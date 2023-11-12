@@ -1,10 +1,10 @@
 namespace HotelService;
 
-public class HotelRepository : IHotelRepository
+public class InMemoryHotelRepository : IHotelRepository
 {
     private readonly Dictionary<int, Hotel> _hotels;
 
-    public HotelRepository()
+    public InMemoryHotelRepository()
     {
         _hotels = new Dictionary<int, Hotel>();
     }

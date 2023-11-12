@@ -1,13 +1,13 @@
 namespace HotelService.Tests;
 
-public class HotelRespositoryAddHotelTests
+public class InMemoryHotelRepositoryAddHotelTests
 {
     [Fact]
     public void AddNewHotel()
     {
         // Arrange
         var hotel = new Hotel(1, "Hotel 1");
-        var repository = new HotelRepository();
+        var repository = new InMemoryHotelRepository();
         
         // Act
         repository.AddHotel(hotel);
@@ -22,7 +22,7 @@ public class HotelRespositoryAddHotelTests
     {
         // Arrange
         var hotel = new Hotel(1, "Hotel 1");
-        var repository = new HotelRepository();
+        var repository = new InMemoryHotelRepository();
         repository.AddHotel(hotel);
         
         // Act
