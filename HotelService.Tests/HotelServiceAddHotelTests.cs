@@ -2,7 +2,7 @@ using Moq;
 
 namespace HotelService.Tests;
 
-public class AddHotelTests
+public class HotelServiceAddHotelTests
 {
     [Fact]
     public void AddNewHotel()
