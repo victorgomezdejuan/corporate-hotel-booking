@@ -10,4 +10,16 @@ public class Hotel
 
     public int Id { get; init; }
     public string Name { get; init; }
+
+    public override bool Equals(object? obj)
+    {
+        return obj is Hotel hotel &&
+               Id == hotel.Id &&
+               Name == hotel.Name;
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(Id, Name);
+    }
 }
