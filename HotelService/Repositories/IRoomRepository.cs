@@ -1,6 +1,6 @@
 using HotelService.Domain;
 
-namespace HotelService;
+namespace HotelService.Repositories;
 
 public interface IRoomRepository
 {
