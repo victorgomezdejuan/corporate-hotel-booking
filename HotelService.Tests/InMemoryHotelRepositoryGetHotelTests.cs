@@ -2,16 +2,22 @@ namespace HotelService.Tests;
 
 public class InMemoryHotelRepositoryGetHotelTests
 {
+    private readonly InMemoryHotelRepository _repository;
+    
+    public InMemoryHotelRepositoryGetHotelTests()
+    {
+        _repository = new InMemoryHotelRepository();
+    }
+    
     [Fact]
     public void GetExistingHotel()
     {
         // Arrange
         var hotel = new Hotel(1, "Hotel 1");
-        var repository = new InMemoryHotelRepository();
-        repository.AddHotel(hotel);
+        _repository.AddHotel(hotel);
         
         // Act
-        var actualHotel = repository.GetHotel(1);
+        var actualHotel = _repository.GetHotel(1);
         
         // Assert
         Assert.Equal(hotel, actualHotel);
@@ -20,11 +26,9 @@ public class InMemoryHotelRepositoryGetHotelTests
     [Fact]
     public void GetNonExistingHotel()
     {
-        // Arrange
-        var repository = new InMemoryHotelRepository();
-        
+       
         // Act
-        void act() => repository.GetHotel(1);
+        void act() => _repository.GetHotel(1);
         
         // Assert
         Assert.Throws<HotelNotFoundException>(act);
