@@ -29,12 +29,19 @@ public class InMemoryRoomRepository : IRoomRepository
         {
             throw new RoomNotFoundException();
         }
-        
+
         return _rooms.Single(r => r.HotelId == hotelId && r.Number == number);
     }
 
     public void UpdateRoom(Room room)
     {
-        throw new NotImplementedException();
+        if (!Exists(room.HotelId, room.Number))
+        {
+            throw new RoomNotFoundException();
+        }
+
+        var existingRoom = GetRoom(room.HotelId, room.Number);
+        _rooms.Remove(existingRoom);
+        _rooms.Add(room);
     }
 }
