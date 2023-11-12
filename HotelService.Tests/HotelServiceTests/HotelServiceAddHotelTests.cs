@@ -1,3 +1,4 @@
+using HotelService.Domain;
 using Moq;
 
 namespace HotelService.Tests.HotelServiceTests;

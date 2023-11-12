@@ -1,4 +1,6 @@
-﻿namespace HotelService;
+﻿using HotelService.Domain;
+
+namespace HotelService;
 
 public enum RoomType
 {

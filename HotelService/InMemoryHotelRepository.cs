@@ -1,4 +1,6 @@
 
+using HotelService.Domain;
+
 namespace HotelService;
 
 public class InMemoryHotelRepository : IHotelRepository

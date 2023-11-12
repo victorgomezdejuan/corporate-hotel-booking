@@ -1,3 +1,5 @@
+using HotelService.Domain;
+
 namespace HotelService;
 
 public interface IHotelRepository

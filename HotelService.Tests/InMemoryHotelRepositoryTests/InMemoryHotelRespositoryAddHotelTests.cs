@@ -1,3 +1,5 @@
+using HotelService.Domain;
+
 namespace HotelService.Tests.InMemoryHotelRepositoryTests;
 
 public class InMemoryHotelRepositoryAddHotelTests
