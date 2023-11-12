@@ -1,3 +1,5 @@
+using HotelService.Domain;
+
 namespace HotelService.Tests;
 
 public class RoomTests

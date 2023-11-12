@@ -1,4 +1,4 @@
-namespace HotelService;
+namespace HotelService.Domain;
 
 public class Room
 {
