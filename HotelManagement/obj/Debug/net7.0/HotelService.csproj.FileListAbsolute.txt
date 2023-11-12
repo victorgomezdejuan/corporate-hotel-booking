@@ -1,0 +1,11 @@
+c:\Training\TDD\Katas\corporate-hotel-booking\HotelService\bin\Debug\net7.0\HotelService.deps.json
+c:\Training\TDD\Katas\corporate-hotel-booking\HotelService\bin\Debug\net7.0\HotelService.dll
+c:\Training\TDD\Katas\corporate-hotel-booking\HotelService\bin\Debug\net7.0\HotelService.pdb
+c:\Training\TDD\Katas\corporate-hotel-booking\HotelService\obj\Debug\net7.0\HotelService.GeneratedMSBuildEditorConfig.editorconfig
+c:\Training\TDD\Katas\corporate-hotel-booking\HotelService\obj\Debug\net7.0\HotelService.AssemblyInfoInputs.cache
+c:\Training\TDD\Katas\corporate-hotel-booking\HotelService\obj\Debug\net7.0\HotelService.AssemblyInfo.cs
+c:\Training\TDD\Katas\corporate-hotel-booking\HotelService\obj\Debug\net7.0\HotelService.csproj.CoreCompileInputs.cache
+c:\Training\TDD\Katas\corporate-hotel-booking\HotelService\obj\Debug\net7.0\HotelService.dll
+c:\Training\TDD\Katas\corporate-hotel-booking\HotelService\obj\Debug\net7.0\refint\HotelService.dll
+c:\Training\TDD\Katas\corporate-hotel-booking\HotelService\obj\Debug\net7.0\HotelService.pdb
+c:\Training\TDD\Katas\corporate-hotel-booking\HotelService\obj\Debug\net7.0\ref\HotelService.dll
