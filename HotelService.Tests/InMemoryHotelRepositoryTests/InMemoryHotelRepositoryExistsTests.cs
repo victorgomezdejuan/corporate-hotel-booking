@@ -1,4 +1,4 @@
-namespace HotelService.Tests.HotelRepositoryTests;
+namespace HotelService.Tests.InMemoryHotelRepositoryTests;
 
 public class InMemoryHotelRepositoryExistsTests
 {
