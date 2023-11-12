@@ -13,14 +13,14 @@ public class InMemoryHotelRepositoryGetHotelTests
     public void GetExistingHotel()
     {
         // Arrange
-        var hotel = new Hotel(1, "Hotel 1");
-        _repository.AddHotel(hotel);
+        var addedHotel = new Hotel(1, "Hotel 1");
+        _repository.AddHotel(addedHotel);
         
         // Act
-        var actualHotel = _repository.GetHotel(1);
+        var retrievedHotel = _repository.GetHotel(1);
         
         // Assert
-        Assert.Equal(hotel, actualHotel);
+        Assert.Equal(addedHotel, retrievedHotel);
     }
 
     [Fact]
