@@ -1,6 +1,6 @@
 using Moq;
 
-namespace HotelService.Tests;
+namespace HotelService.Tests.HotelServiceTests;
 
 public class HotelServiceAddHotelTests
 {
