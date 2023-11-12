@@ -1,4 +1,5 @@
 ﻿using HotelService.Domain;
+using HotelService.Repositories;
 
 namespace HotelService;
 
