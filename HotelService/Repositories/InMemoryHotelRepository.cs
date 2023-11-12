@@ -1,8 +1,7 @@
 
 using HotelService.Domain;
-using HotelService.Repositories;
 
-namespace HotelService;
+namespace HotelService.Repositories;
 
 public class InMemoryHotelRepository : IHotelRepository
 {

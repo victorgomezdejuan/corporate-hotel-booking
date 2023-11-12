@@ -5,7 +5,7 @@ namespace HotelService.Tests.InMemoryHotelRepositoryTests;
 
 public class InMemoryHotelRepositoryExistsTests
 {
-    private readonly IHotelRepository _hotelRepository;
+    private readonly InMemoryHotelRepository _hotelRepository;
 
     public InMemoryHotelRepositoryExistsTests()
     {
