@@ -1,3 +1,4 @@
+
 namespace HotelService;
 
 public class InMemoryHotelRepository : IHotelRepository
@@ -27,5 +28,10 @@ public class InMemoryHotelRepository : IHotelRepository
         }
         
         return new Hotel(_hotels[hotelId].Id, _hotels[hotelId].Name);
+    }
+
+    public bool Exists(int hotelId)
+    {
+        return _hotels.ContainsKey(hotelId);
     }
 }

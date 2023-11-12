@@ -10,7 +10,8 @@ public class HotelServiceAddHotelTests
     public HotelServiceAddHotelTests()
     {
         _hotelRepositoryMock = new Mock<IHotelRepository>();
-        _hotelService = new HotelService(_hotelRepositoryMock.Object);
+        // CODE SMELL: We have to pass null as the second parameter because we don't need it in this test
+        _hotelService = new HotelService(_hotelRepositoryMock.Object, null);
     }
 
     [Fact]
