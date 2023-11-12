@@ -13,6 +13,11 @@ public class Room
         Type = type;
     }
 
+    public Room UpdateType(RoomType roomType)
+    {
+        return new Room(HotelId, Number, roomType);
+    }
+
     public override bool Equals(object? obj)
     {
         if (obj is not Room other)

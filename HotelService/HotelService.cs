@@ -30,9 +30,17 @@ public class HotelService
         {
             throw new HotelNotFoundException();
         }
-        
-        var room = new Room(hotelId, number, roomType);
-        _roomRepository.AddRoom(room);
+
+        if (_roomRepository.Exists(hotelId, number))
+        {
+            var room = _roomRepository.GetRoom(hotelId, number);
+            _roomRepository.UpdateRoom(room.UpdateType(roomType));
+        }
+        else
+        {
+            var room = new Room(hotelId, number, roomType);
+            _roomRepository.AddRoom(room);
+        }
     }
 
     public HotelInfo FindHotel(int hotelId)
