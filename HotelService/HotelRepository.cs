@@ -11,6 +11,11 @@ public class HotelRepository : IHotelRepository
 
     public void AddHotel(Hotel hotel)
     {
+        if (_hotels.ContainsKey(hotel.Id))
+        {
+            throw new HotelAlreadyExistsException();
+        }
+        
         _hotels.Add(hotel.Id, hotel);
     }
 
