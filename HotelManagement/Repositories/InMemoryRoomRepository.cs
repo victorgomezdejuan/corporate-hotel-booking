@@ -14,10 +14,6 @@ public class InMemoryRoomRepository : IRoomRepository
 
     public void AddRoom(Room room)
     {
-        if (Exists(room.HotelId, room.Number))
-        {
-            throw new RoomAlreadyExistsException();
-        }
         _rooms.Add(room);
     }
 
