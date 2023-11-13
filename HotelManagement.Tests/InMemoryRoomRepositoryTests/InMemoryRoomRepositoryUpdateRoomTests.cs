@@ -1,6 +1,5 @@
 using HotelManagement.Domain;
 using HotelManagement.Repositories;
-using HotelManagement.Service;
 
 namespace HotelManagement.Tests.InMemoryRoomRepositoryTests;
 
@@ -27,18 +26,5 @@ public class InMemoryRoomRepositoryUpdateRoomTests
         // Assert
         var retrievedRoom = _repository.GetRoom(1, 100);
         Assert.Equal(updatedRoom, retrievedRoom);
-    }
-
-    [Fact]
-    public void UpdateNonExistingRoom()
-    {
-        // Arrange
-        var updatedRoom = new Room(1, 100, RoomType.Double);
-
-        // Act
-        void act() => _repository.UpdateRoom(updatedRoom);
-
-        // Assert
-        var exception = Assert.Throws<RoomNotFoundException>(act);
     }
 }

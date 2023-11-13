@@ -29,11 +29,6 @@ public class InMemoryRoomRepository : IRoomRepository
 
     public void UpdateRoom(Room room)
     {
-        if (!Exists(room.HotelId, room.Number))
-        {
-            throw new RoomNotFoundException();
-        }
-
         var existingRoom = GetRoom(room.HotelId, room.Number);
         _rooms.Remove(existingRoom);
         _rooms.Add(room);
