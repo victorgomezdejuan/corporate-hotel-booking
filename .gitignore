@@ -1,5 +1,5 @@
 .vscode/
-HotelService.Tests/bin/
-HotelService.Tests/obj/
-HotelService/bin/
-HotelService/obj/
+HotelManagement.Tests/bin/
+HotelManagement.Tests/obj/
+HotelManagement/bin/
+HotelManagement/obj/
