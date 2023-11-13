@@ -16,8 +16,7 @@ public class HotelService
 
     public void AddHotel(int hotelId, string hotelName)
     {
-        var hotel = new Hotel(hotelId, hotelName);
-        _hotelRepository.AddHotel(hotel);
+        new AddHotelCommandHandler(_hotelRepository).Handle(new AddHotelCommand(hotelId, hotelName));
     }
 
     public void SetRoom(int hotelId, int number, RoomType roomType)
