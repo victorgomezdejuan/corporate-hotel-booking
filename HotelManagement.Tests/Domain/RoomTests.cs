@@ -1,6 +1,6 @@
 using HotelManagement.Domain;
 
-namespace HotelManagement.Tests;
+namespace HotelManagement.Tests.Domain;
 
 public class RoomTests
 {
