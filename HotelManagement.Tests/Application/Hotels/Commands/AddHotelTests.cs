@@ -4,7 +4,7 @@ using HotelManagement.Domain;
 using HotelManagement.Repositories;
 using Moq;
 
-namespace HotelManagement.Tests;
+namespace HotelManagement.Tests.Application.Hotels.Commands;
 
 public class AddHotelTests
 {
