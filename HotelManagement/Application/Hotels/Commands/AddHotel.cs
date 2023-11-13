@@ -2,7 +2,7 @@ using HotelManagement.Application;
 using HotelManagement.Domain;
 using HotelManagement.Repositories;
 
-namespace HotelManagement;
+namespace HotelManagement.Application.Hotels.Commands.AddHotel;
 
 public record AddHotelCommand
 {

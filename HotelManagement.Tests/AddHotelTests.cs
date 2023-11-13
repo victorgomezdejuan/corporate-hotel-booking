@@ -1,4 +1,5 @@
 using HotelManagement.Application;
+using HotelManagement.Application.Hotels.Commands.AddHotel;
 using HotelManagement.Domain;
 using HotelManagement.Repositories;
 using Moq;

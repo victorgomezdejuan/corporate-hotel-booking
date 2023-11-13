@@ -1,4 +1,5 @@
-﻿using HotelManagement.Domain;
+﻿using HotelManagement.Application.Hotels.Commands.AddHotel;
+using HotelManagement.Domain;
 using HotelManagement.Repositories;
 
 namespace HotelManagement.Application;
