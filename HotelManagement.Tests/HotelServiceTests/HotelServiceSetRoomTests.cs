@@ -5,7 +5,7 @@ using Moq;
 
 namespace HotelManagement.Tests.HotelServiceTests;
 
-public class HotelServiceAddRoomTests
+public class HotelServiceSetRoomTests
 {
     [Fact]
     public void AddNewRoom()
