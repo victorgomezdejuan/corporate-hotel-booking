@@ -24,11 +24,6 @@ public class InMemoryRoomRepository : IRoomRepository
 
     public Room GetRoom(int hotelId, int number)
     {
-        if (!Exists(hotelId, number))
-        {
-            throw new RoomNotFoundException();
-        }
-
         return _rooms.Single(r => r.HotelId == hotelId && r.Number == number);
     }
 
