@@ -49,10 +49,11 @@ public class SetRoomTests
     {
         // Arrange
         var setRoomCommand = new SetRoomCommand(1, 100, RoomType.Single);
+        var roomRepository = new Mock<IRoomRepository>();
+        roomRepository.Setup(x => x.Exists(It.IsAny<int>(), It.IsAny<int>())).Returns(false);
         var hotelRepositoryMock = new Mock<IHotelRepository>();
         hotelRepositoryMock.Setup(x => x.Exists(setRoomCommand.HotelId)).Returns(false);
-        // In this test case the room repository is not expected to be called at all
-        var setRoomCommandHandler = new SetRoomCommandHandler(hotelRepositoryMock.Object, null);
+        var setRoomCommandHandler = new SetRoomCommandHandler(hotelRepositoryMock.Object, roomRepository.Object);
 
         // Act
         void act() => setRoomCommandHandler.Handle(setRoomCommand);

@@ -32,11 +32,6 @@ public class SetRoomCommandHandler
 
     public void Handle(SetRoomCommand command)
     {
-        if (!_hotelRepository.Exists(command.HotelId))
-        {
-            throw new HotelNotFoundException(command.HotelId);
-        }
-
         var room = new Room(command.HotelId, command.RoomNumber, command.RoomType);
         if (_roomRepository.Exists(command.HotelId, command.RoomNumber))
         {
@@ -44,6 +39,11 @@ public class SetRoomCommandHandler
         }
         else
         {
+            if (!_hotelRepository.Exists(command.HotelId))
+            {
+                throw new HotelNotFoundException(command.HotelId);
+            }
+
             _roomRepository.AddRoom(room);
         }
     }
