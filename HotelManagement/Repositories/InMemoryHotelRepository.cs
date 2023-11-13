@@ -22,7 +22,7 @@ public class InMemoryHotelRepository : IHotelRepository
     {
         if (!_hotels.ContainsKey(hotelId))
         {
-            throw new HotelNotFoundException();
+            throw new HotelNotFoundException(hotelId);
         }
         
         return new Hotel(_hotels[hotelId].Id, _hotels[hotelId].Name);

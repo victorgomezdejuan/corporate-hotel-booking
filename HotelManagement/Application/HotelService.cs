@@ -24,7 +24,7 @@ public class HotelService
     {
         if (!_hotelRepository.Exists(hotelId))
         {
-            throw new HotelNotFoundException();
+            throw new HotelNotFoundException(hotelId);
         }
 
         if (_roomRepository.Exists(hotelId, number))

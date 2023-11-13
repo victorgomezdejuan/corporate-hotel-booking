@@ -21,15 +21,30 @@ public class SetRoomCommand
 
 public class SetRoomCommandHandler
 {
+    private readonly IHotelRepository _hotelRepository;
     private readonly IRoomRepository _roomRepository;
 
-    public SetRoomCommandHandler(IRoomRepository roomRepository)
+    public SetRoomCommandHandler(IHotelRepository hotelRepository, IRoomRepository roomRepository)
     {
+        _hotelRepository = hotelRepository;
         _roomRepository = roomRepository;
     }
 
     public void Handle(SetRoomCommand command)
     {
-        _roomRepository.AddRoom(new Room(command.HotelId, command.RoomNumber, command.RoomType));
+        if (!_hotelRepository.Exists(command.HotelId))
+        {
+            throw new HotelNotFoundException(command.HotelId);
+        }
+
+        var room = new Room(command.HotelId, command.RoomNumber, command.RoomType);
+        if (_roomRepository.Exists(command.HotelId, command.RoomNumber))
+        {
+            _roomRepository.UpdateRoom(room);
+        }
+        else
+        {
+            _roomRepository.AddRoom(room);
+        }
     }
 }
