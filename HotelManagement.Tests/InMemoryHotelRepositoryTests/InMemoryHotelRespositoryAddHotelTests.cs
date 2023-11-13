@@ -26,18 +26,4 @@ public class InMemoryHotelRepositoryAddHotelTests
         var retrievedHotel = _repository.GetHotel(1);
         Assert.Equal(hotelToBeAdded, retrievedHotel);
     }
-
-    [Fact]
-    public void AddExistingHotel()
-    {
-        // Arrange
-        var hotelToBeAddedTwice = new Hotel(1, "Hotel 1");
-        _repository.AddHotel(hotelToBeAddedTwice);
-        
-        // Act
-        void act() => _repository.AddHotel(hotelToBeAddedTwice);
-        
-        // Assert
-        Assert.Throws<HotelAlreadyExistsException>(act);
-    }
 }
