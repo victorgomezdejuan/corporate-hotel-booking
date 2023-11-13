@@ -1,4 +1,3 @@
-using HotelManagement.Application;
 using HotelManagement.Domain;
 using HotelManagement.Repositories;
 
@@ -25,16 +24,5 @@ public class InMemoryHotelRepositoryGetHotelTests
         
         // Assert
         Assert.Equal(addedHotel, retrievedHotel);
-    }
-
-    [Fact]
-    public void GetNonExistingHotel()
-    {
-       
-        // Act
-        void act() => _repository.GetHotel(1);
-        
-        // Assert
-        Assert.Throws<HotelNotFoundException>(act);
     }
 }

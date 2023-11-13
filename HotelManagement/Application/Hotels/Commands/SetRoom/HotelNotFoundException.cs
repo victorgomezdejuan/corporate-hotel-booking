@@ -1,4 +1,4 @@
-namespace HotelManagement.Application;
+namespace HotelManagement.Application.Hotels.Commands.SetRoom;
 
 public class HotelNotFoundException : Exception
 {

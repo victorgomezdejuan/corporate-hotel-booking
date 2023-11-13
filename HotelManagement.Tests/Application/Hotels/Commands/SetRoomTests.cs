@@ -1,4 +1,3 @@
-using HotelManagement.Application;
 using HotelManagement.Application.Hotels.Commands.SetRoom;
 using HotelManagement.Domain;
 using HotelManagement.Repositories;
