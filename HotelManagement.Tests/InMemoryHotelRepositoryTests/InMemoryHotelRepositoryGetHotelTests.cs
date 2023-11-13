@@ -1,6 +1,6 @@
+using HotelManagement.Application;
 using HotelManagement.Domain;
 using HotelManagement.Repositories;
-using HotelManagement.Service;
 
 namespace HotelManagement.Tests.InMemoryHotelRepositoryTests;
 

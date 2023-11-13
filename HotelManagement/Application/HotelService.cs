@@ -1,7 +1,7 @@
 ﻿using HotelManagement.Domain;
 using HotelManagement.Repositories;
 
-namespace HotelManagement.Service;
+namespace HotelManagement.Application;
 
 public class HotelService
 {

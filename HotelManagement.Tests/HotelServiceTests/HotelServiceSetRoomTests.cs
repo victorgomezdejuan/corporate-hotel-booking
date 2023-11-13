@@ -1,6 +1,6 @@
+using HotelManagement.Application;
 using HotelManagement.Domain;
 using HotelManagement.Repositories;
-using HotelManagement.Service;
 using Moq;
 
 namespace HotelManagement.Tests.HotelServiceTests;

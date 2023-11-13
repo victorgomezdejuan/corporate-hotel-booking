@@ -1,5 +1,4 @@
 using HotelManagement.Domain;
-using HotelManagement.Service;
 
 namespace HotelManagement.Repositories;
 
