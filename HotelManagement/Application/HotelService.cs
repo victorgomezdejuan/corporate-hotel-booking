@@ -1,4 +1,5 @@
 ﻿using HotelManagement.Application.Hotels.Commands.AddHotel;
+using HotelManagement.Application.Hotels.Commands.SetRoom;
 using HotelManagement.Domain;
 using HotelManagement.Repositories;
 
@@ -22,21 +23,7 @@ public class HotelService
 
     public void SetRoom(int hotelId, int number, RoomType roomType)
     {
-        if (!_hotelRepository.Exists(hotelId))
-        {
-            throw new HotelNotFoundException(hotelId);
-        }
-
-        if (_roomRepository.Exists(hotelId, number))
-        {
-            var room = _roomRepository.GetRoom(hotelId, number);
-            _roomRepository.UpdateRoom(room.UpdateType(roomType));
-        }
-        else
-        {
-            var room = new Room(hotelId, number, roomType);
-            _roomRepository.AddRoom(room);
-        }
+        new SetRoomCommandHandler(_hotelRepository, _roomRepository).Handle(new SetRoomCommand(hotelId, number, roomType));
     }
 
     public HotelInfo FindHotel(int hotelId)
