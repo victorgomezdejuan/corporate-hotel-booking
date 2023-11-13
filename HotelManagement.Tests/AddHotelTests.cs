@@ -1,5 +1,6 @@
 using HotelManagement.Domain;
 using HotelManagement.Repositories;
+using HotelManagement.Service;
 using Moq;
 
 namespace HotelManagement.Tests;
@@ -26,5 +27,19 @@ public class AddHotelTests
 
             // Assert
             _hotelRepositoryMock.Verify(x => x.AddHotel(It.Is<Hotel>(h => h.Id == 1 && h.Name == "Hilton")));
+        }
+
+        [Fact]
+        public void AddExistingHotel()
+        {
+            // Arrange
+            _hotelRepositoryMock.Setup(x => x.Exists(1)).Returns(true);
+            var command = new AddHotelCommand(1, "Hilton");
+
+            // Act
+            void act() => _handler.Handle(command);
+
+            // Assert
+            Assert.Throws<HotelAlreadyExistsException>(act);
         }
 }

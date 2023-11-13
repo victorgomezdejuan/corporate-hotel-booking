@@ -1,5 +1,6 @@
 using HotelManagement.Domain;
 using HotelManagement.Repositories;
+using HotelManagement.Service;
 
 namespace HotelManagement;
 
@@ -26,6 +27,11 @@ public class AddHotelCommandHandler
 
     public void Handle(AddHotelCommand command)
     {
+        if (_hotelRepository.Exists(command.HotelId))
+        {
+            throw new HotelAlreadyExistsException();
+        }
+        
         var hotel = new Hotel(command.HotelId, command.HotelName);
         _hotelRepository.AddHotel(hotel);
     }
