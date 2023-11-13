@@ -1,4 +1,4 @@
-using HotelManagement.Application;
+using HotelManagement.Application.Hotels.Commands;
 using HotelManagement.Application.Hotels.Commands.AddHotel;
 using HotelManagement.Domain;
 using HotelManagement.Repositories;
