@@ -25,7 +25,7 @@ public class HotelServiceSetRoomTests
     }
 
     [Fact]
-    public void SetRoomToNonExistingHotel()
+    public void SetRoomFromNonExistingHotel()
     {
         // Arrange
         var hotelRepositoryMock = new Mock<IHotelRepository>();
@@ -41,7 +41,7 @@ public class HotelServiceSetRoomTests
     }
 
     [Fact]
-    public void SetExistingRoomToExistingHotel()
+    public void SetExistingRoomFromExistingHotel()
     {
         // Arrange
         var originalExistingRoom = new Room(1, 100, RoomType.Single);
