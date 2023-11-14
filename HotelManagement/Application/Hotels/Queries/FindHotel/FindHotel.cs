@@ -6,7 +6,12 @@ namespace HotelManagement.Application.Hotels.Queries.FindHotel;
 
 public record FindHotelQuery
 {
-    public int Id { get; init; }
+    public int Id { get; }
+
+    public FindHotelQuery(int id)
+    {
+        Id = id;
+    }
 }
 
 public class FindHotelQueryHandler

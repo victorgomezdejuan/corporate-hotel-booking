@@ -1,4 +1,5 @@
 ﻿using HotelManagement.Application.Hotels.Commands.AddHotel;
+using HotelManagement.Application.Hotels.Queries.FindHotel;
 using HotelManagement.Application.Rooms.Commands.SetRoom;
 using HotelManagement.Domain;
 using HotelManagement.Repositories.Hotels;
@@ -29,6 +30,6 @@ public class HotelService
 
     public HotelDto FindHotel(int hotelId)
     {
-        throw new NotImplementedException();
+        return new FindHotelQueryHandler(_hotelRepository, _roomRepository).Handle(new FindHotelQuery(hotelId));
     }
 }

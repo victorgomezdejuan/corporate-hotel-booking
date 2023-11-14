@@ -21,7 +21,7 @@ public class FindHotelTests
         var handler = new FindHotelQueryHandler(hotelRepositoryMock.Object, roomRepositoryMock.Object);
 
         // Act
-        HotelDto result = handler.Handle(new FindHotelQuery { Id = 1 });
+        HotelDto result = handler.Handle(new FindHotelQuery(1));
 
         // Assert
         result.Should().NotBeNull();
