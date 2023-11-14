@@ -1,6 +1,6 @@
 using HotelManagement.Domain;
-using HotelManagement.Repositories;
 using HotelManagement.Repositories.Hotels;
+using HotelManagement.Repositories.Rooms;
 
 namespace HotelManagement.Application.Hotels.Commands.SetRoom;
 

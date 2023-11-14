@@ -1,6 +1,6 @@
 using HotelManagement.Domain;
 
-namespace HotelManagement.Repositories;
+namespace HotelManagement.Repositories.Rooms;
 
 public class InMemoryRoomRepository : IRoomRepository
 {

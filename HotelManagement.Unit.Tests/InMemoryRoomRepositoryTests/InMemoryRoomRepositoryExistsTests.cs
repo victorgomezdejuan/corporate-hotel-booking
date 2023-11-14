@@ -1,5 +1,5 @@
 using HotelManagement.Domain;
-using HotelManagement.Repositories;
+using HotelManagement.Repositories.Rooms;
 
 namespace HotelManagement.Unit.Tests.InMemoryRoomRepositoryTests;
 
