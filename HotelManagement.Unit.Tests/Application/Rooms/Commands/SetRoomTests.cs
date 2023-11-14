@@ -4,7 +4,7 @@ using HotelManagement.Repositories.Hotels;
 using HotelManagement.Repositories.Rooms;
 using Moq;
 
-namespace HotelManagement.Unit.Tests.Application.Hotels.Commands;
+namespace HotelManagement.Unit.Tests.Application.Rooms.Commands;
 
 public class SetRoomTests
 {
