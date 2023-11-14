@@ -5,7 +5,7 @@ using HotelManagement.Repositories.Rooms;
 
 namespace HotelManagement.Integrated.Tests;
 
-public class HotelServiceTests
+public class AddHotelTests
 {
     [Fact]
     public void AddNewHotel()
