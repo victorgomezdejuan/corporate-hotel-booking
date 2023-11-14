@@ -8,7 +8,5 @@ public interface IHotelRepository
 
     Hotel GetHotel(int hotelId);
 
-    Hotel GetHotelWithRooms(int hotelId);
-
     bool Exists(int hotelId);
 }

@@ -3,6 +3,7 @@ using HotelManagement.Application;
 using HotelManagement.Application.Hotels.Queries.FindHotel;
 using HotelManagement.Domain;
 using HotelManagement.Repositories.Hotels;
+using HotelManagement.Repositories.Rooms;
 using Moq;
 
 namespace HotelManagement.Unit.Tests.Application.Hotels.Queries;
@@ -13,16 +14,14 @@ public class FindHotelTests
     public void Handle_ReturnsCorrectVmAndHotel()
     {
         // Arrange
-        var expectedResult = new HotelDto(1, new List<RoomDto>() { new(100, RoomType.Double) });
         var hotelRepositoryMock = new Mock<IHotelRepository>();
-        var retrievedHotel = new Hotel(1, "Hilton");
-        retrievedHotel.AddRoom(new Room(1, 100, RoomType.Double));
-        hotelRepositoryMock.Setup(x => x.GetHotelWithRooms(1)).Returns(retrievedHotel);
-        var query = new FindHotelQuery { Id = 1 };
-        var handler = new FindHotelQueryHandler(hotelRepositoryMock.Object);
+        hotelRepositoryMock.Setup(x => x.GetHotel(1)).Returns(new Hotel(1, "Hilton"));
+        var roomRepositoryMock = new Mock<IRoomRepository>();
+        roomRepositoryMock.Setup(x => x.GetRooms(1)).Returns(new List<Room>() { new(1, 100, RoomType.Double) }.AsReadOnly());
+        var handler = new FindHotelQueryHandler(hotelRepositoryMock.Object, roomRepositoryMock.Object);
 
         // Act
-        HotelDto result = handler.Handle(query);
+        HotelDto result = handler.Handle(new FindHotelQuery { Id = 1 });
 
         // Assert
         result.Should().NotBeNull();

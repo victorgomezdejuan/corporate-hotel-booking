@@ -1,3 +1,4 @@
+using System.Collections.ObjectModel;
 using HotelManagement.Domain;
 
 namespace HotelManagement.Repositories.Rooms;
@@ -24,6 +25,11 @@ public class InMemoryRoomRepository : IRoomRepository
     public Room GetRoom(int hotelId, int number)
     {
         return _rooms.Single(r => r.HotelId == hotelId && r.Number == number);
+    }
+
+    public ReadOnlyCollection<Room> GetRooms(int hotelId)
+    {
+        throw new NotImplementedException();
     }
 
     public void UpdateRoom(Room room)
