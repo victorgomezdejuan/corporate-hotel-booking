@@ -1,6 +1,6 @@
 using HotelManagement.Domain;
 
-namespace HotelManagement.Repositories;
+namespace HotelManagement.Repositories.Hotels;
 
 public interface IHotelRepository
 {

@@ -1,7 +1,7 @@
 using HotelManagement.Application.Hotels.Commands;
 using HotelManagement.Application.Hotels.Commands.AddHotel;
 using HotelManagement.Domain;
-using HotelManagement.Repositories;
+using HotelManagement.Repositories.Hotels;
 using Moq;
 
 namespace HotelManagement.Unit.Tests.Application.Hotels.Commands;
