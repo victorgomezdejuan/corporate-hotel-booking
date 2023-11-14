@@ -1,7 +1,7 @@
 using HotelManagement.Domain;
 using HotelManagement.Repositories.Rooms;
 
-namespace HotelManagement.Unit.Tests.InMemoryRoomRepositoryTests;
+namespace HotelManagement.Unit.Tests.Repositories.InMemoryRoomRepositoryTests;
 
 public class InMemoryRoomRepositoryExistsTests
 {
