@@ -2,7 +2,7 @@ using HotelManagement.Domain;
 using HotelManagement.Repositories.Hotels;
 using HotelManagement.Repositories.Rooms;
 
-namespace HotelManagement.Application.Hotels.Commands.SetRoom;
+namespace HotelManagement.Application.Rooms.Commands.SetRoom;
 
 public class SetRoomCommand
 {

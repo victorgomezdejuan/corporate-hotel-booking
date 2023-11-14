@@ -1,5 +1,5 @@
 ﻿using HotelManagement.Application.Hotels.Commands.AddHotel;
-using HotelManagement.Application.Hotels.Commands.SetRoom;
+using HotelManagement.Application.Rooms.Commands.SetRoom;
 using HotelManagement.Domain;
 using HotelManagement.Repositories.Hotels;
 using HotelManagement.Repositories.Rooms;
