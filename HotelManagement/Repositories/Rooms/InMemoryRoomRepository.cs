@@ -29,7 +29,7 @@ public class InMemoryRoomRepository : IRoomRepository
 
     public ReadOnlyCollection<Room> GetRooms(int hotelId)
     {
-        throw new NotImplementedException();
+        return _rooms.Where(r => r.HotelId == hotelId).ToList().AsReadOnly();
     }
 
     public void UpdateRoom(Room room)
