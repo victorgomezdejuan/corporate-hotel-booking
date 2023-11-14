@@ -25,7 +25,7 @@ public class HotelServiceTests
     }
 
     [Fact]
-    public void AddExistingHotel()
+    public void AddHotelWithExistingHotelId()
     {
         // Arrange
         var hotelRepository = new InMemoryHotelRepository();
