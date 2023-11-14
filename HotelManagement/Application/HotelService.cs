@@ -27,7 +27,7 @@ public class HotelService
         new SetRoomCommandHandler(_hotelRepository, _roomRepository).Handle(new SetRoomCommand(hotelId, number, roomType));
     }
 
-    public HotelInfo FindHotel(int hotelId)
+    public HotelDto FindHotel(int hotelId)
     {
         throw new NotImplementedException();
     }

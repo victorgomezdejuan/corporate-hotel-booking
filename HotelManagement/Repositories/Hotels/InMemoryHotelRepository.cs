@@ -21,6 +21,11 @@ public class InMemoryHotelRepository : IHotelRepository
         return new Hotel(_hotels[hotelId].Id, _hotels[hotelId].Name);
     }
 
+    public Hotel GetHotelWithRooms(int hotelId)
+    {
+        throw new NotImplementedException();
+    }
+
     public bool Exists(int hotelId)
     {
         return _hotels.ContainsKey(hotelId);
