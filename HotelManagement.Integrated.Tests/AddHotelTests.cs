@@ -25,7 +25,7 @@ public class AddHotelTests
         _hotelService.AddHotel(1, "Hotel 1");
 
         // Assert
-        var hotel = _hotelService.FindHotel(1);
+        var hotel = _hotelService.FindHotelBy(1);
         Assert.Equal(1, hotel.Id);
         Assert.Equal("Hotel 1", hotel.Name);
     }
