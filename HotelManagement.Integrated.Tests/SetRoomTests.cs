@@ -9,20 +9,28 @@ namespace HotelManagement.Integrated.Tests;
 
 public class SetRoomTests
 {
+    private readonly IHotelRepository _hotelRepository;
+    private readonly IRoomRepository _roomRepository;
+    private readonly HotelService _hotelService;
+
+    public SetRoomTests()
+    {
+        _hotelRepository = new InMemoryHotelRepository();
+        _roomRepository = new InMemoryRoomRepository();
+        _hotelService = new HotelService(_hotelRepository, _roomRepository);
+    }
+
     [Fact]
     public void AddNewRoom()
     {
         // Arrange
-        var hotelRepository = new InMemoryHotelRepository();
-        var roomRepository = new InMemoryRoomRepository();
-        var hotelService = new HotelService(hotelRepository, roomRepository);
-        hotelService.AddHotel(1, "Hotel 1");
+        _hotelService.AddHotel(1, "Hotel 1");
 
         // Act
-        hotelService.SetRoom(1, 101, RoomType.Single);
+        _hotelService.SetRoom(1, 101, RoomType.Single);
 
         // Assert
-        var rooms = roomRepository.GetRooms(1);
+        var rooms = _roomRepository.GetRooms(1);
         rooms.Should().HaveCount(1);
         rooms.Should().Contain(r => r.Number == 101 && r.Type == RoomType.Single);
     }
@@ -31,17 +39,14 @@ public class SetRoomTests
     public void UpdateExistingRoom()
     {
         // Arrange
-        var hotelRepository = new InMemoryHotelRepository();
-        var roomRepository = new InMemoryRoomRepository();
-        var hotelService = new HotelService(hotelRepository, roomRepository);
-        hotelService.AddHotel(1, "Hotel 1");
-        hotelService.SetRoom(1, 101, RoomType.Single);
+        _hotelService.AddHotel(1, "Hotel 1");
+        _hotelService.SetRoom(1, 101, RoomType.Single);
 
         // Act
-        hotelService.SetRoom(1, 101, RoomType.Double);
+        _hotelService.SetRoom(1, 101, RoomType.Double);
 
         // Assert
-        var rooms = roomRepository.GetRooms(1);
+        var rooms = _roomRepository.GetRooms(1);
         rooms.Should().HaveCount(1);
         rooms.Should().Contain(r => r.Number == 101 && r.Type == RoomType.Double);
     }
@@ -49,13 +54,8 @@ public class SetRoomTests
     [Fact]
     public void AddRoomAssignedToNonExistingHotel()
     {
-        // Arrange
-        var hotelRepository = new InMemoryHotelRepository();
-        var roomRepository = new InMemoryRoomRepository();
-        var hotelService = new HotelService(hotelRepository, roomRepository);
-
         // Act
-        void Act() => hotelService.SetRoom(1, 101, RoomType.Single);
+        void Act() => _hotelService.SetRoom(1, 101, RoomType.Single);
 
         // Assert
         Assert.Throws<HotelNotFoundException>(Act);
