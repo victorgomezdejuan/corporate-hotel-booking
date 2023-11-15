@@ -7,19 +7,25 @@ namespace HotelManagement.Integrated.Tests;
 
 public class AddHotelTests
 {
+    private readonly IHotelRepository _hotelRepository;
+    private readonly IRoomRepository _roomRepository;
+    private readonly HotelService _hotelService;
+
+    public AddHotelTests()
+    {
+        _hotelRepository = new InMemoryHotelRepository();
+        _roomRepository = new InMemoryRoomRepository();
+        _hotelService = new HotelService(_hotelRepository, _roomRepository);
+    }
+
     [Fact]
     public void AddNewHotel()
     {
-        // Arrange
-        var hotelRepository = new InMemoryHotelRepository();
-        var roomRepository = new InMemoryRoomRepository();
-        var hotelService = new HotelService(hotelRepository, roomRepository);
-
         // Act
-        hotelService.AddHotel(1, "Hotel 1");
+        _hotelService.AddHotel(1, "Hotel 1");
 
         // Assert
-        var hotel = hotelService.FindHotel(1);
+        var hotel = _hotelService.FindHotel(1);
         Assert.Equal(1, hotel.Id);
         Assert.Equal("Hotel 1", hotel.Name);
     }
@@ -28,13 +34,10 @@ public class AddHotelTests
     public void AddHotelWithExistingHotelId()
     {
         // Arrange
-        var hotelRepository = new InMemoryHotelRepository();
-        var roomRepository = new InMemoryRoomRepository();
-        var hotelService = new HotelService(hotelRepository, roomRepository);
-        hotelService.AddHotel(1, "Hotel 1");
+        _hotelService.AddHotel(1, "Hotel 1");
 
         // Act
-        void Act() => hotelService.AddHotel(1, "Hotel 2");
+        void Act() => _hotelService.AddHotel(1, "Hotel 2");
 
         // Assert
         Assert.Throws<HotelAlreadyExistsException>(Act);
