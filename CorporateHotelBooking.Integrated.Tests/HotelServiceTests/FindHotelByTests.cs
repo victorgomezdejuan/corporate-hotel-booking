@@ -3,7 +3,7 @@ using CorporateHotelBooking.Domain;
 using CorporateHotelBooking.Repositories.Hotels;
 using CorporateHotelBooking.Repositories.Rooms;
 
-namespace CorporateHotelBooking.Integrated.Tests;
+namespace CorporateHotelBooking.Integrated.Tests.HotelServiceTests;
 
 public class FindHotelByTests
 {
