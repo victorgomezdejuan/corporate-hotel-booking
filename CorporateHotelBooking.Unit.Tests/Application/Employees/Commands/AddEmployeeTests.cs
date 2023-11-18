@@ -9,31 +9,36 @@ namespace CorporateHotelBooking.Unit.Tests.Application.Employees.Commands;
 
 public class AddEmployeeTests
 {
+    private readonly Mock<IEmployeeRepository> _employeeRepository;
+    private readonly AddEmployeeCommandHandler _addEmployeeCommandHandler;
+
+    public AddEmployeeTests()
+    {
+        _employeeRepository = new Mock<IEmployeeRepository>();
+        _addEmployeeCommandHandler = new AddEmployeeCommandHandler(_employeeRepository.Object);
+    }
+
     [Fact]
     public void AddEmployee()
     {
         // Arrange
-        var employeeRepository = new Mock<IEmployeeRepository>();
         var addEmployeeCommand = new AddEmployeeCommand(1, 100);
-        var addEmployeeCommandHandler = new AddEmployeeCommandHandler(employeeRepository.Object);
 
         // Act
-        addEmployeeCommandHandler.Handle(addEmployeeCommand);
+        _addEmployeeCommandHandler.Handle(addEmployeeCommand);
 
         // Assert
-        employeeRepository.Verify(r => r.AddEmployee(new Employee(1, 100)));
+        _employeeRepository.Verify(r => r.AddEmployee(new Employee(1, 100)));
     }
 
     [Fact]
     public void AddExistingEmployee()
     {
         // Arrange
-        var employeeRepository = new Mock<IEmployeeRepository>();
-        employeeRepository.Setup(r => r.Exists(1)).Returns(true);
-        var addEmployeeCommandHandler = new AddEmployeeCommandHandler(employeeRepository.Object);
+        _employeeRepository.Setup(r => r.Exists(1)).Returns(true);
 
         // Act
-        Action action = () => addEmployeeCommandHandler.Handle(new AddEmployeeCommand(1, 100));
+        Action action = () => _addEmployeeCommandHandler.Handle(new AddEmployeeCommand(1, 100));
 
         // Assert
         action.Should().Throw<EmployeeAlreadyExistsException>();
