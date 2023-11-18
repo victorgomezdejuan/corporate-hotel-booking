@@ -1,7 +1,7 @@
 .vscode/
-HotelManagement.Unit.Tests/bin/
-HotelManagement.Unit.Tests/obj/
-HotelManagement/bin/
-HotelManagement/obj/
-HotelManagement.Integrated.Tests/bin/
-HotelManagement.Integrated.Tests/obj/
+CorporateHotelBooking.Unit.Tests/bin/
+CorporateHotelBooking.Unit.Tests/obj/
+CorporateHotelBooking/bin/
+CorporateHotelBooking/obj/
+CorporateHotelBooking.Integrated.Tests/bin/
+CorporateHotelBooking.Integrated.Tests/obj/
