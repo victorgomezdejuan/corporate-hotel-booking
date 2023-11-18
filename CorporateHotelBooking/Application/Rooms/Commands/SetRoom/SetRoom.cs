@@ -1,8 +1,8 @@
-using HotelManagement.Domain;
-using HotelManagement.Repositories.Hotels;
-using HotelManagement.Repositories.Rooms;
+using CorporateHotelBooking.Domain;
+using CorporateHotelBooking.Repositories.Hotels;
+using CorporateHotelBooking.Repositories.Rooms;
 
-namespace HotelManagement.Application.Rooms.Commands.SetRoom;
+namespace CorporateHotelBooking.Application.Rooms.Commands.SetRoom;
 
 public class SetRoomCommand
 {

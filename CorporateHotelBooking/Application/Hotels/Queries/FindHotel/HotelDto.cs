@@ -1,7 +1,7 @@
 using System.Collections.ObjectModel;
-using HotelManagement.Application.Hotels.Queries.FindHotel;
+using CorporateHotelBooking.Application.Hotels.Queries.FindHotel;
 
-namespace HotelManagement.Application;
+namespace CorporateHotelBooking.Application;
 
 public class HotelDto
 {

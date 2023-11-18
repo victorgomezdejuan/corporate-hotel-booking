@@ -1,6 +1,6 @@
-using HotelManagement.Domain;
+using CorporateHotelBooking.Domain;
 
-namespace HotelManagement.Application.Hotels.Queries.FindHotel;
+namespace CorporateHotelBooking.Application.Hotels.Queries.FindHotel;
 
 public record RoomDto
 {

@@ -1,7 +1,7 @@
 using System.Collections.ObjectModel;
-using HotelManagement.Domain;
+using CorporateHotelBooking.Domain;
 
-namespace HotelManagement.Repositories.Rooms;
+namespace CorporateHotelBooking.Repositories.Rooms;
 
 public interface IRoomRepository
 {

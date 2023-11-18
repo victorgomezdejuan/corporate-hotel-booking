@@ -1,12 +1,12 @@
-﻿using HotelManagement.Application;
-using HotelManagement.Application.Hotels.Commands.AddHotel;
-using HotelManagement.Application.Hotels.Queries.FindHotel;
-using HotelManagement.Application.Rooms.Commands.SetRoom;
-using HotelManagement.Domain;
-using HotelManagement.Repositories.Hotels;
-using HotelManagement.Repositories.Rooms;
+﻿using CorporateHotelBooking.Application;
+using CorporateHotelBooking.Application.Hotels.Commands.AddHotel;
+using CorporateHotelBooking.Application.Hotels.Queries.FindHotel;
+using CorporateHotelBooking.Application.Rooms.Commands.SetRoom;
+using CorporateHotelBooking.Domain;
+using CorporateHotelBooking.Repositories.Hotels;
+using CorporateHotelBooking.Repositories.Rooms;
 
-namespace HotelManagement;
+namespace CorporateHotelBooking;
 
 public class HotelService
 {

@@ -1,10 +1,10 @@
 using FluentAssertions;
-using HotelManagement.Application.Rooms.Commands.SetRoom;
-using HotelManagement.Domain;
-using HotelManagement.Repositories.Hotels;
-using HotelManagement.Repositories.Rooms;
+using CorporateHotelBooking.Application.Rooms.Commands.SetRoom;
+using CorporateHotelBooking.Domain;
+using CorporateHotelBooking.Repositories.Hotels;
+using CorporateHotelBooking.Repositories.Rooms;
 
-namespace HotelManagement.Integrated.Tests;
+namespace CorporateHotelBooking.Integrated.Tests;
 
 public class SetRoomTests
 {

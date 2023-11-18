@@ -1,12 +1,12 @@
 using FluentAssertions;
-using HotelManagement.Application;
-using HotelManagement.Application.Hotels.Queries.FindHotel;
-using HotelManagement.Domain;
-using HotelManagement.Repositories.Hotels;
-using HotelManagement.Repositories.Rooms;
+using CorporateHotelBooking.Application;
+using CorporateHotelBooking.Application.Hotels.Queries.FindHotel;
+using CorporateHotelBooking.Domain;
+using CorporateHotelBooking.Repositories.Hotels;
+using CorporateHotelBooking.Repositories.Rooms;
 using Moq;
 
-namespace HotelManagement.Unit.Tests.Application.Hotels.Queries;
+namespace CorporateHotelBooking.Unit.Tests.Application.Hotels.Queries;
 
 public class FindHotelTests
 {

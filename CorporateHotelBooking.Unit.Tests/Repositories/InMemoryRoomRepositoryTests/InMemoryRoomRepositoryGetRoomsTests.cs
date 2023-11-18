@@ -1,8 +1,8 @@
 using FluentAssertions;
-using HotelManagement.Domain;
-using HotelManagement.Repositories.Rooms;
+using CorporateHotelBooking.Domain;
+using CorporateHotelBooking.Repositories.Rooms;
 
-namespace HotelManagement.Unit.Tests.Repositories.InMemoryRoomRepositoryTests;
+namespace CorporateHotelBooking.Unit.Tests.Repositories.InMemoryRoomRepositoryTests;
 
 public class InMemoryRoomRepositoryGetRoomsTests
 {

@@ -1,4 +1,4 @@
-namespace HotelManagement.Domain;
+namespace CorporateHotelBooking.Domain;
 
 public enum RoomType
 {

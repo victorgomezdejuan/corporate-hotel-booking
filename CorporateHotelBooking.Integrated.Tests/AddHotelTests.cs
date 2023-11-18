@@ -1,9 +1,8 @@
-using HotelManagement.Application;
-using HotelManagement.Application.Hotels.Commands.AddHotel;
-using HotelManagement.Repositories.Hotels;
-using HotelManagement.Repositories.Rooms;
+using CorporateHotelBooking.Application.Hotels.Commands.AddHotel;
+using CorporateHotelBooking.Repositories.Hotels;
+using CorporateHotelBooking.Repositories.Rooms;
 
-namespace HotelManagement.Integrated.Tests;
+namespace CorporateHotelBooking.Integrated.Tests;
 
 public class AddHotelTests
 {

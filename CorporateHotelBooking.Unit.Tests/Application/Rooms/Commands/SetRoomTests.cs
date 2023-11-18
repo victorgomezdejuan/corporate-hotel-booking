@@ -1,10 +1,10 @@
-using HotelManagement.Application.Rooms.Commands.SetRoom;
-using HotelManagement.Domain;
-using HotelManagement.Repositories.Hotels;
-using HotelManagement.Repositories.Rooms;
+using CorporateHotelBooking.Application.Rooms.Commands.SetRoom;
+using CorporateHotelBooking.Domain;
+using CorporateHotelBooking.Repositories.Hotels;
+using CorporateHotelBooking.Repositories.Rooms;
 using Moq;
 
-namespace HotelManagement.Unit.Tests.Application.Rooms.Commands;
+namespace CorporateHotelBooking.Unit.Tests.Application.Rooms.Commands;
 
 public class SetRoomTests
 {

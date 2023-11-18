@@ -1,6 +1,6 @@
-using HotelManagement.Domain;
+using CorporateHotelBooking.Domain;
 
-namespace HotelManagement.Repositories.Hotels;
+namespace CorporateHotelBooking.Repositories.Hotels;
 
 public class InMemoryHotelRepository : IHotelRepository
 {

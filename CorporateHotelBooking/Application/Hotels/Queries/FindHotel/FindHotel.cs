@@ -1,8 +1,8 @@
 
-using HotelManagement.Repositories.Hotels;
-using HotelManagement.Repositories.Rooms;
+using CorporateHotelBooking.Repositories.Hotels;
+using CorporateHotelBooking.Repositories.Rooms;
 
-namespace HotelManagement.Application.Hotels.Queries.FindHotel;
+namespace CorporateHotelBooking.Application.Hotels.Queries.FindHotel;
 
 public record FindHotelQuery
 {

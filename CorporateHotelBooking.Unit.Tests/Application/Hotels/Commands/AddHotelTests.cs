@@ -1,10 +1,9 @@
-using HotelManagement.Application.Hotels.Commands;
-using HotelManagement.Application.Hotels.Commands.AddHotel;
-using HotelManagement.Domain;
-using HotelManagement.Repositories.Hotels;
+using CorporateHotelBooking.Application.Hotels.Commands.AddHotel;
+using CorporateHotelBooking.Domain;
+using CorporateHotelBooking.Repositories.Hotels;
 using Moq;
 
-namespace HotelManagement.Unit.Tests.Application.Hotels.Commands;
+namespace CorporateHotelBooking.Unit.Tests.Application.Hotels.Commands;
 
 public class AddHotelTests
 {

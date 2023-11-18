@@ -1,7 +1,7 @@
-using HotelManagement.Domain;
-using HotelManagement.Repositories.Hotels;
+using CorporateHotelBooking.Domain;
+using CorporateHotelBooking.Repositories.Hotels;
 
-namespace HotelManagement.Application.Hotels.Commands.AddHotel;
+namespace CorporateHotelBooking.Application.Hotels.Commands.AddHotel;
 
 public record AddHotelCommand
 {

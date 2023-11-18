@@ -1,6 +1,6 @@
 using System.Collections.ObjectModel;
 
-namespace HotelManagement.Domain;
+namespace CorporateHotelBooking.Domain;
 
 public class Hotel
 {
