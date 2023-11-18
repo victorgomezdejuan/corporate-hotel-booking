@@ -1,5 +1,4 @@
 using FluentAssertions;
-using HotelManagement.Application;
 using HotelManagement.Application.Rooms.Commands.SetRoom;
 using HotelManagement.Domain;
 using HotelManagement.Repositories.Hotels;
