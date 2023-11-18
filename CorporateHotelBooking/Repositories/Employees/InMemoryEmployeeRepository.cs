@@ -11,6 +11,11 @@ public class InMemoryEmployeeRepository : IEmployeeRepository
         _employees.Add(employee.Id, employee);
     }
 
+    public bool Exists(int employeeId)
+    {
+        return _employees.ContainsKey(employeeId);
+    }
+
     public Employee GetEmployee(int employeeId)
     {
         return _employees[employeeId];

@@ -1,7 +1,7 @@
 using CorporateHotelBooking.Domain;
 using CorporateHotelBooking.Repositories.Employees;
 
-namespace CorporateHotelBooking.Application.Employees;
+namespace CorporateHotelBooking.Application.Employees.Commands.AddEmployee;
 
 public class AddEmployeeCommand
 {
@@ -26,6 +26,10 @@ public class AddEmployeeCommandHandler
 
     public void Handle(AddEmployeeCommand command)
     {
+        if (_employeeRepository.Exists(command.EmployeeId))
+        {
+            throw new EmployeeAlreadyExistsException();
+        }
         _employeeRepository.AddEmployee(new Employee(command.EmployeeId, command.CompanyId));
     }
 }

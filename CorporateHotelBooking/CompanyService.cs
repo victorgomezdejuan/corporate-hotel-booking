@@ -1,4 +1,4 @@
-using CorporateHotelBooking.Application.Employees;
+using CorporateHotelBooking.Application.Employees.Commands.AddEmployee;
 using CorporateHotelBooking.Repositories.Employees;
 
 namespace CorporateHotelBooking;
