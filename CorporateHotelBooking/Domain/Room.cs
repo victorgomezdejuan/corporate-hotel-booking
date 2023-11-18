@@ -9,16 +9,16 @@ public enum RoomType
 
 public class Room
 {
-    public int HotelId { get; }
-    public int Number { get; }
-    public RoomType Type { get; }
-
     public Room(int hotelId, int number, RoomType type)
     {
         HotelId = hotelId;
         Number = number;
         Type = type;
     }
+
+    public int HotelId { get; }
+    public int Number { get; }
+    public RoomType Type { get; }
 
     public override bool Equals(object? obj)
     {
