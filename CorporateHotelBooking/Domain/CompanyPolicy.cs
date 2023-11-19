@@ -2,24 +2,24 @@ namespace CorporateHotelBooking.Domain;
 
 public class CompanyPolicy
 {
-    public CompanyPolicy(int companyId, ICollection<RoomType> roomTypes)
+    public CompanyPolicy(int companyId, ICollection<RoomType> allowedRoomTypes)
     {
         CompanyId = companyId;
-        RoomTypes = roomTypes.ToList().AsReadOnly();
+        AllowedRoomTypes = allowedRoomTypes.ToList().AsReadOnly();
     }
 
     public int CompanyId { get; }
-    public IReadOnlyCollection<RoomType> RoomTypes { get; }
+    public IReadOnlyCollection<RoomType> AllowedRoomTypes { get; }
 
     public override bool Equals(object? obj)
     {
         return obj is CompanyPolicy policy &&
                CompanyId == policy.CompanyId &&
-               RoomTypes.SequenceEqual(policy.RoomTypes);
+               AllowedRoomTypes.SequenceEqual(policy.AllowedRoomTypes);
     }
 
     public override int GetHashCode()
     {
-        return HashCode.Combine(CompanyId, RoomTypes);
+        return HashCode.Combine(CompanyId, AllowedRoomTypes);
     }
 }
