@@ -27,6 +27,13 @@ public class SetCompanyPolicyCommandHandler
 
     public void Handle(SetCompanyPolicyCommand command)
     {
-        _companyPolicyRepository.AddCompanyPolicy(new CompanyPolicy(command.CompanyId, command.RoomTypes.ToList()));
+        if (_companyPolicyRepository.Exists(command.CompanyId))
+        {
+            _companyPolicyRepository.UpdateCompanyPolicy(new CompanyPolicy(command.CompanyId, command.RoomTypes.ToList()));
+        }
+        else
+        {
+            _companyPolicyRepository.AddCompanyPolicy(new CompanyPolicy(command.CompanyId, command.RoomTypes.ToList()));
+        }
     }
 }

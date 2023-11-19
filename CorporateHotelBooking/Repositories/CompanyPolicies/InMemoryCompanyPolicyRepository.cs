@@ -16,6 +16,16 @@ public class InMemoryCompanyPolicyRepository : ICompanyPolicyRepository
         _companyPolicies.Add(companyPolicy.CompanyId, companyPolicy);
     }
 
+    public void UpdateCompanyPolicy(CompanyPolicy companyPolicy)
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool Exists(int companyId)
+    {
+        throw new NotImplementedException();
+    }
+
     public CompanyPolicy GetCompanyPolicy(int companyId)
     {
         return _companyPolicies[companyId];
