@@ -4,12 +4,12 @@ namespace CorporateHotelBooking;
 
 public class BookingPolicyService
 {
-    public void SetCompanyPolicy(int companyId, IReadOnlyCollection<RoomType> roomTypes)
+    public void SetCompanyPolicy(int companyId, ICollection<RoomType> roomTypes)
     {
         throw new NotImplementedException();
     }
 
-    public void SetEmployeePolicy(int employeeId, IReadOnlyCollection<RoomType> roomTypes)
+    public void SetEmployeePolicy(int employeeId, ICollection<RoomType> roomTypes)
     {
         throw new NotImplementedException();
     }
