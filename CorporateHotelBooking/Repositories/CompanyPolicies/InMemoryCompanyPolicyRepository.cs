@@ -23,7 +23,7 @@ public class InMemoryCompanyPolicyRepository : ICompanyPolicyRepository
 
     public bool Exists(int companyId)
     {
-        throw new NotImplementedException();
+        return _companyPolicies.ContainsKey(companyId);
     }
 
     public CompanyPolicy GetCompanyPolicy(int companyId)
