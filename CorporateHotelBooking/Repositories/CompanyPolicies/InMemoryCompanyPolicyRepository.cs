@@ -18,7 +18,7 @@ public class InMemoryCompanyPolicyRepository : ICompanyPolicyRepository
 
     public void UpdateCompanyPolicy(CompanyPolicy companyPolicy)
     {
-        throw new NotImplementedException();
+        _companyPolicies[companyPolicy.CompanyId] = companyPolicy;
     }
 
     public bool Exists(int companyId)
