@@ -1,4 +1,4 @@
-using CorporateHotelBooking.Application.Employees.Commands;
+using CorporateHotelBooking.Application.Employees.Commands.AddEmployee;
 using CorporateHotelBooking.Repositories.Employees;
 using FluentAssertions;
 

@@ -3,7 +3,7 @@ using CorporateHotelBooking.Repositories.Employees;
 
 namespace CorporateHotelBooking.Application.Employees.Commands.AddEmployee;
 
-public class AddEmployeeCommand
+public record AddEmployeeCommand
 {
     public AddEmployeeCommand(int employeeID, int companyId)
     {

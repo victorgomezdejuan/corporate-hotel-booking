@@ -1,4 +1,5 @@
 using CorporateHotelBooking.Application.Employees.Commands.AddEmployee;
+using CorporateHotelBooking.Application.Employees.Commands.DeleteEmployee;
 using CorporateHotelBooking.Repositories.Employees;
 
 namespace CorporateHotelBooking;
@@ -19,6 +20,6 @@ public class CompanyService
 
     public void DeleteEmployee(int employeeId)
     {
-        throw new NotImplementedException();
+        new DeleteEmployeeCommandHandler(_employeeRepository).Handle(new DeleteEmployeeCommand(employeeId));
     }
 }
