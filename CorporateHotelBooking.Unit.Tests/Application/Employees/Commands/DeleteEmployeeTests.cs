@@ -7,31 +7,36 @@ namespace CorporateHotelBooking.Unit.Tests.Application.Employees.Commands;
 
 public class DeleteEmployeeTests
 {
+    private readonly Mock<IEmployeeRepository> _employeeRepositoryMock;
+    private readonly DeleteEmployeeCommandHandler _deleteEmployeeCommandHandler;
+
+    public DeleteEmployeeTests()
+    {
+        _employeeRepositoryMock = new Mock<IEmployeeRepository>();
+        _deleteEmployeeCommandHandler = new DeleteEmployeeCommandHandler(_employeeRepositoryMock.Object);
+    }
+
     [Fact]
     public void DeleteExistingEmployee()
     {
         // Arrange
-        var employeeRepositoryMock = new Mock<IEmployeeRepository>();
-        employeeRepositoryMock.Setup(r => r.Exists(1)).Returns(true);
-        var deleteEmployeeCommandHandler = new DeleteEmployeeCommandHandler(employeeRepositoryMock.Object);
+        _employeeRepositoryMock.Setup(r => r.Exists(1)).Returns(true);
 
         // Act
-        deleteEmployeeCommandHandler.Handle(new DeleteEmployeeCommand(1));
+        _deleteEmployeeCommandHandler.Handle(new DeleteEmployeeCommand(1));
 
         // Assert
-        employeeRepositoryMock.Verify(r => r.DeleteEmployee(1));
+        _employeeRepositoryMock.Verify(r => r.DeleteEmployee(1));
     }
 
     [Fact]
     public void DeleteNonExistingEmployee()
     {
         // Arrange
-        var employeeRepositoryMock = new Mock<IEmployeeRepository>();
-        employeeRepositoryMock.Setup(r => r.Exists(1)).Returns(false);
-        var deleteEmployeeCommandHandler = new DeleteEmployeeCommandHandler(employeeRepositoryMock.Object);
+        _employeeRepositoryMock.Setup(r => r.Exists(1)).Returns(false);
 
         // Act
-        Action action = () => deleteEmployeeCommandHandler.Handle(new DeleteEmployeeCommand(1));
+        Action action = () => _deleteEmployeeCommandHandler.Handle(new DeleteEmployeeCommand(1));
 
         // Assert
         action.Should().Throw<EmployeeNotFoundException>();
