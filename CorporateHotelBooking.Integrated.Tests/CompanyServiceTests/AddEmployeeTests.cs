@@ -6,18 +6,23 @@ namespace CorporateHotelBooking.Integrated.Tests.CompanyServiceTests;
 
 public class AddEmployeeTests
 {
+    private readonly IEmployeeRepository _employeeRepository;
+    private readonly CompanyService _companyService;
+
+    public AddEmployeeTests()
+    {
+        _employeeRepository = new InMemoryEmployeeRepository();
+        _companyService = new CompanyService(_employeeRepository);
+    }
+
     [Fact]
     public void AddEmployee()
     {
-        // Arrange
-        IEmployeeRepository employeeRepository = new InMemoryEmployeeRepository();
-        var companyService = new CompanyService(employeeRepository);
-
         // Act
-        companyService.AddEmployee(companyId: 100, employeeId: 1);
+        _companyService.AddEmployee(companyId: 100, employeeId: 1);
 
         // Assert
-        var employee = employeeRepository.GetEmployee(1);
+        var employee = _employeeRepository.GetEmployee(1);
         employee.Id.Should().Be(1);
         employee.CompanyId.Should().Be(100);
     }
@@ -26,12 +31,10 @@ public class AddEmployeeTests
     public void AddExistingEmployee()
     {
         // Arrange
-        IEmployeeRepository employeeRepository = new InMemoryEmployeeRepository();
-        var companyService = new CompanyService(employeeRepository);
-        companyService.AddEmployee(companyId: 100, employeeId: 1);
+        _companyService.AddEmployee(companyId: 100, employeeId: 1);
 
         // Act
-        Action action = () => companyService.AddEmployee(companyId: 100, employeeId: 1);
+        Action action = () => _companyService.AddEmployee(companyId: 100, employeeId: 1);
 
         // Assert
         action.Should().Throw<EmployeeAlreadyExistsException>();
