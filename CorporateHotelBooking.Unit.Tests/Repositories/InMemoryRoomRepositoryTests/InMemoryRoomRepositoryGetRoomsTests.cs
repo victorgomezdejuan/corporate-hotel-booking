@@ -20,28 +20,28 @@ public class InMemoryRoomRepositoryGetRoomsTests
     public void GetOneRoom()
     {
         var repository = new InMemoryRoomRepository();
-        repository.AddRoom(new Room(1, 100, RoomType.Double));
+        repository.AddRoom(new Room(1, 100, RoomType.Standard));
 
         var rooms = repository.GetRooms(1);
 
         rooms.Should().HaveCount(1);
         rooms.First().Number.Should().Be(100);
-        rooms.First().Type.Should().Be(RoomType.Double);
+        rooms.First().Type.Should().Be(RoomType.Standard);
     }
 
     [Fact]
     public void GetMultipleRooms()
     {
         var repository = new InMemoryRoomRepository();
-        repository.AddRoom(new Room(1, 100, RoomType.Double));
-        repository.AddRoom(new Room(1, 101, RoomType.Double));
+        repository.AddRoom(new Room(1, 100, RoomType.Standard));
+        repository.AddRoom(new Room(1, 101, RoomType.JuniorSuite));
 
         var rooms = repository.GetRooms(1);
 
         rooms.Should().HaveCount(2);
         rooms.First().Number.Should().Be(100);
-        rooms.First().Type.Should().Be(RoomType.Double);
+        rooms.First().Type.Should().Be(RoomType.Standard);
         rooms.Last().Number.Should().Be(101);
-        rooms.Last().Type.Should().Be(RoomType.Double);
+        rooms.Last().Type.Should().Be(RoomType.JuniorSuite);
     }
 }

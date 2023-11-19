@@ -2,9 +2,9 @@ namespace CorporateHotelBooking.Domain;
 
 public enum RoomType
 {
-    Single,
-    Double,
-    Suite
+    Standard,
+    JuniorSuite,
+    MasterSuite
 }
 
 public class Room

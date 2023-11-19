@@ -12,7 +12,7 @@ public class SetRoomTests
     public void AddNewRoom()
     {
         // Arrange
-        var setRoomCommand = new SetRoomCommand(1, 100, RoomType.Single);
+        var setRoomCommand = new SetRoomCommand(1, 100, RoomType.Standard);
         var roomRepository = new Mock<IRoomRepository>();
         roomRepository.Setup(x => x.Exists(It.IsAny<int>(), It.IsAny<int>())).Returns(false);
         var hotelRepositoryMock = new Mock<IHotelRepository>();
@@ -23,14 +23,14 @@ public class SetRoomTests
         setRoomCommandHandler.Handle(setRoomCommand);
 
         // Assert
-        roomRepository.Verify(x => x.AddRoom(It.Is<Room>(r => r.Equals(new Room(1, 100, RoomType.Single)))));
+        roomRepository.Verify(x => x.AddRoom(It.Is<Room>(r => r.Equals(new Room(1, 100, RoomType.Standard)))));
     }
 
     [Fact]
     public void UpdateExistingRoom()
     {
         // Arrange
-        var setRoomCommand = new SetRoomCommand(1, 100, RoomType.Single);
+        var setRoomCommand = new SetRoomCommand(1, 100, RoomType.Standard);
         var roomRepository = new Mock<IRoomRepository>();
         roomRepository.Setup(x => x.Exists(It.IsAny<int>(), It.IsAny<int>())).Returns(true);
         var hotelRepositoryMock = new Mock<IHotelRepository>();
@@ -41,14 +41,14 @@ public class SetRoomTests
         setRoomCommandHandler.Handle(setRoomCommand);
 
         // Assert
-        roomRepository.Verify(x => x.UpdateRoom(It.Is<Room>(r => r.Equals(new Room(1, 100, RoomType.Single)))));
+        roomRepository.Verify(x => x.UpdateRoom(It.Is<Room>(r => r.Equals(new Room(1, 100, RoomType.Standard)))));
     }
 
     [Fact]
     public void SetRoomFromNonExistingHotel()
     {
         // Arrange
-        var setRoomCommand = new SetRoomCommand(1, 100, RoomType.Single);
+        var setRoomCommand = new SetRoomCommand(1, 100, RoomType.Standard);
         var roomRepository = new Mock<IRoomRepository>();
         roomRepository.Setup(x => x.Exists(It.IsAny<int>(), It.IsAny<int>())).Returns(false);
         var hotelRepositoryMock = new Mock<IHotelRepository>();

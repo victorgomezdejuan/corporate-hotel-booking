@@ -26,12 +26,12 @@ public class SetRoomTests
         _hotelService.AddHotel(1, "Hotel 1");
 
         // Act
-        _hotelService.SetRoom(1, 101, RoomType.Single);
+        _hotelService.SetRoom(1, 101, RoomType.Standard);
 
         // Assert
         var rooms = _roomRepository.GetRooms(1);
         rooms.Should().HaveCount(1);
-        rooms.Should().Contain(r => r.Number == 101 && r.Type == RoomType.Single);
+        rooms.Should().Contain(r => r.Number == 101 && r.Type == RoomType.Standard);
     }
 
     [Fact]
@@ -39,22 +39,22 @@ public class SetRoomTests
     {
         // Arrange
         _hotelService.AddHotel(1, "Hotel 1");
-        _hotelService.SetRoom(1, 101, RoomType.Single);
+        _hotelService.SetRoom(1, 101, RoomType.Standard);
 
         // Act
-        _hotelService.SetRoom(1, 101, RoomType.Double);
+        _hotelService.SetRoom(1, 101, RoomType.JuniorSuite);
 
         // Assert
         var rooms = _roomRepository.GetRooms(1);
         rooms.Should().HaveCount(1);
-        rooms.Should().Contain(r => r.Number == 101 && r.Type == RoomType.Double);
+        rooms.Should().Contain(r => r.Number == 101 && r.Type == RoomType.JuniorSuite);
     }
 
     [Fact]
     public void AddRoomAssignedToNonExistingHotel()
     {
         // Act
-        void Act() => _hotelService.SetRoom(1, 101, RoomType.Single);
+        void Act() => _hotelService.SetRoom(1, 101, RoomType.Standard);
 
         // Assert
         Assert.Throws<HotelNotFoundException>(Act);

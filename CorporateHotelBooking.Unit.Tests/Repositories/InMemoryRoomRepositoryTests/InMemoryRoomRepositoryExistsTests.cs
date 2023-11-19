@@ -16,7 +16,7 @@ public class InMemoryRoomRepositoryExistsTests
     public void RoomExists()
     {
         // Arrange
-        _repository.AddRoom(new Room(1, 100, RoomType.Single));
+        _repository.AddRoom(new Room(1, 100, RoomType.Standard));
 
         // Act
         var exists = _repository.Exists(1, 100);

@@ -16,7 +16,7 @@ public class InMemoryRoomRepositoryAddRoomTests
     public void AddNewRoom()
     {
         // Arrange
-        var roomToBeAdded = new Room(1, 100, RoomType.Single);
+        var roomToBeAdded = new Room(1, 100, RoomType.Standard);
 
         // Act
         _repository.AddRoom(roomToBeAdded);

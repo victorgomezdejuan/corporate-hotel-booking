@@ -15,8 +15,8 @@ public class FindHotelByTests
         var roomRepository = new InMemoryRoomRepository();
         var hotelService = new HotelService(hotelRepository, roomRepository);
         hotelService.AddHotel(1, "Hotel 1");
-        hotelService.SetRoom(1, 101, RoomType.Single);
-        hotelService.SetRoom(1, 102, RoomType.Double);
+        hotelService.SetRoom(1, 101, RoomType.Standard);
+        hotelService.SetRoom(1, 102, RoomType.JuniorSuite);
 
         // Act
         var hotel = hotelService.FindHotelBy(1);
@@ -25,7 +25,7 @@ public class FindHotelByTests
         hotel.Id.Should().Be(1);
         hotel.Name.Should().Be("Hotel 1");
         hotel.Rooms.Should().HaveCount(2);
-        hotel.Rooms.Should().Contain(r => r.Number == 101 && r.Type == RoomType.Single);
-        hotel.Rooms.Should().Contain(r => r.Number == 102 && r.Type == RoomType.Double);
+        hotel.Rooms.Should().Contain(r => r.Number == 101 && r.Type == RoomType.Standard);
+        hotel.Rooms.Should().Contain(r => r.Number == 102 && r.Type == RoomType.JuniorSuite);
     }
 }

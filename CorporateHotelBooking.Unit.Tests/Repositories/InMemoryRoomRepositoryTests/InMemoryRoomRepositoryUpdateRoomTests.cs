@@ -16,9 +16,9 @@ public class InMemoryRoomRepositoryUpdateRoomTests
     public void UpdateExistingRoom()
     {
         // Arrange
-        var existingRoom = new Room(1, 100, RoomType.Single);
+        var existingRoom = new Room(1, 100, RoomType.Standard);
         _repository.AddRoom(existingRoom);
-        var updatedRoom = new Room(1, 100, RoomType.Double);
+        var updatedRoom = new Room(1, 100, RoomType.JuniorSuite);
 
         // Act
         _repository.UpdateRoom(updatedRoom);
