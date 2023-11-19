@@ -7,16 +7,22 @@ namespace CorporateHotelBooking.Unit.Tests.Repositories.InMemoryEmployeeReposito
 
 public class InMemoryEmployeeRepositoryGetEmployeeTests
 {
+    private readonly InMemoryEmployeeRepository _employeeRepository;
+
+    public InMemoryEmployeeRepositoryGetEmployeeTests()
+    {
+        _employeeRepository = new InMemoryEmployeeRepository();
+    }
+
     [Fact]
     public void GetEmployee()
     {
         // Arrange
-        var employeeRepository = new InMemoryEmployeeRepository();
         var employeeToBeAdded = new Employee(1, 100);
-        employeeRepository.AddEmployee(employeeToBeAdded);
+        _employeeRepository.AddEmployee(employeeToBeAdded);
 
         // Act
-        var retrievedEmployee = employeeRepository.GetEmployee(1);
+        var retrievedEmployee = _employeeRepository.GetEmployee(1);
 
         // Assert
         retrievedEmployee.Should().Be(employeeToBeAdded);
@@ -25,11 +31,8 @@ public class InMemoryEmployeeRepositoryGetEmployeeTests
     [Fact]
     public void GetNonExistingEmployee()
     {
-        // Arrange
-        var employeeRepository = new InMemoryEmployeeRepository();
-
         // Act
-        Action getEmployeeAction = () => employeeRepository.GetEmployee(1);
+        Action getEmployeeAction = () => _employeeRepository.GetEmployee(1);
 
         // Assert
         getEmployeeAction.Should().Throw<EmployeeNotFoundException>();
