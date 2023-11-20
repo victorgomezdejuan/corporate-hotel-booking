@@ -7,41 +7,40 @@ namespace CorporateHotelBooking.Integrated.Tests.BookingPolicyServiceTests;
 
 public class SetEmployeePolicyTests
 {
+    private readonly InMemoryEmployeePolicyRepository _employeePolicyRepository;
+    private readonly BookingPolicyService _bookingPolicyService;
+
+    public SetEmployeePolicyTests()
+    {
+        _employeePolicyRepository = new InMemoryEmployeePolicyRepository();
+        _bookingPolicyService = new BookingPolicyService(
+            new NotImplementedCompanyPolicyRepository(), // BookingPolicyService acts as a facade that handles Company policies as well as Employee policies
+            // This leads us to feed it with both repositories although for this test only one is needed
+            _employeePolicyRepository);
+    }
+
     [Fact]
     public void AddNewEmployeePolicy()
     {
-        // Arrange
-        var employeePolicyRepository = new InMemoryEmployeePolicyRepository();
-        var bookingPolicyService = new BookingPolicyService(
-            new NotImplementedCompanyPolicyRepository(), // BookingPolicyService acts as a facade that handles Company policies as well as Employee policies
-            // This leads us to feed it with both repositories although for this test only one is needed
-            employeePolicyRepository);
-        var employeePolicyToBeAdded = new EmployeePolicy(1, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite  });
-
         // Act
-        bookingPolicyService.SetEmployeePolicy(employeePolicyToBeAdded.EmployeeId, employeePolicyToBeAdded.AllowedRoomTypes.ToList());
+        _bookingPolicyService.SetEmployeePolicy(1, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite });
 
         // Assert
-        var retrievedEmployeePolicy = employeePolicyRepository.GetEmployeePolicy(1);
-        retrievedEmployeePolicy.Should().Be(employeePolicyToBeAdded);
+        var retrievedEmployeePolicy = _employeePolicyRepository.GetEmployeePolicy(1);
+        retrievedEmployeePolicy.Should().Be(new EmployeePolicy(1, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite }));
     }
 
     [Fact]
     public void UpdateExistingEmployeePolicy()
     {
         // Arrange
-        var employeePolicyRepository = new InMemoryEmployeePolicyRepository();
-        var bookingPolicyService = new BookingPolicyService(
-            new NotImplementedCompanyPolicyRepository(), // BookingPolicyService acts as a facade that handles Company policies as well as Employee policies
-            // This leads us to feed it with both repositories although for this test only one is needed
-            employeePolicyRepository);
-        bookingPolicyService.SetEmployeePolicy(1, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite });
+        _bookingPolicyService.SetEmployeePolicy(1, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite });
 
         // Act
-        bookingPolicyService.SetEmployeePolicy(1, new List<RoomType> { RoomType.JuniorSuite, RoomType.MasterSuite });
+        _bookingPolicyService.SetEmployeePolicy(1, new List<RoomType> { RoomType.JuniorSuite, RoomType.MasterSuite });
 
         // Assert
-        var retrievedEmployeePolicy = employeePolicyRepository.GetEmployeePolicy(1);
+        var retrievedEmployeePolicy = _employeePolicyRepository.GetEmployeePolicy(1);
         retrievedEmployeePolicy.Should().Be(new EmployeePolicy(1, new List<RoomType> { RoomType.JuniorSuite, RoomType.MasterSuite }));
     }
 }
