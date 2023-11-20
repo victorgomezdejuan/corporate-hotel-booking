@@ -1,3 +1,4 @@
+using CorporateHotelBooking.Application.Common.Exceptions;
 using CorporateHotelBooking.Domain;
 using CorporateHotelBooking.Repositories.CompanyPolicies;
 using CorporateHotelBooking.Repositories.Employees;
@@ -29,8 +30,14 @@ public class IsBookingAllowedQueryHandler
 
     public bool Handle(IsBookingAllowedQuery query)
     {
+        if (!_employeeRepository.Exists(query.EmployeeId))
+        {
+            throw new EmployeeNotFoundException(query.EmployeeId);
+        }
+
         var employee = _employeeRepository.GetEmployee(query.EmployeeId);
         var companyPolicy = _companyPolicyRepository.GetCompanyPolicy(employee.CompanyId);
+        
         return companyPolicy.AllowedRoomTypes.Contains(query.RoomType);
     }
 }

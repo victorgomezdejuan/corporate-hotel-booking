@@ -1,3 +1,4 @@
+using CorporateHotelBooking.Application.Common.Exceptions;
 using CorporateHotelBooking.Application.Employees.Commands.DeleteEmployee;
 using CorporateHotelBooking.Repositories.Employees;
 using FluentAssertions;

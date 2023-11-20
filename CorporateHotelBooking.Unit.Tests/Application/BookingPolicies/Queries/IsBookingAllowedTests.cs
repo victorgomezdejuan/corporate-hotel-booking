@@ -1,4 +1,5 @@
 using CorporateHotelBooking.Application.BookingPolicies.Queries.IsBookingAllowed;
+using CorporateHotelBooking.Application.Common.Exceptions;
 using CorporateHotelBooking.Domain;
 using CorporateHotelBooking.Repositories.CompanyPolicies;
 using CorporateHotelBooking.Repositories.Employees;
@@ -9,6 +10,23 @@ namespace CorporateHotelBooking.Unit.Tests.Application.BookingPolicies.Queries;
 
 public class IsBookingAllowedTests
 {
+    [Fact]
+    public void NonExistingEmployee()
+    {
+        // Arrange
+        var employeeRepositoryMock = new Mock<IEmployeeRepository>();
+        employeeRepositoryMock.Setup(x => x.Exists(1)).Returns(false);
+        var companyPolicyRepositoryMock = new Mock<ICompanyPolicyRepository>();
+        var query = new IsBookingAllowedQuery(1, RoomType.Standard);
+        var handler = new IsBookingAllowedQueryHandler(employeeRepositoryMock.Object, companyPolicyRepositoryMock.Object);
+
+        // Act
+        Action act = () => handler.Handle(query);
+
+        // Assert
+        act.Should().Throw<EmployeeNotFoundException>();
+    }
+
     [Fact]
     public void BookingAllowedByCompanyBookingPolicy()
     {

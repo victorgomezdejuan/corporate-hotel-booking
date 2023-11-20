@@ -1,4 +1,4 @@
-namespace CorporateHotelBooking.Application.Employees.Commands.DeleteEmployee;
+namespace CorporateHotelBooking.Application.Common.Exceptions;
 
 public class EmployeeNotFoundException : Exception
 {
