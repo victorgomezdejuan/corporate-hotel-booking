@@ -5,14 +5,14 @@ namespace CorporateHotelBooking.Application.EmployeePolicies.Commands.SetEmploye
 {
     public record SetEmployeePolicyCommand
     {
-        public SetEmployeePolicyCommand(int employeeId, List<RoomType> roomTypes)
+        public SetEmployeePolicyCommand(int employeeId, ICollection<RoomType> roomTypes)
         {
             EmployeeId = employeeId;
-            RoomTypes = roomTypes;
+            RoomTypes = roomTypes.ToList().AsReadOnly();
         }
 
         public int EmployeeId { get; }
-        public List<RoomType> RoomTypes { get; }
+        public IReadOnlyCollection<RoomType> RoomTypes { get; }
     }
 
     public class SetEmployeePolicyCommandHandler
@@ -26,7 +26,7 @@ namespace CorporateHotelBooking.Application.EmployeePolicies.Commands.SetEmploye
 
         public void Handle(SetEmployeePolicyCommand setEmployeePolicyCommand)
         {
-            var employeePolicy = new EmployeePolicy(setEmployeePolicyCommand.EmployeeId, setEmployeePolicyCommand.RoomTypes);
+            var employeePolicy = new EmployeePolicy(setEmployeePolicyCommand.EmployeeId, setEmployeePolicyCommand.RoomTypes.ToList());
 
             if (_employeePolicyRepository.Exists(setEmployeePolicyCommand.EmployeeId))
             {

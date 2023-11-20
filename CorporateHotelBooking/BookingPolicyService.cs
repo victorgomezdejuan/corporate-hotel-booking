@@ -1,16 +1,20 @@
 using CorporateHotelBooking.Application.CompanyPolicies.Commands.SetCompanyPolicy;
+using CorporateHotelBooking.Application.EmployeePolicies.Commands.SetEmployeePolicy;
 using CorporateHotelBooking.Domain;
 using CorporateHotelBooking.Repositories.CompanyPolicies;
+using CorporateHotelBooking.Repositories.EmployeePolicies;
 
 namespace CorporateHotelBooking;
 
 public class BookingPolicyService
 {
-    private InMemoryCompanyPolicyRepository _companyPolicyRepository;
-
-    public BookingPolicyService(InMemoryCompanyPolicyRepository companyPolicyRepository)
+    private ICompanyPolicyRepository _companyPolicyRepository;
+    private IEmployeePolicyRepository _employeePolicyRepository;
+    
+    public BookingPolicyService(ICompanyPolicyRepository companyPolicyRepository, IEmployeePolicyRepository employeePolicyRepository)
     {
         _companyPolicyRepository = companyPolicyRepository;
+        _employeePolicyRepository = employeePolicyRepository;
     }
 
     public void SetCompanyPolicy(int companyId, ICollection<RoomType> roomTypes)
@@ -20,7 +24,7 @@ public class BookingPolicyService
 
     public void SetEmployeePolicy(int employeeId, ICollection<RoomType> roomTypes)
     {
-        throw new NotImplementedException();
+        new SetEmployeePolicyCommandHandler(_employeePolicyRepository).Handle(new SetEmployeePolicyCommand(employeeId, roomTypes));
     }
 
     public bool IsBookingAllowed(int employeeId, RoomType roomType)
