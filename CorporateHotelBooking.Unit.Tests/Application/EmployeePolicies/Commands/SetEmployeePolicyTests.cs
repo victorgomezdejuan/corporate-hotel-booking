@@ -7,34 +7,39 @@ namespace CorporateHotelBooking.Unit.Tests.Application.EmployeePolicies.Commands
 
 public class SetEmployeePolicyTests
 {
+    private readonly Mock<IEmployeePolicyRepository> _employeePolicyRepositoryMock;
+    private readonly SetEmployeePolicyCommandHandler _setEmployeePolicyCommandHandler;
+
+    public SetEmployeePolicyTests()
+    {
+        _employeePolicyRepositoryMock = new Mock<IEmployeePolicyRepository>();
+        _setEmployeePolicyCommandHandler = new SetEmployeePolicyCommandHandler(_employeePolicyRepositoryMock.Object);
+    }
+
     [Fact]
     public void AddNewEmployeePolicy()
     {
         // Arrange
-        var employeePolicyRepositoryMock = new Mock<IEmployeePolicyRepository>();
-        var setEmployeePolicyCommandHandler = new SetEmployeePolicyCommandHandler(employeePolicyRepositoryMock.Object);
         var setEmployeePolicyCommand = new SetEmployeePolicyCommand(1, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite });
 
         // Act
-        setEmployeePolicyCommandHandler.Handle(setEmployeePolicyCommand);
+        _setEmployeePolicyCommandHandler.Handle(setEmployeePolicyCommand);
 
         // Assert
-        employeePolicyRepositoryMock.Verify(r => r.AddEmployeePolicy(new EmployeePolicy(1, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite })));
+        _employeePolicyRepositoryMock.Verify(r => r.AddEmployeePolicy(new EmployeePolicy(1, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite })));
     }
 
     [Fact]
     public void UpdateExistingEmployeePolicy()
     {
         // Arrange
-        var employeePolicyRepositoryMock = new Mock<IEmployeePolicyRepository>();
-        var setEmployeePolicyCommandHandler = new SetEmployeePolicyCommandHandler(employeePolicyRepositoryMock.Object);
-        employeePolicyRepositoryMock.Setup(r => r.Exists(1)).Returns(true);
+        _employeePolicyRepositoryMock.Setup(r => r.Exists(1)).Returns(true);
         var setEmployeePolicyCommand = new SetEmployeePolicyCommand(1, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite });
 
         // Act
-        setEmployeePolicyCommandHandler.Handle(setEmployeePolicyCommand);
+        _setEmployeePolicyCommandHandler.Handle(setEmployeePolicyCommand);
 
         // Assert
-        employeePolicyRepositoryMock.Verify(r => r.UpdateEmployeePolicy(new EmployeePolicy(1, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite })));
+        _employeePolicyRepositoryMock.Verify(r => r.UpdateEmployeePolicy(new EmployeePolicy(1, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite })));
     }
 }
