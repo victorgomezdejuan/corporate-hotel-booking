@@ -7,15 +7,21 @@ namespace CorporateHotelBooking.Unit.Tests.Repositories.InMemoryEmployeePolicyRe
 
 public class InMemoryCompanyPolicyRepositoryGetEmployeePolicyTests
 {
+    private readonly InMemoryEmployeePolicyRepository _employeePolicyRepository;
+
+    public InMemoryCompanyPolicyRepositoryGetEmployeePolicyTests()
+    {
+        _employeePolicyRepository = new InMemoryEmployeePolicyRepository();
+    }
+
     [Fact]
     public void GetExistingEmployeePolicy()
     {
         // Arrange
-        var employeePolicyRepository = new InMemoryEmployeePolicyRepository();
-        employeePolicyRepository.AddEmployeePolicy(new EmployeePolicy(1, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite }));
+        _employeePolicyRepository.AddEmployeePolicy(new EmployeePolicy(1, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite }));
 
         // Act
-        var retrievedEmployeePolicy = employeePolicyRepository.GetEmployeePolicy(1);
+        var retrievedEmployeePolicy = _employeePolicyRepository.GetEmployeePolicy(1);
 
         // Assert
         retrievedEmployeePolicy.Should().Be(new EmployeePolicy(1, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite }));
@@ -24,11 +30,8 @@ public class InMemoryCompanyPolicyRepositoryGetEmployeePolicyTests
     [Fact]
     public void GetNonExistingEmployeePolicy()
     {
-        // Arrange
-        var employeePolicyRepository = new InMemoryEmployeePolicyRepository();
-
-        // Act and Assert
-        EmployeePolicy action() => employeePolicyRepository.GetEmployeePolicy(1);
+        // Act
+        EmployeePolicy action() => _employeePolicyRepository.GetEmployeePolicy(1);
 
         // Assert
         Assert.Throws<EmployeeNotFoundException>(action);
