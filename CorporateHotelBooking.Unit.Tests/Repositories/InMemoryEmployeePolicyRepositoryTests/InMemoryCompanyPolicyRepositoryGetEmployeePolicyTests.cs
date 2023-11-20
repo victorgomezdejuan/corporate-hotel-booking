@@ -1,3 +1,4 @@
+using CorporateHotelBooking.Application.Employees.Commands.DeleteEmployee;
 using CorporateHotelBooking.Domain;
 using CorporateHotelBooking.Repositories.EmployeePolicies;
 using FluentAssertions;
@@ -18,5 +19,18 @@ public class InMemoryCompanyPolicyRepositoryGetEmployeePolicyTests
 
         // Assert
         retrievedEmployeePolicy.Should().Be(new EmployeePolicy(1, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite }));
+    }
+
+    [Fact]
+    public void GetNonExistingEmployeePolicy()
+    {
+        // Arrange
+        var employeePolicyRepository = new InMemoryEmployeePolicyRepository();
+
+        // Act and Assert
+        EmployeePolicy action() => employeePolicyRepository.GetEmployeePolicy(1);
+
+        // Assert
+        Assert.Throws<EmployeeNotFoundException>(action);
     }
 }

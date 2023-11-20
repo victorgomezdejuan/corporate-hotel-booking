@@ -1,3 +1,4 @@
+using CorporateHotelBooking.Application.Employees.Commands.DeleteEmployee;
 using CorporateHotelBooking.Domain;
 
 namespace CorporateHotelBooking.Repositories.EmployeePolicies;
@@ -18,6 +19,10 @@ public class InMemoryEmployeePolicyRepository : IEmployeePolicyRepository
 
     public EmployeePolicy GetEmployeePolicy(int employeeId)
     {
+        if (!Exists(employeeId))
+        {
+            throw new EmployeeNotFoundException(employeeId);
+        }
         return _employeePolicies[employeeId];
     }
 
