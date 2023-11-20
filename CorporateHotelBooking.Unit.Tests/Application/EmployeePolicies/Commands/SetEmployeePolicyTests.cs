@@ -21,4 +21,20 @@ public class SetEmployeePolicyTests
         // Assert
         employeePolicyRepositoryMock.Verify(r => r.AddEmployeePolicy(new EmployeePolicy(1, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite })));
     }
+
+    [Fact]
+    public void UpdateExistingEmployeePolicy()
+    {
+        // Arrange
+        var employeePolicyRepositoryMock = new Mock<IEmployeePolicyRepository>();
+        var setEmployeePolicyCommandHandler = new SetEmployeePolicyCommandHandler(employeePolicyRepositoryMock.Object);
+        employeePolicyRepositoryMock.Setup(r => r.Exists(1)).Returns(true);
+        var setEmployeePolicyCommand = new SetEmployeePolicyCommand(1, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite });
+
+        // Act
+        setEmployeePolicyCommandHandler.Handle(setEmployeePolicyCommand);
+
+        // Assert
+        employeePolicyRepositoryMock.Verify(r => r.UpdateEmployeePolicy(new EmployeePolicy(1, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite })));
+    }
 }

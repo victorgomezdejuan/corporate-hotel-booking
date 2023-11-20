@@ -26,7 +26,16 @@ namespace CorporateHotelBooking.Application.EmployeePolicies.Commands.SetEmploye
 
         public void Handle(SetEmployeePolicyCommand setEmployeePolicyCommand)
         {
-            _employeePolicyRepository.AddEmployeePolicy(new EmployeePolicy(setEmployeePolicyCommand.EmployeeId, setEmployeePolicyCommand.RoomTypes));
+            var employeePolicy = new EmployeePolicy(setEmployeePolicyCommand.EmployeeId, setEmployeePolicyCommand.RoomTypes);
+
+            if (_employeePolicyRepository.Exists(setEmployeePolicyCommand.EmployeeId))
+            {
+                _employeePolicyRepository.UpdateEmployeePolicy(employeePolicy);
+            }
+            else
+            {
+                _employeePolicyRepository.AddEmployeePolicy(employeePolicy);
+            }
         }
     }
 }
