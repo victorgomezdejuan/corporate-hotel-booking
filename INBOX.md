@@ -1,0 +1,2 @@
+# TO DO
+- When deleting an employee, all the bookings and policies associated to the employee should also be deleted from the system. So far we cannot do it because we haven't implemented the Booking Policy Service.
