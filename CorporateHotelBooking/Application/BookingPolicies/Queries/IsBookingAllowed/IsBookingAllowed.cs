@@ -43,30 +43,26 @@ public class IsBookingAllowedQueryHandler
 
         if (_employeePolicyRepository.Exists(query.EmployeeId))
         {
-            if (_employeePolicyRepository.GetEmployeePolicy(query.EmployeeId).AllowedRoomTypes.Contains(query.RoomType))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return IsBookingAllowedByEmployeeBookingPolicy(query);
         }
 
         var employee = _employeeRepository.GetEmployee(query.EmployeeId);
 
         if (_companyPolicyRepository.Exists(employee.CompanyId))
         {
-            if (_companyPolicyRepository.GetCompanyPolicy(employee.CompanyId).AllowedRoomTypes.Contains(query.RoomType))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return IsBookingAllowedByCompanyBookingPolicy(query, employee);
         }
 
         return true;
+    }
+
+    private bool IsBookingAllowedByCompanyBookingPolicy(IsBookingAllowedQuery query, Employee employee)
+    {
+        return _companyPolicyRepository.GetCompanyPolicy(employee.CompanyId).AllowedRoomTypes.Contains(query.RoomType);
+    }
+
+    private bool IsBookingAllowedByEmployeeBookingPolicy(IsBookingAllowedQuery query)
+    {
+        return _employeePolicyRepository.GetEmployeePolicy(query.EmployeeId).AllowedRoomTypes.Contains(query.RoomType);
     }
 }
