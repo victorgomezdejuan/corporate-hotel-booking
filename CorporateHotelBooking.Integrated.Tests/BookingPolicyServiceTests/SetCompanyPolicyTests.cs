@@ -1,4 +1,5 @@
 using CorporateHotelBooking.Domain;
+using CorporateHotelBooking.Integrated.Tests.BookingPolicyServiceTests.Helpers;
 using CorporateHotelBooking.Repositories.CompanyPolicies;
 using CorporateHotelBooking.Repositories.EmployeePolicies;
 using FluentAssertions;
@@ -15,8 +16,10 @@ public class SetCompanyPolicyTests
         _companyPolicyRepository = new InMemoryCompanyPolicyRepository();
         _bookingPolicyService = new BookingPolicyService(
             _companyPolicyRepository,
-            new NotImplementedEmployeePolicyRepository()); // BookingPolicyService acts as a facade that handles Company policies as well as Employee policies
-            // This leads us to feed it with both repositories although for this test only one is needed
+            // BookingPolicyService acts as a facade that handles different actions related to booking policies
+            // This leads us to feed it with two additional repositories although for this use case they are not needed
+            new NotImplementedEmployeePolicyRepository(),
+            new NotImplementedEmployeeRepository()); 
     }
 
     [Fact]
