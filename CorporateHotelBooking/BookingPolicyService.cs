@@ -1,6 +1,6 @@
 using CorporateHotelBooking.Application.BookingPolicies.Queries.IsBookingAllowed;
-using CorporateHotelBooking.Application.CompanyBookingPolicies.Commands.SetCompanyBookingPolicy;
-using CorporateHotelBooking.Application.EmployeeBookingPolicies.Commands.SetEmployeeBookingPolicy;
+using CorporateHotelBooking.Application.BookingPolicies.Commands.SetCompanyBookingPolicy;
+using CorporateHotelBooking.Application.BookingPolicies.Commands.SetEmployeeBookingPolicy;
 using CorporateHotelBooking.Domain;
 using CorporateHotelBooking.Repositories.CompanyBookingPolicies;
 using CorporateHotelBooking.Repositories.EmployeeBookingPolicies;

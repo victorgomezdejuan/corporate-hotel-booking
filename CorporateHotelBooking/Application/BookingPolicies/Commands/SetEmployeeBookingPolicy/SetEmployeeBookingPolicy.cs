@@ -1,7 +1,7 @@
 using CorporateHotelBooking.Domain;
 using CorporateHotelBooking.Repositories.EmployeeBookingPolicies;
 
-namespace CorporateHotelBooking.Application.EmployeeBookingPolicies.Commands.SetEmployeeBookingPolicy
+namespace CorporateHotelBooking.Application.BookingPolicies.Commands.SetEmployeeBookingPolicy
 {
     public record SetEmployeeBookingPolicyCommand
     {

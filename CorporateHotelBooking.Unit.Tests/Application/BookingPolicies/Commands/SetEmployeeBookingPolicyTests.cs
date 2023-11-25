@@ -1,9 +1,9 @@
-using CorporateHotelBooking.Application.EmployeeBookingPolicies.Commands.SetEmployeeBookingPolicy;
+using CorporateHotelBooking.Application.BookingPolicies.Commands.SetEmployeeBookingPolicy;
 using CorporateHotelBooking.Domain;
 using CorporateHotelBooking.Repositories.EmployeeBookingPolicies;
 using Moq;
 
-namespace CorporateHotelBooking.Unit.Tests.Application.EmployeeBookingPolicies.Commands;
+namespace CorporateHotelBooking.Unit.Tests.Application.BookingPolicies.Commands;
 
 public class SetEmployeeBookingPolicyTests
 {
