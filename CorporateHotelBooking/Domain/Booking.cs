@@ -1,9 +1,14 @@
+using CorporateHotelBooking.Domain.Exceptions;
+
 namespace CorporateHotelBooking.Domain;
 
 public class Booking
 {
     public Booking(int id, int employeeId, int hotelId, RoomType roomType, DateOnly checkInDate, DateOnly checkOutDate)
     {
+        if (checkOutDate <= checkInDate)
+            throw new CheckOutDateMustBeAfterCheckInDateException();
+
         Id = id;
         EmployeeId = employeeId;
         HotelId = hotelId;
