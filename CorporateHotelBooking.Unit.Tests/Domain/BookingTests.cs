@@ -13,6 +13,13 @@ public class BookingTests
         act.Should().Throw<CheckOutDateMustBeAfterCheckInDateException>();
     }
 
+    [Fact]
+    public void CheckOutDateIsBeforeCheckInDate()
+    {
+        Action act = () => new Booking(1, 2, 3, RoomType.Standard, Today(), Today().AddDays(-1));
+        act.Should().Throw<CheckOutDateMustBeAfterCheckInDateException>();
+    }
+
     private static DateOnly Today()
     {
         return DateOnly.FromDateTime(DateTime.Now);
