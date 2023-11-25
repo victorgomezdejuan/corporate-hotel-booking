@@ -35,6 +35,11 @@ public class BookARoomCommandHandler
             throw new HotelNotFoundException(command.HotelId);
         }
 
+        if (!_roomRepository.ExistsRoomType(command.RoomType))
+        {
+            throw new RoomTypeNotProvidedByTheHotelException(command.HotelId, command.RoomType);
+        }
+
         return null;
     }
 }
