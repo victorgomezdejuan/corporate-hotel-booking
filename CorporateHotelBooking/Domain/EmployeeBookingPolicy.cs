@@ -11,6 +11,11 @@ public class EmployeeBookingPolicy
     public int EmployeeId { get; }
     public IReadOnlyCollection<RoomType> AllowedRoomTypes { get; }
 
+    public bool BookingAllowed(RoomType roomType)
+    {
+        return AllowedRoomTypes.Contains(roomType);
+    }
+
     public override bool Equals(object? obj)
     {
         return obj is EmployeeBookingPolicy policy &&
