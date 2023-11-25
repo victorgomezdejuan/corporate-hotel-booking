@@ -1,3 +1,4 @@
+using CorporateHotelBooking.Application.Rooms.Commands.SetRoom;
 using CorporateHotelBooking.Domain;
 using CorporateHotelBooking.Repositories.Bookings;
 using CorporateHotelBooking.Repositories.Hotels;
@@ -10,8 +11,8 @@ public record BookARoomCommand
     int EmployeeId,
     int HotelId,
     RoomType RoomType,
-    DateTime CheckInDate,
-    DateTime CheckOutDate
+    DateOnly CheckInDate,
+    DateOnly CheckOutDate
 );
 
 public class BookARoomCommandHandler
@@ -29,6 +30,11 @@ public class BookARoomCommandHandler
 
     public NewBooking Handle(BookARoomCommand command)
     {
-        throw new NotImplementedException();
+        if (!_hotelRepository.Exists(command.HotelId))
+        {
+            throw new HotelNotFoundException(command.HotelId);
+        }
+
+        return null;
     }
 }
