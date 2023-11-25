@@ -1,7 +1,7 @@
 using CorporateHotelBooking.Application.Common.Exceptions;
 using CorporateHotelBooking.Domain;
-using CorporateHotelBooking.Repositories.CompanyPolicies;
-using CorporateHotelBooking.Repositories.EmployeePolicies;
+using CorporateHotelBooking.Repositories.CompanyBookingPolicies;
+using CorporateHotelBooking.Repositories.EmployeeBookingPolicies;
 using CorporateHotelBooking.Repositories.Employees;
 
 namespace CorporateHotelBooking.Application.BookingPolicies.Queries.IsBookingAllowed;
@@ -21,13 +21,13 @@ public record IsBookingAllowedQuery
 public class IsBookingAllowedQueryHandler
 {
     private readonly IEmployeeRepository _employeeRepository;
-    private readonly ICompanyPolicyRepository _companyPolicyRepository;
-    private readonly IEmployeePolicyRepository _employeePolicyRepository;
+    private readonly ICompanyBookingPolicyRepository _companyPolicyRepository;
+    private readonly IEmployeeBookingPolicyRepository _employeePolicyRepository;
 
     public IsBookingAllowedQueryHandler(
         IEmployeeRepository employeeRepository,
-        ICompanyPolicyRepository companyPolicyRepository,
-        IEmployeePolicyRepository employeePolicyRepository)
+        ICompanyBookingPolicyRepository companyPolicyRepository,
+        IEmployeeBookingPolicyRepository employeePolicyRepository)
     {
         _employeeRepository = employeeRepository;
         _companyPolicyRepository = companyPolicyRepository;

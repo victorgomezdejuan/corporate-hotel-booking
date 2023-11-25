@@ -1,22 +1,22 @@
 using CorporateHotelBooking.Application.BookingPolicies.Queries.IsBookingAllowed;
-using CorporateHotelBooking.Application.CompanyPolicies.Commands.SetCompanyPolicy;
-using CorporateHotelBooking.Application.EmployeePolicies.Commands.SetEmployeePolicy;
+using CorporateHotelBooking.Application.CompanyBookingPolicies.Commands.SetCompanyBookingPolicy;
+using CorporateHotelBooking.Application.EmployeeBookingPolicies.Commands.SetEmployeeBookingPolicy;
 using CorporateHotelBooking.Domain;
-using CorporateHotelBooking.Repositories.CompanyPolicies;
-using CorporateHotelBooking.Repositories.EmployeePolicies;
+using CorporateHotelBooking.Repositories.CompanyBookingPolicies;
+using CorporateHotelBooking.Repositories.EmployeeBookingPolicies;
 using CorporateHotelBooking.Repositories.Employees;
 
 namespace CorporateHotelBooking;
 
 public class BookingPolicyService
 {
-    private ICompanyPolicyRepository _companyPolicyRepository;
-    private IEmployeePolicyRepository _employeePolicyRepository;
+    private ICompanyBookingPolicyRepository _companyPolicyRepository;
+    private IEmployeeBookingPolicyRepository _employeePolicyRepository;
     private readonly IEmployeeRepository _employeeRepository;
     
     public BookingPolicyService(
-        ICompanyPolicyRepository companyPolicyRepository,
-        IEmployeePolicyRepository employeePolicyRepository,
+        ICompanyBookingPolicyRepository companyPolicyRepository,
+        IEmployeeBookingPolicyRepository employeePolicyRepository,
         IEmployeeRepository employeeRepository)
     {
         _companyPolicyRepository = companyPolicyRepository;
@@ -26,12 +26,12 @@ public class BookingPolicyService
 
     public void SetCompanyPolicy(int companyId, ICollection<RoomType> roomTypes)
     {
-        new SetCompanyPolicyCommandHandler(_companyPolicyRepository).Handle(new SetCompanyPolicyCommand(companyId, roomTypes));
+        new SetCompanyBookingPolicyCommandHandler(_companyPolicyRepository).Handle(new SetCompanyBookingPolicyCommand(companyId, roomTypes));
     }
 
     public void SetEmployeePolicy(int employeeId, ICollection<RoomType> roomTypes)
     {
-        new SetEmployeePolicyCommandHandler(_employeePolicyRepository).Handle(new SetEmployeePolicyCommand(employeeId, roomTypes));
+        new SetEmployeeBookingPolicyCommandHandler(_employeePolicyRepository).Handle(new SetEmployeeBookingPolicyCommand(employeeId, roomTypes));
     }
 
     public bool IsBookingAllowed(int employeeId, RoomType roomType)

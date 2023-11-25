@@ -1,6 +1,6 @@
 using CorporateHotelBooking.Domain;
-using CorporateHotelBooking.Repositories.CompanyPolicies;
-using CorporateHotelBooking.Repositories.EmployeePolicies;
+using CorporateHotelBooking.Repositories.CompanyBookingPolicies;
+using CorporateHotelBooking.Repositories.EmployeeBookingPolicies;
 using CorporateHotelBooking.Repositories.Employees;
 using FluentAssertions;
 
@@ -15,11 +15,11 @@ public class IsBookingAllowedTests
         var employeeRepository = new InMemoryEmployeeRepository();
         var companyService = new CompanyService(employeeRepository);
         companyService.AddEmployee(companyId: 100, employeeId: 1);
-        var companyPolicyRepository = new InMemoryCompanyPolicyRepository();
-        companyPolicyRepository.AddCompanyPolicy(new CompanyPolicy(100, new List<RoomType> { RoomType.Standard }));
+        var companyPolicyRepository = new InMemoryCompanyBookingPolicyRepository();
+        companyPolicyRepository.AddCompanyPolicy(new CompanyBookingPolicy(100, new List<RoomType> { RoomType.Standard }));
         var bookingPolicyService = new BookingPolicyService(
             companyPolicyRepository,
-            new InMemoryEmployeePolicyRepository(),
+            new InMemoryEmployeeBookingPolicyRepository(),
             employeeRepository);
 
         // Act
