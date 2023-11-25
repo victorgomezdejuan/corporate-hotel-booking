@@ -13,7 +13,7 @@ public class InMemoryRoomRepositoryExistsTests
     }
 
     [Fact]
-    public void RoomExists()
+    public void RoomNumberExists()
     {
         // Arrange
         _repository.AddRoom(new Room(1, 100, RoomType.Standard));
@@ -26,10 +26,33 @@ public class InMemoryRoomRepositoryExistsTests
     }
 
     [Fact]
-    public void RoomDoesNotExist()
+    public void RoomNumberDoesNotExist()
     {
         // Act
         var exists = _repository.ExistsRoomType(1, 100);
+
+        // Assert
+        Assert.False(exists);
+    }
+
+    [Fact]
+    public void RoomTypeExists()
+    {
+        // Arrange
+        _repository.AddRoom(new Room(1, 100, RoomType.Standard));
+
+        // Act
+        var exists = _repository.ExistsRoomType(RoomType.Standard);
+
+        // Assert
+        Assert.True(exists);
+    }
+
+    [Fact]
+    public void RoomTypeDoesNotExist()
+    {
+        // Act
+        var exists = _repository.ExistsRoomType(RoomType.Standard);
 
         // Assert
         Assert.False(exists);
