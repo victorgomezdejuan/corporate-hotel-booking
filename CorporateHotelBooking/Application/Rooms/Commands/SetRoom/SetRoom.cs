@@ -34,7 +34,7 @@ public class SetRoomCommandHandler
     public void Handle(SetRoomCommand command)
     {
         var room = new Room(command.HotelId, command.RoomNumber, command.RoomType);
-        if (_roomRepository.Exists(command.HotelId, command.RoomNumber))
+        if (_roomRepository.ExistsRoomType(command.HotelId, command.RoomNumber))
         {
             _roomRepository.UpdateRoom(room);
         }

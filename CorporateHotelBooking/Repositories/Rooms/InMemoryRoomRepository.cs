@@ -17,7 +17,7 @@ public class InMemoryRoomRepository : IRoomRepository
         _rooms.Add(room);
     }
 
-    public bool Exists(int hotelId, int number)
+    public bool ExistsRoomType(int hotelId, int number)
     {
         return _rooms.Any(r => r.HotelId == hotelId && r.Number == number);
     }
