@@ -1,4 +1,4 @@
-using CorporateHotelBooking.Domain;
+using CorporateHotelBooking.Domain.Entities;
 using FluentAssertions;
 
 namespace CorporateHotelBooking.Unit.Tests.Domain;

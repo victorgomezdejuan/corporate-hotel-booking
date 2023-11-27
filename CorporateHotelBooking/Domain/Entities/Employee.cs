@@ -1,4 +1,4 @@
-namespace CorporateHotelBooking.Domain;
+namespace CorporateHotelBooking.Domain.Entities;
 
 public class Employee
 {

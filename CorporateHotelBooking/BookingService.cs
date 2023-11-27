@@ -1,4 +1,4 @@
-using CorporateHotelBooking.Domain;
+using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Repositories.Bookings;
 using CorporateHotelBooking.Repositories.Hotels;
 using CorporateHotelBooking.Repositories.Rooms;

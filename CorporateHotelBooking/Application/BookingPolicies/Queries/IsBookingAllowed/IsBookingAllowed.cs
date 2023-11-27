@@ -1,5 +1,5 @@
 using CorporateHotelBooking.Application.Common.Exceptions;
-using CorporateHotelBooking.Domain;
+using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Repositories.CompanyBookingPolicies;
 using CorporateHotelBooking.Repositories.EmployeeBookingPolicies;
 using CorporateHotelBooking.Repositories.Employees;

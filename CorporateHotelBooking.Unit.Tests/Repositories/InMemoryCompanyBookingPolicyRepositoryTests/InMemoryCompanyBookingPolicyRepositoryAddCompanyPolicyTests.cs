@@ -1,4 +1,4 @@
-using CorporateHotelBooking.Domain;
+using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Repositories.CompanyBookingPolicies;
 using FluentAssertions;
 

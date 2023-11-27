@@ -1,7 +1,7 @@
 using FluentAssertions;
 using CorporateHotelBooking.Application;
 using CorporateHotelBooking.Application.Hotels.Queries.FindHotel;
-using CorporateHotelBooking.Domain;
+using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Repositories.Hotels;
 using CorporateHotelBooking.Repositories.Rooms;
 using Moq;

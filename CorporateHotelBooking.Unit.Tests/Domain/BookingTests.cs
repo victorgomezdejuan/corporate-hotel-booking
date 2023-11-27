@@ -1,4 +1,4 @@
-using CorporateHotelBooking.Domain;
+using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Domain.Exceptions;
 using CorporateHotelBooking.Unit.Tests.Helpers;
 using FluentAssertions;

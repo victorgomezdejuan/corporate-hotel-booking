@@ -1,4 +1,4 @@
-using CorporateHotelBooking.Domain;
+using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Repositories.Hotels;
 
 namespace CorporateHotelBooking.Unit.Tests.Repositories.InMemoryHotelRepositoryTests;

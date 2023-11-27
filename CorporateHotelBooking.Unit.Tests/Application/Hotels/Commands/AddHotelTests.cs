@@ -1,5 +1,5 @@
 using CorporateHotelBooking.Application.Hotels.Commands.AddHotel;
-using CorporateHotelBooking.Domain;
+using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Repositories.Hotels;
 using Moq;
 

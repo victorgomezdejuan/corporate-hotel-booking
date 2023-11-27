@@ -1,6 +1,6 @@
 using CorporateHotelBooking.Application.Bookings.Commands;
 using CorporateHotelBooking.Application.Rooms.Commands.SetRoom;
-using CorporateHotelBooking.Domain;
+using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Repositories.Bookings;
 using CorporateHotelBooking.Repositories.Hotels;
 using CorporateHotelBooking.Repositories.Rooms;

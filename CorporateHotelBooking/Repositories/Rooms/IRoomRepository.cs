@@ -1,5 +1,5 @@
 using System.Collections.ObjectModel;
-using CorporateHotelBooking.Domain;
+using CorporateHotelBooking.Domain.Entities;
 
 namespace CorporateHotelBooking.Repositories.Rooms;
 

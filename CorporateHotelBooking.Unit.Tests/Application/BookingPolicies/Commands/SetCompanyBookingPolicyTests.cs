@@ -1,5 +1,5 @@
 using CorporateHotelBooking.Application.BookingPolicies.Commands.SetCompanyBookingPolicy;
-using CorporateHotelBooking.Domain;
+using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Repositories.CompanyBookingPolicies;
 using Moq;
 

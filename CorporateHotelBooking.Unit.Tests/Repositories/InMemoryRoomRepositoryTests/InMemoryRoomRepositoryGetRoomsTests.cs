@@ -1,5 +1,5 @@
 using FluentAssertions;
-using CorporateHotelBooking.Domain;
+using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Repositories.Rooms;
 
 namespace CorporateHotelBooking.Unit.Tests.Repositories.InMemoryRoomRepositoryTests;
