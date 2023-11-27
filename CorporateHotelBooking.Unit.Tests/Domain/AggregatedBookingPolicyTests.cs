@@ -2,7 +2,7 @@ using CorporateHotelBooking.Domain;
 
 namespace CorporateHotelBooking.Unit.Tests.Domain;
 
-public class BookingPolicyTests
+public class AggregatedBookingPolicyTests
 {
     [Fact]
     public void BookingAllowedByCompanyBookingPolicy()

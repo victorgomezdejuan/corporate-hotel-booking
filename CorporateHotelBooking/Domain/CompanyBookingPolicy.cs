@@ -1,8 +1,8 @@
 namespace CorporateHotelBooking.Domain;
 
-public class CompanyBookingPolicy
+public class CompanyBookingPolicy : BookingPolicy
 {
-    public CompanyBookingPolicy(int companyId, ICollection<RoomType> allowedRoomTypes)
+    public CompanyBookingPolicy(int companyId, ICollection<RoomType> allowedRoomTypes) : base(true)
     {
         CompanyId = companyId;
         AllowedRoomTypes = allowedRoomTypes.ToList().AsReadOnly();
@@ -11,7 +11,7 @@ public class CompanyBookingPolicy
     public int CompanyId { get; }
     public IReadOnlyCollection<RoomType> AllowedRoomTypes { get; }
 
-    public bool BookingAllowed(RoomType roomType)
+    protected override bool BookingAllowedForRoomType(RoomType roomType)
     {
         return AllowedRoomTypes.Contains(roomType);
     }
