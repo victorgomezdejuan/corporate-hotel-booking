@@ -3,10 +3,10 @@ namespace CorporateHotelBooking.Domain;
 
 public class AggregatedBookingPolicy
 {
-    private readonly EmployeeBookingPolicy _employeeBookingPolicy;
-    private readonly CompanyBookingPolicy _companyBookingPolicy;
+    private readonly BookingPolicy _employeeBookingPolicy;
+    private readonly BookingPolicy _companyBookingPolicy;
 
-    public AggregatedBookingPolicy(EmployeeBookingPolicy employeeBookingPolicy, CompanyBookingPolicy companyBookingPolicy)
+    public AggregatedBookingPolicy(BookingPolicy employeeBookingPolicy, BookingPolicy companyBookingPolicy)
     {
         _employeeBookingPolicy = employeeBookingPolicy;
         _companyBookingPolicy = companyBookingPolicy;
@@ -14,14 +14,14 @@ public class AggregatedBookingPolicy
 
     public bool BookingAllowed(RoomType roomType)
     {
-        if (_employeeBookingPolicy?.AllowedRoomTypes.Any() == true)
+        if (_employeeBookingPolicy.IsApplicable)
         {
-            return _employeeBookingPolicy.AllowedRoomTypes.Contains(roomType);
+            return _employeeBookingPolicy.BookingAllowed(roomType);
         }
 
-        if (_companyBookingPolicy?.AllowedRoomTypes.Any() == true)
+        if (_companyBookingPolicy.IsApplicable)
         {
-            return _companyBookingPolicy.AllowedRoomTypes.Contains(roomType);
+            return _companyBookingPolicy.BookingAllowed(roomType);
         }
 
         return true;
