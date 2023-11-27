@@ -36,6 +36,8 @@ public class IsBookingAllowedQueryHandler
 
     public bool Handle(IsBookingAllowedQuery query)
     {
+        // TODO: Change this method to use Booking Policy domain object
+
         if (!_employeeRepository.Exists(query.EmployeeId))
         {
             throw new EmployeeNotFoundException(query.EmployeeId);
