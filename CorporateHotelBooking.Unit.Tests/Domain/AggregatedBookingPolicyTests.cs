@@ -10,7 +10,7 @@ public class BookingPolicyTests
         // Arrange
         var employeeBookingPolicy = new EmployeeBookingPolicy(1, new List<RoomType> { });
         var companyBookingPolicy = new CompanyBookingPolicy(100, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite });
-        var bookingPolicy = new BookingPolicy(employeeBookingPolicy, companyBookingPolicy);
+        var bookingPolicy = new AggregatedBookingPolicy(employeeBookingPolicy, companyBookingPolicy);
 
         // Act
         var bookingAllowed = bookingPolicy.BookingAllowed(RoomType.Standard);
@@ -25,7 +25,7 @@ public class BookingPolicyTests
         // Arrange
         var employeeBookingPolicy = new EmployeeBookingPolicy(1, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite });
         var companyBookingPolicy = new CompanyBookingPolicy(100, new List<RoomType> { });
-        var bookingPolicy = new BookingPolicy(employeeBookingPolicy, companyBookingPolicy);
+        var bookingPolicy = new AggregatedBookingPolicy(employeeBookingPolicy, companyBookingPolicy);
 
         // Act
         var bookingAllowed = bookingPolicy.BookingAllowed(RoomType.Standard);
@@ -40,7 +40,7 @@ public class BookingPolicyTests
         // Arrange
         var employeeBookingPolicy = new EmployeeBookingPolicy(1, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite });
         var companyBookingPolicy = new CompanyBookingPolicy(100, new List<RoomType> { RoomType.JuniorSuite });
-        var bookingPolicy = new BookingPolicy(employeeBookingPolicy, companyBookingPolicy);
+        var bookingPolicy = new AggregatedBookingPolicy(employeeBookingPolicy, companyBookingPolicy);
 
         // Act
         var bookingAllowed = bookingPolicy.BookingAllowed(RoomType.Standard);
@@ -55,7 +55,7 @@ public class BookingPolicyTests
         // Arrange
         var employeeBookingPolicy = new EmployeeBookingPolicy(1, new List<RoomType> { RoomType.JuniorSuite });
         var companyBookingPolicy = new CompanyBookingPolicy(100, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite });
-        var bookingPolicy = new BookingPolicy(employeeBookingPolicy, companyBookingPolicy);
+        var bookingPolicy = new AggregatedBookingPolicy(employeeBookingPolicy, companyBookingPolicy);
 
         // Act
         var bookingAllowed = bookingPolicy.BookingAllowed(RoomType.Standard);
@@ -70,7 +70,7 @@ public class BookingPolicyTests
         // Arrange
         var employeeBookingPolicy = new EmployeeBookingPolicy(1, new List<RoomType> { RoomType.JuniorSuite });
         var companyBookingPolicy = new CompanyBookingPolicy(100, new List<RoomType> { RoomType.JuniorSuite });
-        var bookingPolicy = new BookingPolicy(employeeBookingPolicy, companyBookingPolicy);
+        var bookingPolicy = new AggregatedBookingPolicy(employeeBookingPolicy, companyBookingPolicy);
 
         // Act
         var bookingAllowed = bookingPolicy.BookingAllowed(RoomType.Standard);
@@ -85,7 +85,7 @@ public class BookingPolicyTests
         // Arrange
         var employeeBookingPolicy = new EmployeeBookingPolicy(1, new List<RoomType> { });
         var companyBookingPolicy = new CompanyBookingPolicy(100, new List<RoomType> { });
-        var bookingPolicy = new BookingPolicy(employeeBookingPolicy, companyBookingPolicy);
+        var bookingPolicy = new AggregatedBookingPolicy(employeeBookingPolicy, companyBookingPolicy);
 
         // Act
         var bookingAllowed = bookingPolicy.BookingAllowed(RoomType.Standard);

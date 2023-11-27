@@ -1,12 +1,12 @@
 
 namespace CorporateHotelBooking.Domain;
 
-public class BookingPolicy
+public class AggregatedBookingPolicy
 {
     private readonly EmployeeBookingPolicy _employeeBookingPolicy;
     private readonly CompanyBookingPolicy _companyBookingPolicy;
 
-    public BookingPolicy(EmployeeBookingPolicy employeeBookingPolicy, CompanyBookingPolicy companyBookingPolicy)
+    public AggregatedBookingPolicy(EmployeeBookingPolicy employeeBookingPolicy, CompanyBookingPolicy companyBookingPolicy)
     {
         _employeeBookingPolicy = employeeBookingPolicy;
         _companyBookingPolicy = companyBookingPolicy;
