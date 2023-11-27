@@ -1,4 +1,4 @@
-namespace CorporateHotelBooking.Domain.Entities;
+namespace CorporateHotelBooking.Domain.Entities.BookingPolicies;
 
 public class NonApplicableBookingPolicy : BookingPolicy
 {

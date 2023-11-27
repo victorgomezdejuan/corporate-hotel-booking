@@ -1,4 +1,5 @@
 using CorporateHotelBooking.Domain.Entities;
+using CorporateHotelBooking.Domain.Entities.BookingPolicies;
 using CorporateHotelBooking.Integrated.Tests.BookingPolicyServiceTests.Helpers;
 using CorporateHotelBooking.Repositories.CompanyBookingPolicies;
 using CorporateHotelBooking.Repositories.EmployeeBookingPolicies;

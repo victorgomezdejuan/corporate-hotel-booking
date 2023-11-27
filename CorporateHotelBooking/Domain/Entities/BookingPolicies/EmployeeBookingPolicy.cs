@@ -1,14 +1,14 @@
-namespace CorporateHotelBooking.Domain.Entities;
+namespace CorporateHotelBooking.Domain.Entities.BookingPolicies;
 
-public class CompanyBookingPolicy : BookingPolicy
+public class EmployeeBookingPolicy : BookingPolicy
 {
-    public CompanyBookingPolicy(int companyId, ICollection<RoomType> allowedRoomTypes) : base(true)
+    public EmployeeBookingPolicy(int employeeId, ICollection<RoomType> allowedRoomTypes) : base(true)
     {
-        CompanyId = companyId;
+        EmployeeId = employeeId;
         AllowedRoomTypes = allowedRoomTypes.ToList().AsReadOnly();
     }
 
-    public int CompanyId { get; }
+    public int EmployeeId { get; }
     public IReadOnlyCollection<RoomType> AllowedRoomTypes { get; }
 
     protected override bool BookingAllowedForRoomType(RoomType roomType)
@@ -18,13 +18,13 @@ public class CompanyBookingPolicy : BookingPolicy
 
     public override bool Equals(object? obj)
     {
-        return obj is CompanyBookingPolicy policy &&
-               CompanyId == policy.CompanyId &&
+        return obj is EmployeeBookingPolicy policy &&
+               EmployeeId == policy.EmployeeId &&
                AllowedRoomTypes.SequenceEqual(policy.AllowedRoomTypes);
     }
 
     public override int GetHashCode()
     {
-        return HashCode.Combine(CompanyId, AllowedRoomTypes);
+        return HashCode.Combine(EmployeeId, AllowedRoomTypes);
     }
 }
