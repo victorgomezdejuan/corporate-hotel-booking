@@ -12,8 +12,18 @@ public class BookingPolicy
         _companyBookingPolicy = companyBookingPolicy;
     }
 
-    public bool BookingAllowed(RoomType standard)
+    public bool BookingAllowed(RoomType roomType)
     {
-        return _employeeBookingPolicy.BookingAllowed(standard) || _companyBookingPolicy.BookingAllowed(standard);
+        if (_employeeBookingPolicy?.AllowedRoomTypes.Any() == true)
+        {
+            return _employeeBookingPolicy.AllowedRoomTypes.Contains(roomType);
+        }
+
+        if (_companyBookingPolicy?.AllowedRoomTypes.Any() == true)
+        {
+            return _companyBookingPolicy.AllowedRoomTypes.Contains(roomType);
+        }
+
+        return true;
     }
 }

@@ -19,5 +19,78 @@ public class BookingPolicyTests
         Assert.True(bookingAllowed);
     }
 
-    // Add the rest of the tests equivalent to the ones in IsBookingAllowedTests
+    [Fact]
+    public void BookingAllowedByEmployeeBookingPolicy()
+    {
+        // Arrange
+        var employeeBookingPolicy = new EmployeeBookingPolicy(1, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite });
+        var companyBookingPolicy = new CompanyBookingPolicy(100, new List<RoomType> { });
+        var bookingPolicy = new BookingPolicy(employeeBookingPolicy, companyBookingPolicy);
+
+        // Act
+        var bookingAllowed = bookingPolicy.BookingAllowed(RoomType.Standard);
+
+        // Assert
+        Assert.True(bookingAllowed);
+    }
+
+    [Fact]
+    public void BookingAllowedByEmployeeBookingPolicyButNotByCompanyBookingPolicy()
+    {
+        // Arrange
+        var employeeBookingPolicy = new EmployeeBookingPolicy(1, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite });
+        var companyBookingPolicy = new CompanyBookingPolicy(100, new List<RoomType> { RoomType.JuniorSuite });
+        var bookingPolicy = new BookingPolicy(employeeBookingPolicy, companyBookingPolicy);
+
+        // Act
+        var bookingAllowed = bookingPolicy.BookingAllowed(RoomType.Standard);
+
+        // Assert
+        Assert.True(bookingAllowed);
+    }
+
+    [Fact]
+    public void BookingAllowedByCompanyBookingPolicyButNotByEmployeeBookingPolicy()
+    {
+        // Arrange
+        var employeeBookingPolicy = new EmployeeBookingPolicy(1, new List<RoomType> { RoomType.JuniorSuite });
+        var companyBookingPolicy = new CompanyBookingPolicy(100, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite });
+        var bookingPolicy = new BookingPolicy(employeeBookingPolicy, companyBookingPolicy);
+
+        // Act
+        var bookingAllowed = bookingPolicy.BookingAllowed(RoomType.Standard);
+
+        // Assert
+        Assert.False(bookingAllowed);
+    }
+
+    [Fact]
+    public void BookingAllowedByNeitherCompanyNorEmployeeBookingPolicy()
+    {
+        // Arrange
+        var employeeBookingPolicy = new EmployeeBookingPolicy(1, new List<RoomType> { RoomType.JuniorSuite });
+        var companyBookingPolicy = new CompanyBookingPolicy(100, new List<RoomType> { RoomType.JuniorSuite });
+        var bookingPolicy = new BookingPolicy(employeeBookingPolicy, companyBookingPolicy);
+
+        // Act
+        var bookingAllowed = bookingPolicy.BookingAllowed(RoomType.Standard);
+
+        // Assert
+        Assert.False(bookingAllowed);
+    }
+
+    [Fact]
+    public void NoBookingPoliciesForAnEmployee()
+    {
+        // Arrange
+        var employeeBookingPolicy = new EmployeeBookingPolicy(1, new List<RoomType> { });
+        var companyBookingPolicy = new CompanyBookingPolicy(100, new List<RoomType> { });
+        var bookingPolicy = new BookingPolicy(employeeBookingPolicy, companyBookingPolicy);
+
+        // Act
+        var bookingAllowed = bookingPolicy.BookingAllowed(RoomType.Standard);
+
+        // Assert
+        Assert.True(bookingAllowed);
+    }
 }
