@@ -36,35 +36,20 @@ public class IsBookingAllowedQueryHandler
 
     public bool Handle(IsBookingAllowedQuery query)
     {
-        // TODO: Change this method to use Booking Policy domain object
-
         if (!_employeeRepository.Exists(query.EmployeeId))
         {
             throw new EmployeeNotFoundException(query.EmployeeId);
         }
 
-        if (_employeePolicyRepository.Exists(query.EmployeeId))
-        {
-            return IsBookingAllowedByEmployeeBookingPolicy(query);
-        }
+        BookingPolicy employeeBookingPolicy= _employeePolicyRepository.Exists(query.EmployeeId)
+            ? _employeePolicyRepository.GetEmployeePolicy(query.EmployeeId)
+            : new NonApplicableBookingPolicy();
+        BookingPolicy companyBookingPolicy = _companyPolicyRepository.Exists(query.EmployeeId)
+            ? _companyPolicyRepository.GetCompanyPolicy(_employeeRepository.GetEmployee(query.EmployeeId).CompanyId)
+            : new NonApplicableBookingPolicy();
 
-        var employee = _employeeRepository.GetEmployee(query.EmployeeId);
+        var aggregatedBookingPolicy = new AggregatedBookingPolicy(employeeBookingPolicy, companyBookingPolicy);
 
-        if (_companyPolicyRepository.Exists(employee.CompanyId))
-        {
-            return IsBookingAllowedByCompanyBookingPolicy(query, employee);
-        }
-
-        return true;
-    }
-
-    private bool IsBookingAllowedByCompanyBookingPolicy(IsBookingAllowedQuery query, Employee employee)
-    {
-        return _companyPolicyRepository.GetCompanyPolicy(employee.CompanyId).AllowedRoomTypes.Contains(query.RoomType);
-    }
-
-    private bool IsBookingAllowedByEmployeeBookingPolicy(IsBookingAllowedQuery query)
-    {
-        return _employeePolicyRepository.GetEmployeePolicy(query.EmployeeId).AllowedRoomTypes.Contains(query.RoomType);
+        return aggregatedBookingPolicy.BookingAllowed(query.RoomType);
     }
 }
