@@ -22,9 +22,9 @@ public class InMemoryRoomRepository : IRoomRepository
         return _rooms.Any(r => r.HotelId == hotelId && r.Number == number);
     }
 
-    public bool ExistsRoomType(RoomType standard)
+    public bool ExistsRoomType(int hotelId, RoomType standard)
     {
-        return _rooms.Any(r => r.Type == standard);
+        return _rooms.Any(r => r.HotelId == hotelId && r.Type == standard);
     }
 
     public Room GetRoom(int hotelId, int number)
