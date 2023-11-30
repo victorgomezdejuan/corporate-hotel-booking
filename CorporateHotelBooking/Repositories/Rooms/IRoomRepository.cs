@@ -9,6 +9,7 @@ public interface IRoomRepository
     bool ExistsRoomNumber(int hotelId, int number);
     bool ExistsRoomType(int hotelId, RoomType roomType);
     Room GetRoom(int hotelId, int number);
+    int GetRoomCount(int hotelId, RoomType roomType);
     ReadOnlyCollection<Room> GetRooms(int hotelId);
     void UpdateRoom(Room room);
 }
