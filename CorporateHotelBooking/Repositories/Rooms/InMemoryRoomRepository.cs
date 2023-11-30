@@ -17,14 +17,14 @@ public class InMemoryRoomRepository : IRoomRepository
         _rooms.Add(room);
     }
 
-    public bool ExistsRoomType(int hotelId, int number)
+    public bool ExistsRoomNumber(int hotelId, int number)
     {
         return _rooms.Any(r => r.HotelId == hotelId && r.Number == number);
     }
 
-    public bool ExistsRoomType(int hotelId, RoomType standard)
+    public bool ExistsRoomType(int hotelId, RoomType roomType)
     {
-        return _rooms.Any(r => r.HotelId == hotelId && r.Type == standard);
+        return _rooms.Any(r => r.HotelId == hotelId && r.Type == roomType);
     }
 
     public Room GetRoom(int hotelId, int number)

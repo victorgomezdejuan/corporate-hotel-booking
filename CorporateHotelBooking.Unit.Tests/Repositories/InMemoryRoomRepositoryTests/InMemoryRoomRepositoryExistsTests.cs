@@ -19,7 +19,7 @@ public class InMemoryRoomRepositoryExistsTests
         _repository.AddRoom(new Room(1, 100, RoomType.Standard));
 
         // Act
-        var exists = _repository.ExistsRoomType(1, 100);
+        var exists = _repository.ExistsRoomNumber(1, 100);
 
         // Assert
         Assert.True(exists);
@@ -29,7 +29,7 @@ public class InMemoryRoomRepositoryExistsTests
     public void RoomNumberDoesNotExist()
     {
         // Act
-        var exists = _repository.ExistsRoomType(1, 100);
+        var exists = _repository.ExistsRoomNumber(1, 100);
 
         // Assert
         Assert.False(exists);
