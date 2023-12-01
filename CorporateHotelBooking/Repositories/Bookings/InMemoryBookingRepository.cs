@@ -11,6 +11,10 @@ public class InMemoryBookingRepository : IBookingRepository
         _bookings = new List<Booking>();
     }
 
+    public Booking Add(Booking booking)
+    {
+        throw new NotImplementedException();
+    }
 
     public void AddBooking(Booking booking)
     {

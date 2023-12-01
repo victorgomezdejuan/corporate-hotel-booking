@@ -2,7 +2,7 @@ using CorporateHotelBooking.Domain.Exceptions;
 
 namespace CorporateHotelBooking.Domain.Entities;
 
-public class Booking
+public record Booking
 {
     public Booking(int employeeId, int hotelId, RoomType roomType, DateOnly checkInDate, DateOnly checkOutDate)
     {

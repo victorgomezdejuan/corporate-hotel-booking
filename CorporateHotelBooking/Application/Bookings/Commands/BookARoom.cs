@@ -46,18 +46,54 @@ public class BookARoomCommandHandler
 
     public NewBooking Handle(BookARoomCommand command)
     {
+        CheckHotelExistance(command);
+        CheckRoomTypeExistanceInTheHotel(command);
+        CheckBookingPolicyAllowance(command);
+        CheckRoomAvailability(command);
+        Booking booking = _bookingRepository.Add(new Booking
+        (
+            employeeId: command.EmployeeId,
+            hotelId: command.HotelId,
+            roomType: command.RoomType,
+            checkInDate: command.CheckInDate,
+            checkOutDate: command.CheckOutDate
+        ));
+
+        return new NewBooking(booking.Id!.Value, booking.EmployeeId, booking.HotelId, booking.RoomType, booking.CheckInDate, booking.CheckOutDate);
+    }
+
+    private void CheckHotelExistance(BookARoomCommand command)
+    {
         if (!_hotelRepository.Exists(command.HotelId))
         {
             throw new HotelNotFoundException(command.HotelId);
         }
+    }
 
+    private void CheckRoomTypeExistanceInTheHotel(BookARoomCommand command)
+    {
         if (!_roomRepository.ExistsRoomType(command.HotelId, command.RoomType))
         {
             throw new RoomTypeNotProvidedByTheHotelException(command.HotelId, command.RoomType);
         }
+    }
 
+    private void CheckBookingPolicyAllowance(BookARoomCommand command)
+    {
+        BookingPolicy employeeBookingPolicy = GetEmployeeBookingPolicy(command);
+        BookingPolicy companyBookingPolicy = GetCompanyBookingPolicy(command);
+
+        var bookingPolicy = new AggregatedBookingPolicy(employeeBookingPolicy, companyBookingPolicy);
+        if (!bookingPolicy.BookingAllowed(command.RoomType))
+        {
+            throw new BookingNotAllowedException();
+        }
+    }
+
+    private BookingPolicy GetEmployeeBookingPolicy(BookARoomCommand command)
+    {
         BookingPolicy employeeBookingPolicy;
-        if(_employeeBookingPolicyRepository.Exists(command.EmployeeId))
+        if (_employeeBookingPolicyRepository.Exists(command.EmployeeId))
         {
             employeeBookingPolicy = _employeeBookingPolicyRepository.GetEmployeePolicy(command.EmployeeId);
         }
@@ -66,9 +102,14 @@ public class BookARoomCommandHandler
             employeeBookingPolicy = new NonApplicableBookingPolicy();
         }
 
-        var employee = _employeeRepository.GetEmployee(command.EmployeeId);
+        return employeeBookingPolicy;
+    }
+
+    private BookingPolicy GetCompanyBookingPolicy(BookARoomCommand command)
+    {
         BookingPolicy companyBookingPolicy;
-        if(_companyBookingPolicyRepository.Exists(employee.CompanyId))
+        var employee = _employeeRepository.GetEmployee(command.EmployeeId);
+        if (_companyBookingPolicyRepository.Exists(employee.CompanyId))
         {
             companyBookingPolicy = _companyBookingPolicyRepository.GetCompanyPolicy(employee.CompanyId);
         }
@@ -77,20 +118,17 @@ public class BookARoomCommandHandler
             companyBookingPolicy = new NonApplicableBookingPolicy();
         }
 
-        var bookingPolicy = new AggregatedBookingPolicy(employeeBookingPolicy, companyBookingPolicy);
-        if (!bookingPolicy.BookingAllowed(command.RoomType))
-        {
-            throw new BookingNotAllowedException();
-        }
+        return companyBookingPolicy;
+    }
 
-        if(
+    private void CheckRoomAvailability(BookARoomCommand command)
+    {
+        if (
             _bookingRepository.GetBookingCount(command.HotelId, command.RoomType, command.CheckInDate, command.CheckOutDate)
             >=
             _roomRepository.GetRoomCount(command.HotelId, command.RoomType))
         {
             throw new NoRoomsAvailableException();
         }
-                
-        return null;
     }
 }
