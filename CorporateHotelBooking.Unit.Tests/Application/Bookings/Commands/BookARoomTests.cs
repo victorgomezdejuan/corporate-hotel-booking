@@ -140,4 +140,32 @@ public class BookARoomTests
         // Assert
         act.Should().Throw<BookingNotAllowedException>();
     }
+
+    [Fact]
+    public void NoRoomsOfThatTypeAvailableForTheRequestedPeriod()
+    {
+        // Arrange
+        _hotelRepositoryMock.Setup(x => x.Exists(1)).Returns(true);
+        _roomRepositoryMock.Setup(x => x.ExistsRoomType(1, RoomType.Standard)).Returns(true);
+        _employeeRepositoryMock.Setup(x => x.GetEmployee(10)).Returns(new Employee(10, 100));
+        _employeeBookingPolicyRepositoryMock.Setup(x => x.Exists(10)).Returns(false);
+        _companyBookingPolicyRepositoryMock.Setup(x => x.Exists(100)).Returns(false);
+        _roomRepositoryMock.Setup(x => x.GetRoomCount(1, RoomType.Standard)).Returns(1);
+        _bookingRepositoryMock.Setup(x => x.GetBookingCount(1, RoomType.Standard, DateUtils.Today(), DateUtils.Today().AddDays(1))).Returns(1);
+
+        var command = new BookARoomCommand
+        (
+            EmployeeId: 10,
+            HotelId: 1,
+            RoomType: RoomType.Standard,
+            CheckInDate: DateUtils.Today(),
+            CheckOutDate: DateUtils.Today().AddDays(1)
+        );
+
+        // Act
+        Action act = () => _handler.Handle(command);
+
+        // Assert
+        act.Should().Throw<NoRoomsAvailableException>();
+    }
 }

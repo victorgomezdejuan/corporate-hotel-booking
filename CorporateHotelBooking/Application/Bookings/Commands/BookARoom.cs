@@ -82,6 +82,14 @@ public class BookARoomCommandHandler
         {
             throw new BookingNotAllowedException();
         }
+
+        if(
+            _bookingRepository.GetBookingCount(command.HotelId, command.RoomType, command.CheckInDate, command.CheckOutDate)
+            >=
+            _roomRepository.GetRoomCount(command.HotelId, command.RoomType))
+        {
+            throw new NoRoomsAvailableException();
+        }
                 
         return null;
     }
