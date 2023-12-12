@@ -30,7 +30,7 @@ public class SetCompanyBookingPolicyTests
         _bookingPolicyService.SetCompanyPolicy(100, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite });
 
         // Assert
-        var retrievedCompanyPolicy = _companyPolicyRepository.GetCompanyPolicy(100);
+        var retrievedCompanyPolicy = _companyPolicyRepository.Get(100);
         retrievedCompanyPolicy.Should().Be(new CompanyBookingPolicy(100, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite }));
     }
 
@@ -44,7 +44,7 @@ public class SetCompanyBookingPolicyTests
         _bookingPolicyService.SetCompanyPolicy(100, new List<RoomType> { RoomType.JuniorSuite, RoomType.MasterSuite });
 
         // Assert
-        var retrievedCompanyPolicy = _companyPolicyRepository.GetCompanyPolicy(100);
+        var retrievedCompanyPolicy = _companyPolicyRepository.Get(100);
         retrievedCompanyPolicy.Should().Be(new CompanyBookingPolicy(100, new List<RoomType> { RoomType.JuniorSuite, RoomType.MasterSuite }));
     }
 }

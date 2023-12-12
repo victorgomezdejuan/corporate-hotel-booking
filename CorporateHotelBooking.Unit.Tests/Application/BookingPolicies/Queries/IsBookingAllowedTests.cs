@@ -53,7 +53,7 @@ public class IsBookingAllowedTests
         _employeePolicyRepositoryMock.Setup(x => x.Exists(1)).Returns(false);
 
         _companyPolicyRepositoryMock.Setup(x => x.Exists(100)).Returns(true);
-        _companyPolicyRepositoryMock.Setup(x => x.GetCompanyPolicy(100)).Returns(new CompanyBookingPolicy(100, new List<RoomType> { RoomType.Standard }));
+        _companyPolicyRepositoryMock.Setup(x => x.Get(100)).Returns(new CompanyBookingPolicy(100, new List<RoomType> { RoomType.Standard }));
 
         var query = new IsBookingAllowedQuery(1, RoomType.Standard);
 
@@ -91,7 +91,7 @@ public class IsBookingAllowedTests
         SetEmployeeRepositoryWithEmployeeAndCompany(1, 100);
 
         _companyPolicyRepositoryMock.Setup(x => x.Exists(100)).Returns(true);
-        _companyPolicyRepositoryMock.Setup(x => x.GetCompanyPolicy(100)).Returns(new CompanyBookingPolicy(100, new List<RoomType> { RoomType.JuniorSuite }));
+        _companyPolicyRepositoryMock.Setup(x => x.Get(100)).Returns(new CompanyBookingPolicy(100, new List<RoomType> { RoomType.JuniorSuite }));
 
         _employeePolicyRepositoryMock.Setup(x => x.Exists(1)).Returns(true);
         _employeePolicyRepositoryMock.Setup(x => x.GetEmployeePolicy(1)).Returns(new EmployeeBookingPolicy(1, new List<RoomType> { RoomType.Standard }));
@@ -112,7 +112,7 @@ public class IsBookingAllowedTests
         SetEmployeeRepositoryWithEmployeeAndCompany(1, 100);
 
         _companyPolicyRepositoryMock.Setup(x => x.Exists(100)).Returns(true);
-        _companyPolicyRepositoryMock.Setup(x => x.GetCompanyPolicy(100)).Returns(new CompanyBookingPolicy(100, new List<RoomType> { RoomType.Standard }));
+        _companyPolicyRepositoryMock.Setup(x => x.Get(100)).Returns(new CompanyBookingPolicy(100, new List<RoomType> { RoomType.Standard }));
 
         _employeePolicyRepositoryMock.Setup(x => x.Exists(1)).Returns(true);
         _employeePolicyRepositoryMock.Setup(x => x.GetEmployeePolicy(1)).Returns(new EmployeeBookingPolicy(1, new List<RoomType> { RoomType.JuniorSuite }));
@@ -133,7 +133,7 @@ public class IsBookingAllowedTests
         SetEmployeeRepositoryWithEmployeeAndCompany(1, 100);
 
         _companyPolicyRepositoryMock.Setup(x => x.Exists(100)).Returns(true);
-        _companyPolicyRepositoryMock.Setup(x => x.GetCompanyPolicy(100)).Returns(new CompanyBookingPolicy(100, new List<RoomType> { RoomType.JuniorSuite }));
+        _companyPolicyRepositoryMock.Setup(x => x.Get(100)).Returns(new CompanyBookingPolicy(100, new List<RoomType> { RoomType.JuniorSuite }));
 
         _employeePolicyRepositoryMock.Setup(x => x.Exists(1)).Returns(true);
         _employeePolicyRepositoryMock.Setup(x => x.GetEmployeePolicy(1)).Returns(new EmployeeBookingPolicy(1, new List<RoomType> { RoomType.MasterSuite }));

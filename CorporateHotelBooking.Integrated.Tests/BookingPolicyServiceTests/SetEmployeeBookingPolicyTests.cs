@@ -61,7 +61,7 @@ public class NotImplementedCompanyBookingPolicyRepository : ICompanyBookingPolic
         throw new NotImplementedException();
     }
 
-    public CompanyBookingPolicy GetCompanyPolicy(int companyId)
+    public CompanyBookingPolicy Get(int companyId)
     {
         throw new NotImplementedException();
     }

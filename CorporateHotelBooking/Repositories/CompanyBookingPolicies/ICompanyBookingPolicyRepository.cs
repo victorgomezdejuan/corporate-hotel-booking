@@ -7,5 +7,5 @@ public interface ICompanyBookingPolicyRepository
     void Add(CompanyBookingPolicy companyPolicy);
     void UpdateCompanyPolicy(CompanyBookingPolicy companyPolicy);
     bool Exists(int companyId);
-    CompanyBookingPolicy GetCompanyPolicy(int companyId);
+    CompanyBookingPolicy Get(int companyId);
 }

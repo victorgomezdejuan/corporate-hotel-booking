@@ -123,7 +123,7 @@ public class BookARoomTests
         _employeeRepositoryMock.Setup(x => x.GetEmployee(10)).Returns(new Employee(10, 100));
         _employeeBookingPolicyRepositoryMock.Setup(x => x.Exists(10)).Returns(false);
         _companyBookingPolicyRepositoryMock.Setup(x => x.Exists(100)).Returns(true);
-        _companyBookingPolicyRepositoryMock.Setup(x => x.GetCompanyPolicy(100)).Returns(new CompanyBookingPolicy(1, new List<RoomType> { RoomType.JuniorSuite }));
+        _companyBookingPolicyRepositoryMock.Setup(x => x.Get(100)).Returns(new CompanyBookingPolicy(1, new List<RoomType> { RoomType.JuniorSuite }));
 
         var command = new BookARoomCommand
         (

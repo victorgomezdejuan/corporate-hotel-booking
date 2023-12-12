@@ -18,7 +18,7 @@ public class AddTests
         companyPolicyRepository.Add(companyPolicyToBeAdded);
 
         // Assert
-        var retrievedCompanyPolicy = companyPolicyRepository.GetCompanyPolicy(1);
+        var retrievedCompanyPolicy = companyPolicyRepository.Get(1);
         retrievedCompanyPolicy.Should().Be(companyPolicyToBeAdded);
     }
 }

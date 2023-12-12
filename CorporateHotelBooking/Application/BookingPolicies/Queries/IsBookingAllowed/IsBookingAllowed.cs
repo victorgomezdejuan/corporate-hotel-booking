@@ -46,7 +46,7 @@ public class IsBookingAllowedQueryHandler
             ? _employeePolicyRepository.GetEmployeePolicy(query.EmployeeId)
             : new NonApplicableBookingPolicy();
         BookingPolicy companyBookingPolicy = _companyPolicyRepository.Exists(query.EmployeeId)
-            ? _companyPolicyRepository.GetCompanyPolicy(_employeeRepository.GetEmployee(query.EmployeeId).CompanyId)
+            ? _companyPolicyRepository.Get(_employeeRepository.GetEmployee(query.EmployeeId).CompanyId)
             : new NonApplicableBookingPolicy();
 
         var aggregatedBookingPolicy = new AggregatedBookingPolicy(employeeBookingPolicy, companyBookingPolicy);

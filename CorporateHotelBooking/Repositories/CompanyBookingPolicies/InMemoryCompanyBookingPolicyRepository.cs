@@ -26,7 +26,7 @@ public class InMemoryCompanyBookingPolicyRepository : ICompanyBookingPolicyRepos
         return _companyPolicies.ContainsKey(companyId);
     }
 
-    public CompanyBookingPolicy GetCompanyPolicy(int companyId)
+    public CompanyBookingPolicy Get(int companyId)
     {
         return _companyPolicies[companyId];
     }

@@ -20,7 +20,7 @@ public class UpdateCompanyPolicyTests
         companyPolicyRepository.UpdateCompanyPolicy(updatedCompanyPolicy);
 
         // Assert
-        var retrievedCompanyPolicy = companyPolicyRepository.GetCompanyPolicy(1);
+        var retrievedCompanyPolicy = companyPolicyRepository.Get(1);
         retrievedCompanyPolicy.Should().Be(updatedCompanyPolicy);
     }    
 }
