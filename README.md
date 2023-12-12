@@ -21,8 +21,6 @@ To achieve that, the engine needs to provide 4 main services that work in close 
 
 The four services are described below. The <?> indicates you can use whatever primitive or type you want.
 
-> [!NOTE]  
-> Current status: Only Hotel Service was implemented so far.
 # Hotel Service
 
 Used by the hotel manager to define the types and number of rooms of each type the hotel has. It also can return hotel information given a hotel ID.
