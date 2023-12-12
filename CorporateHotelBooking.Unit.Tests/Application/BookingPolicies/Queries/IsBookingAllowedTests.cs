@@ -168,6 +168,6 @@ public class IsBookingAllowedTests
     private void SetEmployeeRepositoryWithEmployeeAndCompany(int employeeId, int companyId)
     {
         _employeeRepositoryMock.Setup(x => x.Exists(employeeId)).Returns(true);
-        _employeeRepositoryMock.Setup(x => x.GetEmployee(employeeId)).Returns(new Employee(employeeId, companyId));
+        _employeeRepositoryMock.Setup(x => x.Get(employeeId)).Returns(new Employee(employeeId, companyId));
     }
 }

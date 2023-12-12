@@ -108,7 +108,7 @@ public class BookARoomCommandHandler
     private BookingPolicy GetCompanyBookingPolicy(BookARoomCommand command)
     {
         BookingPolicy companyBookingPolicy;
-        var employee = _employeeRepository.GetEmployee(command.EmployeeId);
+        var employee = _employeeRepository.Get(command.EmployeeId);
         if (_companyBookingPolicyRepository.Exists(employee.CompanyId))
         {
             companyBookingPolicy = _companyBookingPolicyRepository.Get(employee.CompanyId);

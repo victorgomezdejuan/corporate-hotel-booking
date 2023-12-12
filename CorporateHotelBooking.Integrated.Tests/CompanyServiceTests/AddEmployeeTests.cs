@@ -22,7 +22,7 @@ public class AddEmployeeTests
         _companyService.AddEmployee(companyId: 100, employeeId: 1);
 
         // Assert
-        var employee = _employeeRepository.GetEmployee(1);
+        var employee = _employeeRepository.Get(1);
         employee.Id.Should().Be(1);
         employee.CompanyId.Should().Be(100);
     }

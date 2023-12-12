@@ -17,7 +17,7 @@ public class AddTests
         employeeRepository.Add(employeeToBeAdded);
 
         // Assert
-        var retrievedEmployee = employeeRepository.GetEmployee(1);
+        var retrievedEmployee = employeeRepository.Get(1);
         retrievedEmployee.Should().Be(employeeToBeAdded);
     }
 }

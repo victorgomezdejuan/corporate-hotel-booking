@@ -20,7 +20,7 @@ public class NotImplementedEmployeeRepository: IEmployeeRepository
         throw new NotImplementedException();
     }
 
-    public Employee GetEmployee(int employeeId)
+    public Employee Get(int employeeId)
     {
         throw new NotImplementedException();
     }

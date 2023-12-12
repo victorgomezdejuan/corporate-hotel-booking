@@ -5,11 +5,11 @@ using FluentAssertions;
 
 namespace CorporateHotelBooking.Unit.Tests.Repositories.InMemoryEmployeeRepositoryTests;
 
-public class GetEmployeeTests
+public class GetTests
 {
     private readonly InMemoryEmployeeRepository _employeeRepository;
 
-    public GetEmployeeTests()
+    public GetTests()
     {
         _employeeRepository = new InMemoryEmployeeRepository();
     }
@@ -22,7 +22,7 @@ public class GetEmployeeTests
         _employeeRepository.Add(employeeToBeAdded);
 
         // Act
-        var retrievedEmployee = _employeeRepository.GetEmployee(1);
+        var retrievedEmployee = _employeeRepository.Get(1);
 
         // Assert
         retrievedEmployee.Should().Be(employeeToBeAdded);
@@ -32,7 +32,7 @@ public class GetEmployeeTests
     public void GetNonExistingEmployee()
     {
         // Act
-        Action getEmployeeAction = () => _employeeRepository.GetEmployee(1);
+        Action getEmployeeAction = () => _employeeRepository.Get(1);
 
         // Assert
         getEmployeeAction.Should().Throw<EmployeeNotFoundException>();
