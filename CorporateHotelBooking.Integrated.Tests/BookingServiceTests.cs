@@ -43,7 +43,7 @@ public class BookingServiceTests
             checkInDate: DateOnly.FromDateTime(DateTime.Now),
             checkOutDate: DateOnly.FromDateTime(DateTime.Now.AddDays(1))
         );
-        _hotelRepository.AddHotel(new Hotel(3, "Hotel 3"));
+        _hotelRepository.Add(new Hotel(3, "Hotel 3"));
         _roomRepository.AddRoom(new Room(3, 100, RoomType.Standard));
         _employeeRepository.Add(new Employee(2, 4));
         _companyBookingPolicyRepository.Add(new CompanyBookingPolicy(4, new List<RoomType> { RoomType.Standard }));
@@ -67,7 +67,7 @@ public class BookingServiceTests
     public void TryToBookARoomThatIsNotAvailableAtThatTime()
     {
         // Arrange
-        _hotelRepository.AddHotel(new Hotel(3, "Hotel 3"));
+        _hotelRepository.Add(new Hotel(3, "Hotel 3"));
         _roomRepository.AddRoom(new Room(3, 100, RoomType.Standard));
         _employeeRepository.Add(new Employee(2, 4));
         _companyBookingPolicyRepository.Add(new CompanyBookingPolicy(4, new List<RoomType> { RoomType.Standard }));

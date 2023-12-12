@@ -26,7 +26,7 @@ public class AddHotelTests
             _handler.Handle(command);
 
             // Assert
-            _hotelRepositoryMock.Verify(x => x.AddHotel(It.Is<Hotel>(h => h.Id == 1 && h.Name == "Hilton")));
+            _hotelRepositoryMock.Verify(x => x.Add(It.Is<Hotel>(h => h.Id == 1 && h.Name == "Hilton")));
         }
 
         [Fact]

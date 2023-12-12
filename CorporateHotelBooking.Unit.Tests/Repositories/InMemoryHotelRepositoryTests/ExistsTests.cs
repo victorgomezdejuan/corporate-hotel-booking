@@ -17,7 +17,7 @@ public class ExistsTests
     {
         // Arrange
         var hotel = new Hotel(1, "Hotel");
-        _hotelRepository.AddHotel(hotel);
+        _hotelRepository.Add(hotel);
 
         // Act
         var exists = _hotelRepository.Exists(hotel.Id);

@@ -32,6 +32,6 @@ public class AddHotelCommandHandler
         }
         
         var hotel = new Hotel(command.HotelId, command.HotelName);
-        _hotelRepository.AddHotel(hotel);
+        _hotelRepository.Add(hotel);
     }
 }

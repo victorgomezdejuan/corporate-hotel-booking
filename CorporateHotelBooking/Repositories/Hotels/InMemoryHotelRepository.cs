@@ -11,7 +11,7 @@ public class InMemoryHotelRepository : IHotelRepository
         _hotels = new Dictionary<int, Hotel>();
     }
 
-    public void AddHotel(Hotel hotel)
+    public void Add(Hotel hotel)
     {
         _hotels.Add(hotel.Id, hotel);
     }

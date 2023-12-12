@@ -17,7 +17,7 @@ public class GetHotelTests
     {
         // Arrange
         var addedHotel = new Hotel(1, "Hotel 1");
-        _repository.AddHotel(addedHotel);
+        _repository.Add(addedHotel);
         
         // Act
         var retrievedHotel = _repository.GetHotel(1);

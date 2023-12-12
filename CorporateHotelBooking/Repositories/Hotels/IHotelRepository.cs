@@ -4,7 +4,7 @@ namespace CorporateHotelBooking.Repositories.Hotels;
 
 public interface IHotelRepository
 {
-    void AddHotel(Hotel hotel);
+    void Add(Hotel hotel);
 
     Hotel GetHotel(int hotelId);
 
