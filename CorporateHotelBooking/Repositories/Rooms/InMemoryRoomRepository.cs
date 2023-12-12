@@ -32,7 +32,7 @@ public class InMemoryRoomRepository : IRoomRepository
         return _rooms.Single(r => r.HotelId == hotelId && r.Number == number);
     }
 
-    public int GetRoomCount(int hotelId, RoomType roomType)
+    public int GetCount(int hotelId, RoomType roomType)
     {
         return _rooms.Count(r => r.HotelId == hotelId && r.Type == roomType);
     }

@@ -126,7 +126,7 @@ public class BookARoomCommandHandler
         if (
             _bookingRepository.GetCount(command.HotelId, command.RoomType, command.CheckInDate, command.CheckOutDate)
             >=
-            _roomRepository.GetRoomCount(command.HotelId, command.RoomType))
+            _roomRepository.GetCount(command.HotelId, command.RoomType))
         {
             throw new NoRoomsAvailableException();
         }

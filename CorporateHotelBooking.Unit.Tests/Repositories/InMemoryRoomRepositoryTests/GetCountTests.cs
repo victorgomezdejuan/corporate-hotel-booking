@@ -12,7 +12,7 @@ public class GetRoomCountTests
         var repository = new InMemoryRoomRepository();
 
         // Act
-        var count = repository.GetRoomCount(1, RoomType.Standard);
+        var count = repository.GetCount(1, RoomType.Standard);
 
         // Assert
         Assert.Equal(0, count);
@@ -26,7 +26,7 @@ public class GetRoomCountTests
         repository.Add(new Room(1, 100, RoomType.Standard));
 
         // Act
-        var count = repository.GetRoomCount(1, RoomType.Standard);
+        var count = repository.GetCount(1, RoomType.Standard);
 
         // Assert
         Assert.Equal(1, count);
@@ -42,7 +42,7 @@ public class GetRoomCountTests
         repository.Add(new Room(1, 102, RoomType.Standard));
 
         // Act
-        var count = repository.GetRoomCount(1, RoomType.Standard);
+        var count = repository.GetCount(1, RoomType.Standard);
 
         // Assert
         Assert.Equal(3, count);
