@@ -46,7 +46,7 @@ public class BookingServiceTests
         _hotelRepository.AddHotel(new Hotel(3, "Hotel 3"));
         _roomRepository.AddRoom(new Room(3, 100, RoomType.Standard));
         _employeeRepository.AddEmployee(new Employee(2, 4));
-        _companyBookingPolicyRepository.AddCompanyPolicy(new CompanyBookingPolicy(4, new List<RoomType> { RoomType.Standard }));
+        _companyBookingPolicyRepository.Add(new CompanyBookingPolicy(4, new List<RoomType> { RoomType.Standard }));
         var bookingService = new BookingService(
             _bookingRepository,
             _hotelRepository,
@@ -70,7 +70,7 @@ public class BookingServiceTests
         _hotelRepository.AddHotel(new Hotel(3, "Hotel 3"));
         _roomRepository.AddRoom(new Room(3, 100, RoomType.Standard));
         _employeeRepository.AddEmployee(new Employee(2, 4));
-        _companyBookingPolicyRepository.AddCompanyPolicy(new CompanyBookingPolicy(4, new List<RoomType> { RoomType.Standard }));
+        _companyBookingPolicyRepository.Add(new CompanyBookingPolicy(4, new List<RoomType> { RoomType.Standard }));
         _bookingRepository.Add(new Booking(2, 3, RoomType.Standard, DateOnly.FromDateTime(DateTime.Now), DateOnly.FromDateTime(DateTime.Now.AddDays(1))));
         var bookingService = new BookingService(
             _bookingRepository,

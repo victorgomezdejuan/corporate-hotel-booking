@@ -33,7 +33,7 @@ public class SetCompanyBookingPolicyCommandHandler
         }
         else
         {
-            _companyPolicyRepository.AddCompanyPolicy(new CompanyBookingPolicy(command.CompanyId, command.RoomTypes.ToList()));
+            _companyPolicyRepository.Add(new CompanyBookingPolicy(command.CompanyId, command.RoomTypes.ToList()));
         }
     }
 }

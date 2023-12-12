@@ -12,7 +12,7 @@ public class ExistsTests
     {
         // Arrange
         var companyPolicyRepository = new InMemoryCompanyBookingPolicyRepository();
-        companyPolicyRepository.AddCompanyPolicy(new CompanyBookingPolicy(1, new List<RoomType> { RoomType.Standard }));
+        companyPolicyRepository.Add(new CompanyBookingPolicy(1, new List<RoomType> { RoomType.Standard }));
 
         // Act
         var companyPolicyExists = companyPolicyRepository.Exists(1);

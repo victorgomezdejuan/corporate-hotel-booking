@@ -5,7 +5,7 @@ using FluentAssertions;
 
 namespace CorporateHotelBooking.Unit.Tests.Repositories.InMemoryCompanyBookingPolicyRepositoryTests;
 
-public class AddCompanyPolicyTests
+public class AddTests
 {
     [Fact]
     public void AddCompanyPolicy()
@@ -15,7 +15,7 @@ public class AddCompanyPolicyTests
         var companyPolicyToBeAdded = new CompanyBookingPolicy(1, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite });
 
         // Act
-        companyPolicyRepository.AddCompanyPolicy(companyPolicyToBeAdded);
+        companyPolicyRepository.Add(companyPolicyToBeAdded);
 
         // Assert
         var retrievedCompanyPolicy = companyPolicyRepository.GetCompanyPolicy(1);

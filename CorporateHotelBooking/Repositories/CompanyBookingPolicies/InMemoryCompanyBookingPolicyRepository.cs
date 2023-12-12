@@ -11,7 +11,7 @@ public class InMemoryCompanyBookingPolicyRepository : ICompanyBookingPolicyRepos
         _companyPolicies = new();
     }
 
-    public void AddCompanyPolicy(CompanyBookingPolicy companyPolicy)
+    public void Add(CompanyBookingPolicy companyPolicy)
     {
         _companyPolicies.Add(companyPolicy.CompanyId, companyPolicy);
     }

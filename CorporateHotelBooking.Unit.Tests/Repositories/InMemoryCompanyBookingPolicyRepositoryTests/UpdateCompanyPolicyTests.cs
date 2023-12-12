@@ -13,7 +13,7 @@ public class UpdateCompanyPolicyTests
         // Arrange
         var companyPolicyRepository = new InMemoryCompanyBookingPolicyRepository();
         var companyPolicyToBeAdded = new CompanyBookingPolicy(1, new List<RoomType> { RoomType.Standard });
-        companyPolicyRepository.AddCompanyPolicy(companyPolicyToBeAdded);
+        companyPolicyRepository.Add(companyPolicyToBeAdded);
         var updatedCompanyPolicy = new CompanyBookingPolicy(1, new List<RoomType> { RoomType.JuniorSuite, RoomType.MasterSuite });
 
         // Act

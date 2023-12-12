@@ -51,7 +51,7 @@ public class SetEmployeeBookingPolicyTests
 
 public class NotImplementedCompanyBookingPolicyRepository : ICompanyBookingPolicyRepository
 {
-    public void AddCompanyPolicy(CompanyBookingPolicy companyPolicy)
+    public void Add(CompanyBookingPolicy companyPolicy)
     {
         throw new NotImplementedException();
     }

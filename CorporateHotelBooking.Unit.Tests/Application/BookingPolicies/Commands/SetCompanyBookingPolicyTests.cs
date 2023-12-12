@@ -20,7 +20,7 @@ public class SetCompanyBookingPolicyTests
         setCompanyPolicyCommandHandler.Handle(setCompanyPolicyCommand);
 
         // Assert
-        companyPolicyRepositoryMock.Verify(r => r.AddCompanyPolicy(new CompanyBookingPolicy(100, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite })));
+        companyPolicyRepositoryMock.Verify(r => r.Add(new CompanyBookingPolicy(100, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite })));
     }
 
     [Fact]
