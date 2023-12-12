@@ -22,7 +22,7 @@ public class AddTests
         _repository.Add(roomToBeAdded);
 
         // Assert
-        var retrievedRoom = _repository.GetRoom(1, 100);
+        var retrievedRoom = _repository.Get(1, 100);
         Assert.Equal(roomToBeAdded, retrievedRoom);
     }
 }

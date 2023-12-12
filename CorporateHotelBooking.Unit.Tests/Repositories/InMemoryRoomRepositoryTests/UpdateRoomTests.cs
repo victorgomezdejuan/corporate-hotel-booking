@@ -24,7 +24,7 @@ public class UpdateRoomTests
         _repository.UpdateRoom(updatedRoom);
 
         // Assert
-        var retrievedRoom = _repository.GetRoom(1, 100);
+        var retrievedRoom = _repository.Get(1, 100);
         Assert.Equal(updatedRoom, retrievedRoom);
     }
 }

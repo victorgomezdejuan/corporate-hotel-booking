@@ -27,7 +27,7 @@ public class InMemoryRoomRepository : IRoomRepository
         return _rooms.Any(r => r.HotelId == hotelId && r.Type == roomType);
     }
 
-    public Room GetRoom(int hotelId, int number)
+    public Room Get(int hotelId, int number)
     {
         return _rooms.Single(r => r.HotelId == hotelId && r.Number == number);
     }
@@ -44,7 +44,7 @@ public class InMemoryRoomRepository : IRoomRepository
 
     public void UpdateRoom(Room room)
     {
-        var existingRoom = GetRoom(room.HotelId, room.Number);
+        var existingRoom = Get(room.HotelId, room.Number);
         _rooms.Remove(existingRoom);
         _rooms.Add(room);
     }
