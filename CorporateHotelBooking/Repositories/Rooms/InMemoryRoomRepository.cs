@@ -37,7 +37,7 @@ public class InMemoryRoomRepository : IRoomRepository
         return _rooms.Count(r => r.HotelId == hotelId && r.Type == roomType);
     }
 
-    public ReadOnlyCollection<Room> GetRooms(int hotelId)
+    public ReadOnlyCollection<Room> GetMany(int hotelId)
     {
         return _rooms.Where(r => r.HotelId == hotelId).ToList().AsReadOnly();
     }

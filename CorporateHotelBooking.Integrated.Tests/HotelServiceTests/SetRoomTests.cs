@@ -29,7 +29,7 @@ public class SetRoomTests
         _hotelService.SetRoom(1, 101, RoomType.Standard);
 
         // Assert
-        var rooms = _roomRepository.GetRooms(1);
+        var rooms = _roomRepository.GetMany(1);
         rooms.Should().HaveCount(1);
         rooms.Should().Contain(r => r.Number == 101 && r.Type == RoomType.Standard);
     }
@@ -45,7 +45,7 @@ public class SetRoomTests
         _hotelService.SetRoom(1, 101, RoomType.JuniorSuite);
 
         // Assert
-        var rooms = _roomRepository.GetRooms(1);
+        var rooms = _roomRepository.GetMany(1);
         rooms.Should().HaveCount(1);
         rooms.Should().Contain(r => r.Number == 101 && r.Type == RoomType.JuniorSuite);
     }

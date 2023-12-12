@@ -4,14 +4,14 @@ using CorporateHotelBooking.Repositories.Rooms;
 
 namespace CorporateHotelBooking.Unit.Tests.Repositories.InMemoryRoomRepositoryTests;
 
-public class GetRoomsTests
+public class GetManyTests
 {
     [Fact]
     public void GetNoRooms()
     {
         var repository = new InMemoryRoomRepository();
 
-        var rooms = repository.GetRooms(1);
+        var rooms = repository.GetMany(1);
 
         rooms.Should().BeEmpty();
     }
@@ -22,7 +22,7 @@ public class GetRoomsTests
         var repository = new InMemoryRoomRepository();
         repository.Add(new Room(1, 100, RoomType.Standard));
 
-        var rooms = repository.GetRooms(1);
+        var rooms = repository.GetMany(1);
 
         rooms.Should().HaveCount(1);
         rooms.First().Number.Should().Be(100);
@@ -36,7 +36,7 @@ public class GetRoomsTests
         repository.Add(new Room(1, 100, RoomType.Standard));
         repository.Add(new Room(1, 101, RoomType.JuniorSuite));
 
-        var rooms = repository.GetRooms(1);
+        var rooms = repository.GetMany(1);
 
         rooms.Should().HaveCount(2);
         rooms.First().Number.Should().Be(100);
