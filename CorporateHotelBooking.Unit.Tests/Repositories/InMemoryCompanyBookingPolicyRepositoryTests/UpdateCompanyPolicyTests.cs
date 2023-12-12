@@ -5,7 +5,7 @@ using FluentAssertions;
 
 namespace CorporateHotelBooking.Unit.Tests.Repositories.InMemoryCompanyBookingPolicyRepositoryTests;
 
-public class InMemoryCompanyBookingPolicyRepositoryUpdateCompanyPolicyTests
+public class UpdateCompanyPolicyTests
 {
     [Fact]
     public void UpdateCompanyPolicy()

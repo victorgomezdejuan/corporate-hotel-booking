@@ -3,11 +3,11 @@ using CorporateHotelBooking.Repositories.Hotels;
 
 namespace CorporateHotelBooking.Unit.Tests.Repositories.InMemoryHotelRepositoryTests;
 
-public class InMemoryHotelRepositoryExistsTests
+public class ExistsTests
 {
     private readonly InMemoryHotelRepository _hotelRepository;
 
-    public InMemoryHotelRepositoryExistsTests()
+    public ExistsTests()
     {
         _hotelRepository = new InMemoryHotelRepository();
     }

@@ -1,40 +1,39 @@
-using CorporateHotelBooking.Application.Common.Exceptions;
 using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Repositories.Employees;
 using FluentAssertions;
 
 namespace CorporateHotelBooking.Unit.Tests.Repositories.InMemoryEmployeeRepositoryTests;
 
-public class InMemoryEmployeeRepositoryGetEmployeeTests
+public class ExistsTests
 {
     private readonly InMemoryEmployeeRepository _employeeRepository;
 
-    public InMemoryEmployeeRepositoryGetEmployeeTests()
+    public ExistsTests()
     {
         _employeeRepository = new InMemoryEmployeeRepository();
     }
 
     [Fact]
-    public void GetEmployee()
+    public void EmployeeExists()
     {
         // Arrange
         var employeeToBeAdded = new Employee(1, 100);
         _employeeRepository.AddEmployee(employeeToBeAdded);
 
         // Act
-        var retrievedEmployee = _employeeRepository.GetEmployee(1);
+        var employeeExists = _employeeRepository.Exists(1);
 
         // Assert
-        retrievedEmployee.Should().Be(employeeToBeAdded);
+        employeeExists.Should().BeTrue();
     }
 
     [Fact]
-    public void GetNonExistingEmployee()
+    public void EmployeeDoesNotExist()
     {
         // Act
-        Action getEmployeeAction = () => _employeeRepository.GetEmployee(1);
+        var employeeExists = _employeeRepository.Exists(1);
 
         // Assert
-        getEmployeeAction.Should().Throw<EmployeeNotFoundException>();
+        employeeExists.Should().BeFalse();
     }
 }

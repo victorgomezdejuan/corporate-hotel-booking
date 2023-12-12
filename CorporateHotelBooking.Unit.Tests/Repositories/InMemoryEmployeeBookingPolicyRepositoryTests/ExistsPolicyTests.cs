@@ -5,11 +5,11 @@ using FluentAssertions;
 
 namespace CorporateHotelBooking.Unit.Tests.Repositories.InMemoryEmployeeBookingPolicyRepositoryTests;
 
-public class InMemoryEmployeeBookingPolicyRepositoryExistsPolicyTests
+public class ExistsPolicyTests
 {
     private readonly InMemoryEmployeeBookingPolicyRepository _employeePolicyRepository;
 
-    public InMemoryEmployeeBookingPolicyRepositoryExistsPolicyTests()
+    public ExistsPolicyTests()
     {
         _employeePolicyRepository = new InMemoryEmployeeBookingPolicyRepository();
     }

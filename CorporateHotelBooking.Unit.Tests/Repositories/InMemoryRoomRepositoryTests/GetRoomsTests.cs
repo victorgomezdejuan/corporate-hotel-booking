@@ -4,7 +4,7 @@ using CorporateHotelBooking.Repositories.Rooms;
 
 namespace CorporateHotelBooking.Unit.Tests.Repositories.InMemoryRoomRepositoryTests;
 
-public class InMemoryRoomRepositoryGetRoomsTests
+public class GetRoomsTests
 {
     [Fact]
     public void GetNoRooms()

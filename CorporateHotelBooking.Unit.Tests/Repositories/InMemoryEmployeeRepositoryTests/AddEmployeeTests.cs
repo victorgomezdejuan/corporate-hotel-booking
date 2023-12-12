@@ -4,7 +4,7 @@ using FluentAssertions;
 
 namespace CorporateHotelBooking.Unit.Tests.Repositories.InMemoryEmployeeRepositoryTest;
 
-public class InMemoryEmployeeRepositoryAddEmployeeTests
+public class AddEmployeeTests
 {
     [Fact]
     public void AddEmployee()

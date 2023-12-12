@@ -3,28 +3,26 @@ using CorporateHotelBooking.Repositories.Rooms;
 
 namespace CorporateHotelBooking.Unit.Tests.Repositories.InMemoryRoomRepositoryTests;
 
-public class InMemoryRoomRepositoryUpdateRoomTests
+public class AddRoomTests
 {
     private readonly InMemoryRoomRepository _repository;
 
-    public InMemoryRoomRepositoryUpdateRoomTests()
+    public AddRoomTests()
     {
         _repository = new InMemoryRoomRepository();
     }
 
     [Fact]
-    public void UpdateExistingRoom()
+    public void AddNewRoom()
     {
         // Arrange
-        var existingRoom = new Room(1, 100, RoomType.Standard);
-        _repository.AddRoom(existingRoom);
-        var updatedRoom = new Room(1, 100, RoomType.JuniorSuite);
+        var roomToBeAdded = new Room(1, 100, RoomType.Standard);
 
         // Act
-        _repository.UpdateRoom(updatedRoom);
+        _repository.AddRoom(roomToBeAdded);
 
         // Assert
         var retrievedRoom = _repository.GetRoom(1, 100);
-        Assert.Equal(updatedRoom, retrievedRoom);
+        Assert.Equal(roomToBeAdded, retrievedRoom);
     }
 }

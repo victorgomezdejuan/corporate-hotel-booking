@@ -5,20 +5,20 @@ using FluentAssertions;
 
 namespace CorporateHotelBooking.Unit.Tests.Repositories.InMemoryCompanyBookingPolicyRepositoryTests;
 
-public class InMemoryCompanyBookingPolicyRepositoryAddCompanyPolicyTests
+public class GetCompanyPolicyTests
 {
     [Fact]
-    public void AddCompanyPolicy()
+    public void GetExistingCompanyPolicy()
     {
         // Arrange
         var companyPolicyRepository = new InMemoryCompanyBookingPolicyRepository();
         var companyPolicyToBeAdded = new CompanyBookingPolicy(1, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite });
-
-        // Act
         companyPolicyRepository.AddCompanyPolicy(companyPolicyToBeAdded);
 
-        // Assert
+        // Act
         var retrievedCompanyPolicy = companyPolicyRepository.GetCompanyPolicy(1);
+
+        // Assert
         retrievedCompanyPolicy.Should().Be(companyPolicyToBeAdded);
     }
 }
