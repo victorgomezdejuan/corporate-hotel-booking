@@ -124,7 +124,7 @@ public class BookARoomCommandHandler
     private void CheckRoomAvailability(BookARoomCommand command)
     {
         if (
-            _bookingRepository.GetBookingCount(command.HotelId, command.RoomType, command.CheckInDate, command.CheckOutDate)
+            _bookingRepository.GetCount(command.HotelId, command.RoomType, command.CheckInDate, command.CheckOutDate)
             >=
             _roomRepository.GetRoomCount(command.HotelId, command.RoomType))
         {

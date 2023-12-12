@@ -6,5 +6,5 @@ public interface IBookingRepository
 {
     Booking Add(Booking booking);
     Booking Get(int id);
-    int GetBookingCount(int hotelId, RoomType roomType, DateOnly dateFrom, DateOnly dateTo);
+    int GetCount(int hotelId, RoomType roomType, DateOnly dateFrom, DateOnly dateTo);
 }

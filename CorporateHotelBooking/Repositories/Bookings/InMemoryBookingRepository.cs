@@ -40,7 +40,7 @@ public class InMemoryBookingRepository : IBookingRepository
         }
     }
 
-    public int GetBookingCount(int hotelId, RoomType roomType, DateOnly dateFrom, DateOnly dateTo)
+    public int GetCount(int hotelId, RoomType roomType, DateOnly dateFrom, DateOnly dateTo)
     {
         return _bookings.Count(b => b.HotelId == hotelId && b.RoomType == roomType &&
             (
