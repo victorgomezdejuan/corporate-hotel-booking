@@ -1,3 +1,4 @@
+using CorporateHotelBooking.Application.Bookings.Commands;
 using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Domain.Entities.BookingPolicies;
 using CorporateHotelBooking.Repositories.Bookings;
@@ -60,5 +61,29 @@ public class BookingServiceTests
         // Assert
         booking.Should().BeEquivalentTo(expectedBooking);
         _bookingRepository.Get(1).Should().Be(expectedBooking);
+    }
+
+    [Fact]
+    public void TryToBookARoomThatIsNotAvailableAtThatTime()
+    {
+        // Arrange
+        _hotelRepository.AddHotel(new Hotel(3, "Hotel 3"));
+        _roomRepository.AddRoom(new Room(3, 100, RoomType.Standard));
+        _employeeRepository.AddEmployee(new Employee(2, 4));
+        _companyBookingPolicyRepository.AddCompanyPolicy(new CompanyBookingPolicy(4, new List<RoomType> { RoomType.Standard }));
+        _bookingRepository.Add(new Booking(2, 3, RoomType.Standard, DateOnly.FromDateTime(DateTime.Now), DateOnly.FromDateTime(DateTime.Now.AddDays(1))));
+        var bookingService = new BookingService(
+            _bookingRepository,
+            _hotelRepository,
+            _roomRepository,
+            _employeeRepository,
+            _employeeBookingPolicyRepository,
+            _companyBookingPolicyRepository);
+
+        // Act
+        Action action = () => bookingService.Book(2, 3, RoomType.Standard, DateOnly.FromDateTime(DateTime.Now), DateOnly.FromDateTime(DateTime.Now.AddDays(1)));
+
+        // Assert
+        action.Should().Throw<NoRoomsAvailableException>();
     }
 }
