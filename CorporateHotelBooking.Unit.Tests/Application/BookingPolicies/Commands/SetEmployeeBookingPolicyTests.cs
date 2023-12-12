@@ -41,6 +41,6 @@ public class SetEmployeeBookingPolicyTests
         _setEmployeePolicyCommandHandler.Handle(setEmployeePolicyCommand);
 
         // Assert
-        _employeePolicyRepositoryMock.Verify(r => r.UpdateEmployeePolicy(new EmployeeBookingPolicy(1, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite })));
+        _employeePolicyRepositoryMock.Verify(r => r.Update(new EmployeeBookingPolicy(1, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite })));
     }
 }

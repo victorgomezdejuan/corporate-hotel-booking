@@ -66,7 +66,7 @@ public class NotImplementedEmployeeBookingPolicyRepository : IEmployeeBookingPol
         throw new NotImplementedException();
     }
 
-    public void UpdateEmployeePolicy(EmployeeBookingPolicy employeePolicy)
+    public void Update(EmployeeBookingPolicy employeePolicy)
     {
         throw new NotImplementedException();
     }

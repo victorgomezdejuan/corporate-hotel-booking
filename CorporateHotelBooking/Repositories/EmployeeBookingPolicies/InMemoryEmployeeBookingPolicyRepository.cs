@@ -26,7 +26,7 @@ public class InMemoryEmployeeBookingPolicyRepository : IEmployeeBookingPolicyRep
         return _employeePolicies[employeeId];
     }
 
-    public void UpdateEmployeePolicy(EmployeeBookingPolicy employeePolicy)
+    public void Update(EmployeeBookingPolicy employeePolicy)
     {
         _employeePolicies[employeePolicy.EmployeeId] = employeePolicy;
     }

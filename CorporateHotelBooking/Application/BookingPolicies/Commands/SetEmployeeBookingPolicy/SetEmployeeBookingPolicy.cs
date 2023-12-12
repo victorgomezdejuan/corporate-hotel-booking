@@ -31,7 +31,7 @@ namespace CorporateHotelBooking.Application.BookingPolicies.Commands.SetEmployee
 
             if (_employeePolicyRepository.Exists(setEmployeePolicyCommand.EmployeeId))
             {
-                _employeePolicyRepository.UpdateEmployeePolicy(employeePolicy);
+                _employeePolicyRepository.Update(employeePolicy);
             }
             else
             {
