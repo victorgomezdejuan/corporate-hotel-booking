@@ -66,7 +66,7 @@ public class NotImplementedCompanyBookingPolicyRepository : ICompanyBookingPolic
         throw new NotImplementedException();
     }
 
-    public void UpdateCompanyPolicy(CompanyBookingPolicy companyPolicy)
+    public void Update(CompanyBookingPolicy companyPolicy)
     {
         throw new NotImplementedException();
     }

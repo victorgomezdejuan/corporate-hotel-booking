@@ -29,7 +29,7 @@ public class SetCompanyBookingPolicyCommandHandler
     {
         if (_companyPolicyRepository.Exists(command.CompanyId))
         {
-            _companyPolicyRepository.UpdateCompanyPolicy(new CompanyBookingPolicy(command.CompanyId, command.RoomTypes.ToList()));
+            _companyPolicyRepository.Update(new CompanyBookingPolicy(command.CompanyId, command.RoomTypes.ToList()));
         }
         else
         {
