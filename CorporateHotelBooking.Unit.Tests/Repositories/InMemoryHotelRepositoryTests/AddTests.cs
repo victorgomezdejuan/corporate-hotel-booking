@@ -22,7 +22,7 @@ public class AddTests
         _repository.Add(hotelToBeAdded);
         
         // Assert
-        var retrievedHotel = _repository.GetHotel(1);
+        var retrievedHotel = _repository.Get(1);
         Assert.Equal(hotelToBeAdded, retrievedHotel);
     }
 }

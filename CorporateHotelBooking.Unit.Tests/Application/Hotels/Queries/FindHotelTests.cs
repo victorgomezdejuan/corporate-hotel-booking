@@ -15,7 +15,7 @@ public class FindHotelTests
     {
         // Arrange
         var hotelRepositoryMock = new Mock<IHotelRepository>();
-        hotelRepositoryMock.Setup(x => x.GetHotel(1)).Returns(new Hotel(1, "Hilton"));
+        hotelRepositoryMock.Setup(x => x.Get(1)).Returns(new Hotel(1, "Hilton"));
         var roomRepositoryMock = new Mock<IRoomRepository>();
         roomRepositoryMock.Setup(x => x.GetRooms(1)).Returns(new List<Room>() { new(1, 100, RoomType.Standard) }.AsReadOnly());
         var handler = new FindHotelQueryHandler(hotelRepositoryMock.Object, roomRepositoryMock.Object);

@@ -6,7 +6,7 @@ public interface IHotelRepository
 {
     void Add(Hotel hotel);
 
-    Hotel GetHotel(int hotelId);
+    Hotel Get(int hotelId);
 
     bool Exists(int hotelId);
 }

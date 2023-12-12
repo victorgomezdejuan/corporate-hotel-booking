@@ -16,7 +16,7 @@ public class InMemoryHotelRepository : IHotelRepository
         _hotels.Add(hotel.Id, hotel);
     }
 
-    public Hotel GetHotel(int hotelId)
+    public Hotel Get(int hotelId)
     {      
         return new Hotel(_hotels[hotelId].Id, _hotels[hotelId].Name);
     }
