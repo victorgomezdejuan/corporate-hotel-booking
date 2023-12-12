@@ -18,7 +18,7 @@ public class ExistsPolicyTests
     public void ExistsEmployeePolicy()
     {
         // Arrange
-        _employeePolicyRepository.AddEmployeePolicy(new EmployeeBookingPolicy(1, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite }));
+        _employeePolicyRepository.Add(new EmployeeBookingPolicy(1, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite }));
 
         // Act
         var exists = _employeePolicyRepository.Exists(1);

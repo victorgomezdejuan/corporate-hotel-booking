@@ -7,7 +7,7 @@ public class InMemoryEmployeeBookingPolicyRepository : IEmployeeBookingPolicyRep
 {
     private readonly Dictionary<int, EmployeeBookingPolicy> _employeePolicies = new();
 
-    public void AddEmployeePolicy(EmployeeBookingPolicy employeePolicy)
+    public void Add(EmployeeBookingPolicy employeePolicy)
     {
         _employeePolicies.Add(employeePolicy.EmployeeId, employeePolicy);
     }

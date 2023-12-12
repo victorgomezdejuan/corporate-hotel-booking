@@ -35,7 +35,7 @@ namespace CorporateHotelBooking.Application.BookingPolicies.Commands.SetEmployee
             }
             else
             {
-                _employeePolicyRepository.AddEmployeePolicy(employeePolicy);
+                _employeePolicyRepository.Add(employeePolicy);
             }
         }
     }

@@ -12,7 +12,7 @@ public class UpdateEmployeePolicyTests
     {
         // Arrange
         var employeePolicyRepository = new InMemoryEmployeeBookingPolicyRepository();
-        employeePolicyRepository.AddEmployeePolicy(new EmployeeBookingPolicy(1, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite }));
+        employeePolicyRepository.Add(new EmployeeBookingPolicy(1, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite }));
         var employeePolicytoBeUpdated = new EmployeeBookingPolicy(1, new List<RoomType> { RoomType.JuniorSuite, RoomType.MasterSuite });
 
         // Act

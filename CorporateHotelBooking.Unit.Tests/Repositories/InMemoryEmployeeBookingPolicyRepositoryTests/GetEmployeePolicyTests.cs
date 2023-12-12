@@ -19,7 +19,7 @@ public class GetEmployeePolicyTests
     public void GetExistingEmployeePolicy()
     {
         // Arrange
-        _employeePolicyRepository.AddEmployeePolicy(new EmployeeBookingPolicy(1, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite }));
+        _employeePolicyRepository.Add(new EmployeeBookingPolicy(1, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite }));
 
         // Act
         var retrievedEmployeePolicy = _employeePolicyRepository.GetEmployeePolicy(1);
