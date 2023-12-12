@@ -45,7 +45,7 @@ public class SetRoomCommandHandler
                 throw new HotelNotFoundException(command.HotelId);
             }
 
-            _roomRepository.AddRoom(room);
+            _roomRepository.Add(room);
         }
     }
 }

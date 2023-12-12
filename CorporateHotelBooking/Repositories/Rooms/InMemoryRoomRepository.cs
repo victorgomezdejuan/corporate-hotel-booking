@@ -12,7 +12,7 @@ public class InMemoryRoomRepository : IRoomRepository
         _rooms = new List<Room>();
     }
 
-    public void AddRoom(Room room)
+    public void Add(Room room)
     {
         _rooms.Add(room);
     }

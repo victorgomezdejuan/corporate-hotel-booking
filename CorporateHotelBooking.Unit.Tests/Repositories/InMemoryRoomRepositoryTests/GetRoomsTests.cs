@@ -20,7 +20,7 @@ public class GetRoomsTests
     public void GetOneRoom()
     {
         var repository = new InMemoryRoomRepository();
-        repository.AddRoom(new Room(1, 100, RoomType.Standard));
+        repository.Add(new Room(1, 100, RoomType.Standard));
 
         var rooms = repository.GetRooms(1);
 
@@ -33,8 +33,8 @@ public class GetRoomsTests
     public void GetMultipleRooms()
     {
         var repository = new InMemoryRoomRepository();
-        repository.AddRoom(new Room(1, 100, RoomType.Standard));
-        repository.AddRoom(new Room(1, 101, RoomType.JuniorSuite));
+        repository.Add(new Room(1, 100, RoomType.Standard));
+        repository.Add(new Room(1, 101, RoomType.JuniorSuite));
 
         var rooms = repository.GetRooms(1);
 

@@ -5,7 +5,7 @@ namespace CorporateHotelBooking.Repositories.Rooms;
 
 public interface IRoomRepository
 {
-    void AddRoom(Room room);
+    void Add(Room room);
     bool ExistsRoomNumber(int hotelId, int number);
     bool ExistsRoomType(int hotelId, RoomType roomType);
     Room GetRoom(int hotelId, int number);

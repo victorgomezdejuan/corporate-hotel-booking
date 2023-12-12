@@ -44,7 +44,7 @@ public class BookingServiceTests
             checkOutDate: DateOnly.FromDateTime(DateTime.Now.AddDays(1))
         );
         _hotelRepository.Add(new Hotel(3, "Hotel 3"));
-        _roomRepository.AddRoom(new Room(3, 100, RoomType.Standard));
+        _roomRepository.Add(new Room(3, 100, RoomType.Standard));
         _employeeRepository.Add(new Employee(2, 4));
         _companyBookingPolicyRepository.Add(new CompanyBookingPolicy(4, new List<RoomType> { RoomType.Standard }));
         var bookingService = new BookingService(
@@ -68,7 +68,7 @@ public class BookingServiceTests
     {
         // Arrange
         _hotelRepository.Add(new Hotel(3, "Hotel 3"));
-        _roomRepository.AddRoom(new Room(3, 100, RoomType.Standard));
+        _roomRepository.Add(new Room(3, 100, RoomType.Standard));
         _employeeRepository.Add(new Employee(2, 4));
         _companyBookingPolicyRepository.Add(new CompanyBookingPolicy(4, new List<RoomType> { RoomType.Standard }));
         _bookingRepository.Add(new Booking(2, 3, RoomType.Standard, DateOnly.FromDateTime(DateTime.Now), DateOnly.FromDateTime(DateTime.Now.AddDays(1))));

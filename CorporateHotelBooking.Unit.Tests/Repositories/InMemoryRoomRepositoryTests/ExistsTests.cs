@@ -16,7 +16,7 @@ public class ExistsTests
     public void RoomNumberExists()
     {
         // Arrange
-        _repository.AddRoom(new Room(1, 100, RoomType.Standard));
+        _repository.Add(new Room(1, 100, RoomType.Standard));
 
         // Act
         var exists = _repository.ExistsRoomNumber(1, 100);
@@ -39,7 +39,7 @@ public class ExistsTests
     public void RoomTypeExists()
     {
         // Arrange
-        _repository.AddRoom(new Room(1, 100, RoomType.Standard));
+        _repository.Add(new Room(1, 100, RoomType.Standard));
 
         // Act
         var exists = _repository.ExistsRoomType(1, RoomType.Standard);

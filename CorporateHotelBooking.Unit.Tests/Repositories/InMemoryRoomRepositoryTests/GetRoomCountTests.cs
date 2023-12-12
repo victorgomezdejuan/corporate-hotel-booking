@@ -23,7 +23,7 @@ public class GetRoomCountTests
     {
         // Arrange
         var repository = new InMemoryRoomRepository();
-        repository.AddRoom(new Room(1, 100, RoomType.Standard));
+        repository.Add(new Room(1, 100, RoomType.Standard));
 
         // Act
         var count = repository.GetRoomCount(1, RoomType.Standard);
@@ -37,9 +37,9 @@ public class GetRoomCountTests
     {
         // Arrange
         var repository = new InMemoryRoomRepository();
-        repository.AddRoom(new Room(1, 100, RoomType.Standard));
-        repository.AddRoom(new Room(1, 101, RoomType.Standard));
-        repository.AddRoom(new Room(1, 102, RoomType.Standard));
+        repository.Add(new Room(1, 100, RoomType.Standard));
+        repository.Add(new Room(1, 101, RoomType.Standard));
+        repository.Add(new Room(1, 102, RoomType.Standard));
 
         // Act
         var count = repository.GetRoomCount(1, RoomType.Standard);

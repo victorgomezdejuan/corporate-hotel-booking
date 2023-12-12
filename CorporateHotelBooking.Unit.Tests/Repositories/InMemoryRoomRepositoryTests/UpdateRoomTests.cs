@@ -17,7 +17,7 @@ public class UpdateRoomTests
     {
         // Arrange
         var existingRoom = new Room(1, 100, RoomType.Standard);
-        _repository.AddRoom(existingRoom);
+        _repository.Add(existingRoom);
         var updatedRoom = new Room(1, 100, RoomType.JuniorSuite);
 
         // Act

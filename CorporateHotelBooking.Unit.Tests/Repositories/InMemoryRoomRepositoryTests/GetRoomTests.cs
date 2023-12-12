@@ -17,7 +17,7 @@ public class GetRoomTests
     {
         // Arrange
         var existingRoom = new Room(1, 100, RoomType.Standard);
-        _repository.AddRoom(existingRoom);
+        _repository.Add(existingRoom);
 
         // Act
         var retrievedRoom = _repository.GetRoom(1, 100);
