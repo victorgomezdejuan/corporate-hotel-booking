@@ -41,7 +41,7 @@ public class SetRoomTests
         setRoomCommandHandler.Handle(setRoomCommand);
 
         // Assert
-        roomRepository.Verify(x => x.UpdateRoom(It.Is<Room>(r => r.Equals(new Room(1, 100, RoomType.Standard)))));
+        roomRepository.Verify(x => x.Update(It.Is<Room>(r => r.Equals(new Room(1, 100, RoomType.Standard)))));
     }
 
     [Fact]

@@ -3,11 +3,11 @@ using CorporateHotelBooking.Repositories.Rooms;
 
 namespace CorporateHotelBooking.Unit.Tests.Repositories.InMemoryRoomRepositoryTests;
 
-public class UpdateRoomTests
+public class UpdateTests
 {
     private readonly InMemoryRoomRepository _repository;
 
-    public UpdateRoomTests()
+    public UpdateTests()
     {
         _repository = new InMemoryRoomRepository();
     }
@@ -21,7 +21,7 @@ public class UpdateRoomTests
         var updatedRoom = new Room(1, 100, RoomType.JuniorSuite);
 
         // Act
-        _repository.UpdateRoom(updatedRoom);
+        _repository.Update(updatedRoom);
 
         // Assert
         var retrievedRoom = _repository.Get(1, 100);

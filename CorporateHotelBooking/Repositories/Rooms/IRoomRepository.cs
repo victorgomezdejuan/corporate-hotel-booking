@@ -11,5 +11,5 @@ public interface IRoomRepository
     Room Get(int hotelId, int number);
     int GetCount(int hotelId, RoomType roomType);
     ReadOnlyCollection<Room> GetMany(int hotelId);
-    void UpdateRoom(Room room);
+    void Update(Room room);
 }

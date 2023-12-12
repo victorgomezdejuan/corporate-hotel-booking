@@ -42,7 +42,7 @@ public class InMemoryRoomRepository : IRoomRepository
         return _rooms.Where(r => r.HotelId == hotelId).ToList().AsReadOnly();
     }
 
-    public void UpdateRoom(Room room)
+    public void Update(Room room)
     {
         var existingRoom = Get(room.HotelId, room.Number);
         _rooms.Remove(existingRoom);
