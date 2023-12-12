@@ -23,7 +23,7 @@ public class GetBookingCountTests
     {
         // Arrange
         var repository = new InMemoryBookingRepository();
-        repository.AddBooking(new Booking(10, 1, RoomType.Standard, new DateOnly(2021, 1, 1), new DateOnly(2021, 1, 2)));
+        repository.Add(new Booking(10, 1, RoomType.Standard, new DateOnly(2021, 1, 1), new DateOnly(2021, 1, 2)));
 
         // Act
         var count = repository.GetBookingCount(1, RoomType.Standard, new DateOnly(2021, 1, 1), new DateOnly(2021, 1, 2));
@@ -37,7 +37,7 @@ public class GetBookingCountTests
     {
         // Arrange
         var repository = new InMemoryBookingRepository();
-        repository.AddBooking(new Booking(10, 1, RoomType.Standard, new DateOnly(2021, 1, 1), new DateOnly(2021, 1, 2)));
+        repository.Add(new Booking(10, 1, RoomType.Standard, new DateOnly(2021, 1, 1), new DateOnly(2021, 1, 2)));
 
         // Act
         var count = repository.GetBookingCount(2, RoomType.Standard, new DateOnly(2021, 1, 1), new DateOnly(2021, 1, 2));
@@ -51,7 +51,7 @@ public class GetBookingCountTests
     {
         // Arrange
         var repository = new InMemoryBookingRepository();
-        repository.AddBooking(new Booking(10, 1, RoomType.Standard, new DateOnly(2021, 1, 1), new DateOnly(2021, 1, 2)));
+        repository.Add(new Booking(10, 1, RoomType.Standard, new DateOnly(2021, 1, 1), new DateOnly(2021, 1, 2)));
 
         // Act
         var count = repository.GetBookingCount(1, RoomType.JuniorSuite, new DateOnly(2021, 1, 1), new DateOnly(2021, 1, 2));
@@ -65,7 +65,7 @@ public class GetBookingCountTests
     {
         // Arrange
         var repository = new InMemoryBookingRepository();
-        repository.AddBooking(new Booking(10, 1, RoomType.Standard, new DateOnly(2021, 1, 1), new DateOnly(2021, 1, 2)));
+        repository.Add(new Booking(10, 1, RoomType.Standard, new DateOnly(2021, 1, 1), new DateOnly(2021, 1, 2)));
 
         // Act
         var count = repository.GetBookingCount(1, RoomType.Standard, new DateOnly(2021, 1, 2), new DateOnly(2021, 1, 3));
@@ -79,7 +79,7 @@ public class GetBookingCountTests
     {
         // Arrange
         var repository = new InMemoryBookingRepository();
-        repository.AddBooking(new Booking(10, 1, RoomType.Standard, new DateOnly(2021, 1, 1), new DateOnly(2021, 1, 2)));
+        repository.Add(new Booking(10, 1, RoomType.Standard, new DateOnly(2021, 1, 1), new DateOnly(2021, 1, 2)));
 
         // Act
         var count = repository.GetBookingCount(1, RoomType.Standard, new DateOnly(2020, 12, 31), new DateOnly(2021, 1, 1));
@@ -93,7 +93,7 @@ public class GetBookingCountTests
     {
         // Arrange
         var repository = new InMemoryBookingRepository();
-        repository.AddBooking(new Booking(10, 1, RoomType.Standard, new DateOnly(2021, 1, 1), new DateOnly(2021, 1, 2)));
+        repository.Add(new Booking(10, 1, RoomType.Standard, new DateOnly(2021, 1, 1), new DateOnly(2021, 1, 2)));
 
         // Act
         var count = repository.GetBookingCount(1, RoomType.Standard, new DateOnly(2021, 1, 3), new DateOnly(2021, 1, 4));

@@ -5,6 +5,6 @@ namespace CorporateHotelBooking.Repositories.Bookings;
 public interface IBookingRepository
 {
     Booking Add(Booking booking);
-    Booking GetBooking(int id);
+    Booking Get(int id);
     int GetBookingCount(int hotelId, RoomType roomType, DateOnly dateFrom, DateOnly dateTo);
 }

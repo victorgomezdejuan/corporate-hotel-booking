@@ -13,17 +13,31 @@ public class InMemoryBookingRepository : IBookingRepository
 
     public Booking Add(Booking booking)
     {
-        throw new NotImplementedException();
+        var newBooking = new Booking(
+            id: _bookings.Count + 1,
+            employeeId: booking.EmployeeId,
+            hotelId: booking.HotelId,
+            roomType: booking.RoomType,
+            checkInDate: booking.CheckInDate,
+            checkOutDate: booking.CheckOutDate
+        );
+        _bookings.Add(newBooking);
+
+        return newBooking;
     }
 
-    public void AddBooking(Booking booking)
+    public Booking Get(int id)
     {
-        _bookings.Add(booking);
-    }
-
-    public Booking GetBooking(int id)
-    {
-        throw new NotImplementedException();
+        var booking = _bookings.SingleOrDefault(b => b.Id == id);
+        
+        if (booking is not null)
+        {
+            return booking;
+        }
+        else
+        {
+            throw new BookingNotFoundException();
+        }
     }
 
     public int GetBookingCount(int hotelId, RoomType roomType, DateOnly dateFrom, DateOnly dateTo)
