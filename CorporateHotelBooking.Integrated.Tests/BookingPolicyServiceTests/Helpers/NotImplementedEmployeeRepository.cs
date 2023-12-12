@@ -10,7 +10,7 @@ public class NotImplementedEmployeeRepository: IEmployeeRepository
         throw new NotImplementedException();
     }
 
-    public void DeleteEmployee(int employeeId)
+    public void Delete(int employeeId)
     {
         throw new NotImplementedException();
     }

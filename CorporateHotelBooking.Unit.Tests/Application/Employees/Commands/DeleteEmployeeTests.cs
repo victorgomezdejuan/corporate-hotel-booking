@@ -27,7 +27,7 @@ public class DeleteEmployeeTests
         _deleteEmployeeCommandHandler.Handle(new DeleteEmployeeCommand(1));
 
         // Assert
-        _employeeRepositoryMock.Verify(r => r.DeleteEmployee(1));
+        _employeeRepositoryMock.Verify(r => r.Delete(1));
     }
 
     [Fact]

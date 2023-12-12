@@ -5,7 +5,7 @@ using FluentAssertions;
 
 namespace CorporateHotelBooking.Unit.Tests.Repositories.InMemoryEmployeeRepositoryTests;
 
-public class DeleteEmployeeTests
+public class DeleteTests
 {
     [Fact]
     public void DeleteExistingEmployee()
@@ -15,7 +15,7 @@ public class DeleteEmployeeTests
         employeeRepository.Add(new Employee(1, 100));
 
         // Act
-        employeeRepository.DeleteEmployee(1);
+        employeeRepository.Delete(1);
 
         // Assert
         Action getEmployeeAction = () => employeeRepository.GetEmployee(1);

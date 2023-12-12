@@ -28,6 +28,6 @@ public class DeleteEmployeeCommandHandler
         {
             throw new EmployeeNotFoundException(command.EmployeeId);
         }
-        _employeeRepository.DeleteEmployee(command.EmployeeId);
+        _employeeRepository.Delete(command.EmployeeId);
     }
 }

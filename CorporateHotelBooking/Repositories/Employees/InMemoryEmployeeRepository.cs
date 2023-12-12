@@ -12,7 +12,7 @@ public class InMemoryEmployeeRepository : IEmployeeRepository
         _employees.Add(employee.Id, employee);
     }
 
-    public void DeleteEmployee(int employeeId)
+    public void Delete(int employeeId)
     {
         if (_employees.ContainsKey(employeeId))
         {
