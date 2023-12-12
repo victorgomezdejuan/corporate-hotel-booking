@@ -18,7 +18,7 @@ public class ExistsTests
     {
         // Arrange
         var employeeToBeAdded = new Employee(1, 100);
-        _employeeRepository.AddEmployee(employeeToBeAdded);
+        _employeeRepository.Add(employeeToBeAdded);
 
         // Act
         var employeeExists = _employeeRepository.Exists(1);

@@ -28,7 +28,7 @@ public class AddEmployeeTests
         _addEmployeeCommandHandler.Handle(addEmployeeCommand);
 
         // Assert
-        _employeeRepository.Verify(r => r.AddEmployee(new Employee(1, 100)));
+        _employeeRepository.Verify(r => r.Add(new Employee(1, 100)));
     }
 
     [Fact]

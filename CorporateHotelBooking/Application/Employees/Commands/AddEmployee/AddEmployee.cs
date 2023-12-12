@@ -30,6 +30,6 @@ public class AddEmployeeCommandHandler
         {
             throw new EmployeeAlreadyExistsException();
         }
-        _employeeRepository.AddEmployee(new Employee(command.EmployeeId, command.CompanyId));
+        _employeeRepository.Add(new Employee(command.EmployeeId, command.CompanyId));
     }
 }

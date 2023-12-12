@@ -12,7 +12,7 @@ public class DeleteEmployeeTests
     {
         // Arrange
         var employeeRepository = new InMemoryEmployeeRepository();
-        employeeRepository.AddEmployee(new Employee(1, 100));
+        employeeRepository.Add(new Employee(1, 100));
 
         // Act
         employeeRepository.DeleteEmployee(1);

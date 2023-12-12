@@ -19,7 +19,7 @@ public class GetEmployeeTests
     {
         // Arrange
         var employeeToBeAdded = new Employee(1, 100);
-        _employeeRepository.AddEmployee(employeeToBeAdded);
+        _employeeRepository.Add(employeeToBeAdded);
 
         // Act
         var retrievedEmployee = _employeeRepository.GetEmployee(1);

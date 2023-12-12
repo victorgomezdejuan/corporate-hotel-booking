@@ -7,7 +7,7 @@ public class InMemoryEmployeeRepository : IEmployeeRepository
 {
     private readonly Dictionary<int, Employee> _employees = new();
 
-    public void AddEmployee(Employee employee)
+    public void Add(Employee employee)
     {
         _employees.Add(employee.Id, employee);
     }

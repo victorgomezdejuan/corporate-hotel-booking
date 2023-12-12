@@ -5,7 +5,7 @@ namespace CorporateHotelBooking.Integrated.Tests.BookingPolicyServiceTests.Helpe
 
 public class NotImplementedEmployeeRepository: IEmployeeRepository
 {
-    public void AddEmployee(Employee employee)
+    public void Add(Employee employee)
     {
         throw new NotImplementedException();
     }
