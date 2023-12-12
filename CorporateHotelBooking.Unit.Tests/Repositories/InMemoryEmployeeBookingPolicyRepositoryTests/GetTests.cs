@@ -6,11 +6,11 @@ using FluentAssertions;
 
 namespace CorporateHotelBooking.Unit.Tests.Repositories.InMemoryEmployeePolicyRepositoryTests;
 
-public class GetEmployeePolicyTests
+public class GetTests
 {
     private readonly InMemoryEmployeeBookingPolicyRepository _employeePolicyRepository;
 
-    public GetEmployeePolicyTests()
+    public GetTests()
     {
         _employeePolicyRepository = new InMemoryEmployeeBookingPolicyRepository();
     }
@@ -22,7 +22,7 @@ public class GetEmployeePolicyTests
         _employeePolicyRepository.Add(new EmployeeBookingPolicy(1, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite }));
 
         // Act
-        var retrievedEmployeePolicy = _employeePolicyRepository.GetEmployeePolicy(1);
+        var retrievedEmployeePolicy = _employeePolicyRepository.Get(1);
 
         // Assert
         retrievedEmployeePolicy.Should().Be(new EmployeeBookingPolicy(1, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite }));
@@ -32,7 +32,7 @@ public class GetEmployeePolicyTests
     public void GetNonExistingEmployeePolicy()
     {
         // Act
-        EmployeeBookingPolicy action() => _employeePolicyRepository.GetEmployeePolicy(1);
+        EmployeeBookingPolicy action() => _employeePolicyRepository.Get(1);
 
         // Assert
         Assert.Throws<EmployeeNotFoundException>(action);

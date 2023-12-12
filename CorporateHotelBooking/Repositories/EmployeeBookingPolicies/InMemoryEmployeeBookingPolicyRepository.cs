@@ -17,7 +17,7 @@ public class InMemoryEmployeeBookingPolicyRepository : IEmployeeBookingPolicyRep
         return _employeePolicies.ContainsKey(employeeId);
     }
 
-    public EmployeeBookingPolicy GetEmployeePolicy(int employeeId)
+    public EmployeeBookingPolicy Get(int employeeId)
     {
         if (!Exists(employeeId))
         {

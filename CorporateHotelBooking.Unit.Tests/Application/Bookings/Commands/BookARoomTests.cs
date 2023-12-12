@@ -95,7 +95,7 @@ public class BookARoomTests
         _roomRepositoryMock.Setup(x => x.ExistsRoomType(1, RoomType.Standard)).Returns(true);
         _employeeRepositoryMock.Setup(x => x.GetEmployee(10)).Returns(new Employee(10, 100));
         _employeeBookingPolicyRepositoryMock.Setup(x => x.Exists(10)).Returns(true);
-        _employeeBookingPolicyRepositoryMock.Setup(x => x.GetEmployeePolicy(10)).Returns(new EmployeeBookingPolicy(1, new List<RoomType> { RoomType.JuniorSuite }));
+        _employeeBookingPolicyRepositoryMock.Setup(x => x.Get(10)).Returns(new EmployeeBookingPolicy(1, new List<RoomType> { RoomType.JuniorSuite }));
         _companyBookingPolicyRepositoryMock.Setup(x => x.Exists(100)).Returns(false);
 
         var command = new BookARoomCommand
@@ -177,7 +177,7 @@ public class BookARoomTests
         _roomRepositoryMock.Setup(x => x.ExistsRoomType(1, RoomType.Standard)).Returns(true);
         _employeeRepositoryMock.Setup(x => x.GetEmployee(10)).Returns(new Employee(10, 100));
         _employeeBookingPolicyRepositoryMock.Setup(x => x.Exists(10)).Returns(true);
-        _employeeBookingPolicyRepositoryMock.Setup(x => x.GetEmployeePolicy(10)).Returns(new EmployeeBookingPolicy(10, new List<RoomType> { RoomType.Standard }));
+        _employeeBookingPolicyRepositoryMock.Setup(x => x.Get(10)).Returns(new EmployeeBookingPolicy(10, new List<RoomType> { RoomType.Standard }));
         _companyBookingPolicyRepositoryMock.Setup(x => x.Exists(100)).Returns(false);
         _roomRepositoryMock.Setup(x => x.GetRoomCount(1, RoomType.Standard)).Returns(1);
         _bookingRepositoryMock.Setup(x => x.GetCount(1, RoomType.Standard, DateUtils.Today(), DateUtils.Today().AddDays(1))).Returns(0);

@@ -19,7 +19,7 @@ public class UpdateEmployeePolicyTests
         employeePolicyRepository.UpdateEmployeePolicy(employeePolicytoBeUpdated);
 
         // Assert
-        var retrievedEmployeePolicy = employeePolicyRepository.GetEmployeePolicy(1);
+        var retrievedEmployeePolicy = employeePolicyRepository.Get(1);
         retrievedEmployeePolicy.Should().Be(employeePolicytoBeUpdated);
     }
 }

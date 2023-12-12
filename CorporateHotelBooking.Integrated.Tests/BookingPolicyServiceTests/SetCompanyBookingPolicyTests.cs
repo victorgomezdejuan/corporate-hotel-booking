@@ -61,7 +61,7 @@ public class NotImplementedEmployeeBookingPolicyRepository : IEmployeeBookingPol
         throw new NotImplementedException();
     }
 
-    public EmployeeBookingPolicy GetEmployeePolicy(int employeeId)
+    public EmployeeBookingPolicy Get(int employeeId)
     {
         throw new NotImplementedException();
     }

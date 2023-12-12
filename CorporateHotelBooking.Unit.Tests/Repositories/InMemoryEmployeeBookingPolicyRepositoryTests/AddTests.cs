@@ -18,7 +18,7 @@ public class AddTests
         employeePolicyRepository.Add(employeePolicyToBeAdded);
 
         // Assert
-        var retrievedEmployeePolicy = employeePolicyRepository.GetEmployeePolicy(1);
+        var retrievedEmployeePolicy = employeePolicyRepository.Get(1);
         retrievedEmployeePolicy.Should().Be(employeePolicyToBeAdded);
     }
 }

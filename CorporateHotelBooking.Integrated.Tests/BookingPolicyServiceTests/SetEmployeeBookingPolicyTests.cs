@@ -30,7 +30,7 @@ public class SetEmployeeBookingPolicyTests
         _bookingPolicyService.SetEmployeePolicy(1, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite });
 
         // Assert
-        var retrievedEmployeePolicy = _employeePolicyRepository.GetEmployeePolicy(1);
+        var retrievedEmployeePolicy = _employeePolicyRepository.Get(1);
         retrievedEmployeePolicy.Should().Be(new EmployeeBookingPolicy(1, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite }));
     }
 
@@ -44,7 +44,7 @@ public class SetEmployeeBookingPolicyTests
         _bookingPolicyService.SetEmployeePolicy(1, new List<RoomType> { RoomType.JuniorSuite, RoomType.MasterSuite });
 
         // Assert
-        var retrievedEmployeePolicy = _employeePolicyRepository.GetEmployeePolicy(1);
+        var retrievedEmployeePolicy = _employeePolicyRepository.Get(1);
         retrievedEmployeePolicy.Should().Be(new EmployeeBookingPolicy(1, new List<RoomType> { RoomType.JuniorSuite, RoomType.MasterSuite }));
     }
 }
