@@ -13,7 +13,7 @@ public class GetTests
     }
 
     [Fact]
-    public void GetRoom()
+    public void GetAnExistingRoom()
     {
         // Arrange
         var existingRoom = new Room(1, 100, RoomType.Standard);
