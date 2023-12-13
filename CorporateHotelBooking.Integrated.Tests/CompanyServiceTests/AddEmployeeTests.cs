@@ -1,5 +1,6 @@
 using CorporateHotelBooking.Application.Employees.Commands.AddEmployee;
 using CorporateHotelBooking.Repositories.Employees;
+using CorporateHotelBooking.Services;
 using FluentAssertions;
 
 namespace CorporateHotelBooking.Integrated.Tests.CompanyServiceTests;

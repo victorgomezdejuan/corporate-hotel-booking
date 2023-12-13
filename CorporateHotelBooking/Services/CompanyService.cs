@@ -2,7 +2,7 @@ using CorporateHotelBooking.Application.Employees.Commands.AddEmployee;
 using CorporateHotelBooking.Application.Employees.Commands.DeleteEmployee;
 using CorporateHotelBooking.Repositories.Employees;
 
-namespace CorporateHotelBooking;
+namespace CorporateHotelBooking.Services;
 
 public class CompanyService
 {

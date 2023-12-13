@@ -1,5 +1,6 @@
 using CorporateHotelBooking.Application.Common.Exceptions;
 using CorporateHotelBooking.Repositories.Employees;
+using CorporateHotelBooking.Services;
 using FluentAssertions;
 
 namespace CorporateHotelBooking.Integrated.Tests.CompanyServiceTests;
