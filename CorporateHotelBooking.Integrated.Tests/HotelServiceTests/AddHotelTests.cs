@@ -1,6 +1,7 @@
 using CorporateHotelBooking.Application.Hotels.Commands.AddHotel;
 using CorporateHotelBooking.Repositories.Hotels;
 using CorporateHotelBooking.Repositories.Rooms;
+using CorporateHotelBooking.Services;
 
 namespace CorporateHotelBooking.Integrated.Tests.HotelServiceTests;
 

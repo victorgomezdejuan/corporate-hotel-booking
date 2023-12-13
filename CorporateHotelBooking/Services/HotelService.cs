@@ -6,7 +6,7 @@ using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Repositories.Hotels;
 using CorporateHotelBooking.Repositories.Rooms;
 
-namespace CorporateHotelBooking;
+namespace CorporateHotelBooking.Services;
 
 public class HotelService
 {
