@@ -7,7 +7,7 @@ using CorporateHotelBooking.Repositories.Employees;
 using CorporateHotelBooking.Repositories.Hotels;
 using CorporateHotelBooking.Repositories.Rooms;
 
-namespace CorporateHotelBooking;
+namespace CorporateHotelBooking.Services;
 
 public class BookingService
 {
@@ -47,5 +47,3 @@ public class BookingService
             .Handle(new BookARoomCommand(employeeId, hotelId, roomType, checkInDate, checkOutDate));
     }
 }
-
-public record NewBooking(int Id, int EmployeeId, int HotelId, RoomType RoomType, DateOnly CheckInDate, DateOnly CheckOutDate);

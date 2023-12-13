@@ -7,6 +7,7 @@ using CorporateHotelBooking.Repositories.EmployeeBookingPolicies;
 using CorporateHotelBooking.Repositories.Employees;
 using CorporateHotelBooking.Repositories.Hotels;
 using CorporateHotelBooking.Repositories.Rooms;
+using CorporateHotelBooking.Services;
 using FluentAssertions;
 
 namespace CorporateHotelBooking.Integrated.Tests;
