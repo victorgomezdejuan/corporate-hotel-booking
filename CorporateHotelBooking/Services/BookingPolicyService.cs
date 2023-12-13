@@ -6,7 +6,7 @@ using CorporateHotelBooking.Repositories.CompanyBookingPolicies;
 using CorporateHotelBooking.Repositories.EmployeeBookingPolicies;
 using CorporateHotelBooking.Repositories.Employees;
 
-namespace CorporateHotelBooking;
+namespace CorporateHotelBooking.Services;
 
 public class BookingPolicyService
 {

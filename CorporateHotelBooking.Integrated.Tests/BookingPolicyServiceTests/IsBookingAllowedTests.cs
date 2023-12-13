@@ -3,6 +3,7 @@ using CorporateHotelBooking.Domain.Entities.BookingPolicies;
 using CorporateHotelBooking.Repositories.CompanyBookingPolicies;
 using CorporateHotelBooking.Repositories.EmployeeBookingPolicies;
 using CorporateHotelBooking.Repositories.Employees;
+using CorporateHotelBooking.Services;
 using FluentAssertions;
 
 namespace CorporateHotelBooking.Integrated.Tests.BookingPolicyServiceTests;
