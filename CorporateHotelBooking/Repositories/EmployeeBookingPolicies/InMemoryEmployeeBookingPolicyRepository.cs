@@ -12,6 +12,16 @@ public class InMemoryEmployeeBookingPolicyRepository : IEmployeeBookingPolicyRep
         _employeePolicies.Add(employeePolicy.EmployeeId, employeePolicy);
     }
 
+    public void Update(EmployeeBookingPolicy employeePolicy)
+    {
+        _employeePolicies[employeePolicy.EmployeeId] = employeePolicy;
+    }
+
+    public void DeleteByEmployeeId(int employeeId)
+    {
+        throw new NotImplementedException();
+    }
+
     public bool Exists(int employeeId)
     {
         return _employeePolicies.ContainsKey(employeeId);
@@ -24,10 +34,5 @@ public class InMemoryEmployeeBookingPolicyRepository : IEmployeeBookingPolicyRep
             throw new EmployeeNotFoundException(employeeId);
         }
         return _employeePolicies[employeeId];
-    }
-
-    public void Update(EmployeeBookingPolicy employeePolicy)
-    {
-        _employeePolicies[employeePolicy.EmployeeId] = employeePolicy;
     }
 }
