@@ -59,7 +59,7 @@ public class DeleteEmployeeTests
         _deleteEmployeeCommandHandler.Handle(new DeleteEmployeeCommand(1));
 
         // Assert
-        _bookingRepositoryMock.Verify(r => r.DeleteByEmployeeId(1));
+        _bookingRepositoryMock.Verify(r => r.DeleteByEmployee(1));
     }
 
     [Fact]
@@ -72,6 +72,6 @@ public class DeleteEmployeeTests
         _deleteEmployeeCommandHandler.Handle(new DeleteEmployeeCommand(1));
 
         // Assert
-        _employeeBookingPolicyRepositoryMock.Verify(r => r.DeleteByEmployeeId(1));
+        _employeeBookingPolicyRepositoryMock.Verify(r => r.DeleteByEmployee(1));
     }
 }

@@ -26,7 +26,7 @@ public class InMemoryBookingRepository : IBookingRepository
         return newBooking;
     }
 
-    public void DeleteByEmployeeId(int employeeId)
+    public void DeleteByEmployee(int employeeId)
     {
         throw new NotImplementedException();
     }

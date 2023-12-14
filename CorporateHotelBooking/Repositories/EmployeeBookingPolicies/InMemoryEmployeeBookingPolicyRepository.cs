@@ -17,7 +17,7 @@ public class InMemoryEmployeeBookingPolicyRepository : IEmployeeBookingPolicyRep
         _employeePolicies[employeePolicy.EmployeeId] = employeePolicy;
     }
 
-    public void DeleteByEmployeeId(int employeeId)
+    public void DeleteByEmployee(int employeeId)
     {
         throw new NotImplementedException();
     }
