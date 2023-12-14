@@ -28,7 +28,7 @@ public class InMemoryBookingRepository : IBookingRepository
 
     public void DeleteByEmployee(int employeeId)
     {
-        throw new NotImplementedException();
+        _bookings.RemoveAll(b => b.EmployeeId == employeeId);
     }
 
     public Booking Get(int id)
