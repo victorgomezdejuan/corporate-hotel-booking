@@ -26,6 +26,11 @@ public class InMemoryBookingRepository : IBookingRepository
         return newBooking;
     }
 
+    public void DeleteByEmployeeId(int employeeId)
+    {
+        throw new NotImplementedException();
+    }
+
     public Booking Get(int id)
     {
         var booking = _bookings.SingleOrDefault(b => b.Id == id);

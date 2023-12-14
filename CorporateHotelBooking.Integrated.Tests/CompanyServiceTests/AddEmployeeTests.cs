@@ -1,4 +1,5 @@
 using CorporateHotelBooking.Application.Employees.Commands.AddEmployee;
+using CorporateHotelBooking.Repositories.Bookings;
 using CorporateHotelBooking.Repositories.Employees;
 using CorporateHotelBooking.Services;
 using FluentAssertions;
@@ -8,12 +9,14 @@ namespace CorporateHotelBooking.Integrated.Tests.CompanyServiceTests;
 public class AddEmployeeTests
 {
     private readonly IEmployeeRepository _employeeRepository;
+    private readonly IBookingRepository _bookingRepository;
     private readonly CompanyService _companyService;
 
     public AddEmployeeTests()
     {
         _employeeRepository = new InMemoryEmployeeRepository();
-        _companyService = new CompanyService(_employeeRepository);
+        _bookingRepository = new InMemoryBookingRepository();
+        _companyService = new CompanyService(_employeeRepository, _bookingRepository);
     }
 
     [Fact]

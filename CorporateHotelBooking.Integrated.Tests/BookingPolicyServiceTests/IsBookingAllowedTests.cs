@@ -15,8 +15,7 @@ public class IsBookingAllowedTests
     {
         // Arrange
         var employeeRepository = new InMemoryEmployeeRepository();
-        var companyService = new CompanyService(employeeRepository);
-        companyService.AddEmployee(companyId: 100, employeeId: 1);
+        employeeRepository.Add(new Employee(id: 1, companyId: 100));
         var companyPolicyRepository = new InMemoryCompanyBookingPolicyRepository();
         companyPolicyRepository.Add(new CompanyBookingPolicy(100, new List<RoomType> { RoomType.Standard }));
         var bookingPolicyService = new BookingPolicyService(
