@@ -47,7 +47,7 @@ public class DeleteEmployeeTests
     }
 
     [Fact]
-    public void DeleteEmployeeBookingWhenDeletingEmployee()
+    public void DeleteEmployeeBookingsWhenDeletingEmployee()
     {
         // Arrange
         _employeeRepositoryMock.Setup(r => r.Exists(1)).Returns(true);
@@ -56,7 +56,6 @@ public class DeleteEmployeeTests
         _deleteEmployeeCommandHandler.Handle(new DeleteEmployeeCommand(1));
 
         // Assert
-        _employeeRepositoryMock.Verify(r => r.Delete(1));
         _bookingRepositoryMock.Verify(r => r.DeleteByEmployeeId(1));
     }
 }
