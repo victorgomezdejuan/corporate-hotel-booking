@@ -16,13 +16,13 @@ public class InMemoryHotelRepository : IHotelRepository
         _hotels.Add(hotel.Id, hotel);
     }
 
-    public Hotel Get(int hotelId)
-    {      
-        return new Hotel(_hotels[hotelId].Id, _hotels[hotelId].Name);
-    }
-    
     public bool Exists(int hotelId)
     {
         return _hotels.ContainsKey(hotelId);
+    }
+
+    public Hotel Get(int hotelId)
+    {      
+        return new Hotel(_hotels[hotelId].Id, _hotels[hotelId].Name);
     }
 }
