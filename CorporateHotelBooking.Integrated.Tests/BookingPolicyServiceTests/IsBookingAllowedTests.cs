@@ -1,3 +1,4 @@
+using AutoFixture.Xunit2;
 using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Domain.Entities.BookingPolicies;
 using CorporateHotelBooking.Repositories.CompanyBookingPolicies;
@@ -10,14 +11,15 @@ namespace CorporateHotelBooking.Integrated.Tests.BookingPolicyServiceTests;
 
 public class IsBookingAllowedTests
 {
-    [Fact]
-    public void BookingAllowedByCompanyPolicy()
+    [Theory, AutoData]
+    public void BookingAllowedByCompanyPolicy(Employee employee)
     {
         // Arrange
         var employeeRepository = new InMemoryEmployeeRepository();
-        employeeRepository.Add(new Employee(id: 1, companyId: 100));
+        employeeRepository.Add(employee);
         var companyPolicyRepository = new InMemoryCompanyBookingPolicyRepository();
-        companyPolicyRepository.Add(new CompanyBookingPolicy(100, new List<RoomType> { RoomType.Standard }));
+        companyPolicyRepository.Add(
+            new CompanyBookingPolicy(employee.CompanyId, new List<RoomType> { RoomType.Standard }));
         
         var bookingPolicyService = new BookingPolicyService(
             companyPolicyRepository,
@@ -25,7 +27,7 @@ public class IsBookingAllowedTests
             employeeRepository);
 
         // Act
-        var isBookingAllowed = bookingPolicyService.IsBookingAllowed(employeeId: 1, RoomType.Standard);
+        var isBookingAllowed = bookingPolicyService.IsBookingAllowed(employee.Id, RoomType.Standard);
 
         // Assert
         isBookingAllowed.Should().BeTrue();
