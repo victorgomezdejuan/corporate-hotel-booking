@@ -4,9 +4,9 @@ using CorporateHotelBooking.Repositories.CompanyBookingPolicies;
 
 namespace CorporateHotelBooking.Application.BookingPolicies.Commands.SetCompanyBookingPolicy;
 
-public class SetCompanyBookingPolicyCommand
+public record SetCompanyBookingPolicyCommand
 {
-    public SetCompanyBookingPolicyCommand(int companyId, ICollection<RoomType> roomTypes)
+    public SetCompanyBookingPolicyCommand(int companyId, IEnumerable<RoomType> roomTypes)
     {
         CompanyId = companyId;
         RoomTypes = roomTypes.ToList().AsReadOnly();
@@ -29,11 +29,11 @@ public class SetCompanyBookingPolicyCommandHandler
     {
         if (_companyPolicyRepository.Exists(command.CompanyId))
         {
-            _companyPolicyRepository.Update(new CompanyBookingPolicy(command.CompanyId, command.RoomTypes.ToList()));
+            _companyPolicyRepository.Update(new CompanyBookingPolicy(command.CompanyId, command.RoomTypes));
         }
         else
         {
-            _companyPolicyRepository.Add(new CompanyBookingPolicy(command.CompanyId, command.RoomTypes.ToList()));
+            _companyPolicyRepository.Add(new CompanyBookingPolicy(command.CompanyId, command.RoomTypes));
         }
     }
 }

@@ -2,7 +2,7 @@ namespace CorporateHotelBooking.Domain.Entities.BookingPolicies;
 
 public class CompanyBookingPolicy : BookingPolicy
 {
-    public CompanyBookingPolicy(int companyId, ICollection<RoomType> allowedRoomTypes) : base(true)
+    public CompanyBookingPolicy(int companyId, IEnumerable<RoomType> allowedRoomTypes) : base(true)
     {
         CompanyId = companyId;
         AllowedRoomTypes = allowedRoomTypes.ToList().AsReadOnly();
