@@ -46,10 +46,11 @@ public class BookARoomCommandHandler
 
     public NewBooking Handle(BookARoomCommand command)
     {
-        CheckHotelExistance(command);
+        CheckHotelExistance(command.HotelId);
         CheckRoomTypeExistanceInTheHotel(command);
         CheckBookingPolicyAllowance(command);
         CheckRoomAvailability(command);
+        
         Booking booking = _bookingRepository.Add(new Booking
         (
             employeeId: command.EmployeeId,
@@ -62,11 +63,11 @@ public class BookARoomCommandHandler
         return new NewBooking(booking.Id!.Value, booking.EmployeeId, booking.HotelId, booking.RoomType, booking.CheckInDate, booking.CheckOutDate);
     }
 
-    private void CheckHotelExistance(BookARoomCommand command)
+    private void CheckHotelExistance(int hotelId)
     {
-        if (!_hotelRepository.Exists(command.HotelId))
+        if (!_hotelRepository.Exists(hotelId))
         {
-            throw new HotelNotFoundException(command.HotelId);
+            throw new HotelNotFoundException(hotelId);
         }
     }
 
@@ -80,7 +81,7 @@ public class BookARoomCommandHandler
 
     private void CheckBookingPolicyAllowance(BookARoomCommand command)
     {
-        BookingPolicy employeeBookingPolicy = GetEmployeeBookingPolicy(command);
+        BookingPolicy employeeBookingPolicy = GetEmployeeBookingPolicy(command.EmployeeId);
         BookingPolicy companyBookingPolicy = GetCompanyBookingPolicy(command);
 
         var bookingPolicy = new AggregatedBookingPolicy(employeeBookingPolicy, companyBookingPolicy);
@@ -90,12 +91,12 @@ public class BookARoomCommandHandler
         }
     }
 
-    private BookingPolicy GetEmployeeBookingPolicy(BookARoomCommand command)
+    private BookingPolicy GetEmployeeBookingPolicy(int employeeId)
     {
         BookingPolicy employeeBookingPolicy;
-        if (_employeeBookingPolicyRepository.Exists(command.EmployeeId))
+        if (_employeeBookingPolicyRepository.Exists(employeeId))
         {
-            employeeBookingPolicy = _employeeBookingPolicyRepository.Get(command.EmployeeId);
+            employeeBookingPolicy = _employeeBookingPolicyRepository.Get(employeeId);
         }
         else
         {
