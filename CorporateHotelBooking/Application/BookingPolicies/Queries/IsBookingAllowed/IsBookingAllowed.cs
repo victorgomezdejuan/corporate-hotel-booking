@@ -7,17 +7,7 @@ using CorporateHotelBooking.Repositories.Employees;
 
 namespace CorporateHotelBooking.Application.BookingPolicies.Queries.IsBookingAllowed;
 
-public record IsBookingAllowedQuery
-{
-    public IsBookingAllowedQuery(int employeeId, RoomType roomType)
-    {
-        EmployeeId = employeeId;
-        RoomType = roomType;
-    }
-
-    public int EmployeeId { get; }
-    public RoomType RoomType { get; }
-}
+public record IsBookingAllowedQuery(int EmployeeId, RoomType RoomType);
 
 public class IsBookingAllowedQueryHandler
 {
