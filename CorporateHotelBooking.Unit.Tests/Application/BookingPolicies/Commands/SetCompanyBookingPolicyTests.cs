@@ -8,34 +8,44 @@ namespace CorporateHotelBooking.Unit.Tests.Application.BookingPolicies.Commands;
 
 public class SetCompanyBookingPolicyTests
 {
+    private readonly Mock<ICompanyBookingPolicyRepository> _companyPolicyRepositoryMock;
+    private readonly SetCompanyBookingPolicyCommandHandler _setCompanyPolicyCommandHandler;
+
+    public SetCompanyBookingPolicyTests()
+    {
+        _companyPolicyRepositoryMock = new Mock<ICompanyBookingPolicyRepository>();
+        _setCompanyPolicyCommandHandler = new SetCompanyBookingPolicyCommandHandler(_companyPolicyRepositoryMock.Object);
+    }
+
     [Fact]
     public void AddNewCompanyPolicy()
     {
         // Arrange
-        var companyPolicyRepositoryMock = new Mock<ICompanyBookingPolicyRepository>();
-        var setCompanyPolicyCommandHandler = new SetCompanyBookingPolicyCommandHandler(companyPolicyRepositoryMock.Object);
-        var setCompanyPolicyCommand = new SetCompanyBookingPolicyCommand(100, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite });
+        var setCompanyPolicyCommand = new SetCompanyBookingPolicyCommand(
+            100,
+            new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite });
 
         // Act
-        setCompanyPolicyCommandHandler.Handle(setCompanyPolicyCommand);
+        _setCompanyPolicyCommandHandler.Handle(setCompanyPolicyCommand);
 
         // Assert
-        companyPolicyRepositoryMock.Verify(r => r.Add(new CompanyBookingPolicy(100, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite })));
+        _companyPolicyRepositoryMock.Verify(r => r.Add(
+            new CompanyBookingPolicy(
+                100,
+                new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite })));
     }
 
     [Fact]
     public void UpdateExistingCompanyPolicy()
     {
         // Arrange
-        var companyPolicyRepositoryMock = new Mock<ICompanyBookingPolicyRepository>();
-        var setCompanyPolicyCommandHandler = new SetCompanyBookingPolicyCommandHandler(companyPolicyRepositoryMock.Object);
-        companyPolicyRepositoryMock.Setup(r => r.Exists(100)).Returns(true);
+        _companyPolicyRepositoryMock.Setup(r => r.Exists(100)).Returns(true);
         var setCompanyPolicyCommand = new SetCompanyBookingPolicyCommand(100, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite });
 
         // Act
-        setCompanyPolicyCommandHandler.Handle(setCompanyPolicyCommand);
+        _setCompanyPolicyCommandHandler.Handle(setCompanyPolicyCommand);
 
         // Assert
-        companyPolicyRepositoryMock.Verify(r => r.Update(new CompanyBookingPolicy(100, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite })));
+        _companyPolicyRepositoryMock.Verify(r => r.Update(new CompanyBookingPolicy(100, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite })));
     }
 }
