@@ -95,7 +95,8 @@ public class BookARoomTests
         _roomRepositoryMock.Setup(x => x.ExistsRoomType(1, RoomType.Standard)).Returns(true);
         _employeeRepositoryMock.Setup(x => x.Get(10)).Returns(new Employee(10, 100));
         _employeeBookingPolicyRepositoryMock.Setup(x => x.Exists(10)).Returns(true);
-        _employeeBookingPolicyRepositoryMock.Setup(x => x.Get(10)).Returns(new EmployeeBookingPolicy(1, new List<RoomType> { RoomType.JuniorSuite }));
+        _employeeBookingPolicyRepositoryMock.Setup(x => x.Get(10))
+            .Returns(new EmployeeBookingPolicy(1, new List<RoomType> { RoomType.JuniorSuite }));
         _companyBookingPolicyRepositoryMock.Setup(x => x.Exists(100)).Returns(false);
 
         var command = new BookARoomCommand
@@ -123,7 +124,8 @@ public class BookARoomTests
         _employeeRepositoryMock.Setup(x => x.Get(10)).Returns(new Employee(10, 100));
         _employeeBookingPolicyRepositoryMock.Setup(x => x.Exists(10)).Returns(false);
         _companyBookingPolicyRepositoryMock.Setup(x => x.Exists(100)).Returns(true);
-        _companyBookingPolicyRepositoryMock.Setup(x => x.Get(100)).Returns(new CompanyBookingPolicy(1, new List<RoomType> { RoomType.JuniorSuite }));
+        _companyBookingPolicyRepositoryMock.Setup(x => x.Get(100))
+            .Returns(new CompanyBookingPolicy(1, new List<RoomType> { RoomType.JuniorSuite }));
 
         var command = new BookARoomCommand
         (
@@ -151,7 +153,9 @@ public class BookARoomTests
         _employeeBookingPolicyRepositoryMock.Setup(x => x.Exists(10)).Returns(false);
         _companyBookingPolicyRepositoryMock.Setup(x => x.Exists(100)).Returns(false);
         _roomRepositoryMock.Setup(x => x.GetCount(1, RoomType.Standard)).Returns(1);
-        _bookingRepositoryMock.Setup(x => x.GetCount(1, RoomType.Standard, DateUtils.Today(), DateUtils.Today().AddDays(1))).Returns(1);
+        _bookingRepositoryMock
+            .Setup(x => x.GetCount(1, RoomType.Standard, DateUtils.Today(), DateUtils.Today().AddDays(1)))
+            .Returns(1);
 
         var command = new BookARoomCommand
         (
@@ -177,11 +181,15 @@ public class BookARoomTests
         _roomRepositoryMock.Setup(x => x.ExistsRoomType(1, RoomType.Standard)).Returns(true);
         _employeeRepositoryMock.Setup(x => x.Get(10)).Returns(new Employee(10, 100));
         _employeeBookingPolicyRepositoryMock.Setup(x => x.Exists(10)).Returns(true);
-        _employeeBookingPolicyRepositoryMock.Setup(x => x.Get(10)).Returns(new EmployeeBookingPolicy(10, new List<RoomType> { RoomType.Standard }));
+        _employeeBookingPolicyRepositoryMock.Setup(x => x.Get(10))
+            .Returns(new EmployeeBookingPolicy(10, new List<RoomType> { RoomType.Standard }));
         _companyBookingPolicyRepositoryMock.Setup(x => x.Exists(100)).Returns(false);
         _roomRepositoryMock.Setup(x => x.GetCount(1, RoomType.Standard)).Returns(1);
-        _bookingRepositoryMock.Setup(x => x.GetCount(1, RoomType.Standard, DateUtils.Today(), DateUtils.Today().AddDays(1))).Returns(0);
-        _bookingRepositoryMock.Setup(x => x.Add(It.IsAny<Booking>())).Returns(new Booking(1, 10, 1, RoomType.Standard, DateUtils.Today(), DateUtils.Today().AddDays(1)));
+        _bookingRepositoryMock
+            .Setup(x => x.GetCount(1, RoomType.Standard, DateUtils.Today(), DateUtils.Today().AddDays(1)))
+            .Returns(0);
+        _bookingRepositoryMock.Setup(x => x.Add(It.IsAny<Booking>()))
+            .Returns(new Booking(1, 10, 1, RoomType.Standard, DateUtils.Today(), DateUtils.Today().AddDays(1)));
 
         var command = new BookARoomCommand
         (
@@ -199,6 +207,7 @@ public class BookARoomTests
         _bookingRepositoryMock.Verify(
             x => x.Add(new Booking(10, 1, RoomType.Standard, DateUtils.Today(), DateUtils.Today().AddDays(1))),
             Times.Once);
-        newBooking.Should().BeEquivalentTo(new NewBooking(1, 10, 1, RoomType.Standard, DateUtils.Today(), DateUtils.Today().AddDays(1)));
+        newBooking.Should().BeEquivalentTo(
+            new NewBooking(1, 10, 1, RoomType.Standard, DateUtils.Today(), DateUtils.Today().AddDays(1)));
     }
 }

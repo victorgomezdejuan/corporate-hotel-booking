@@ -20,7 +20,10 @@ public class DeleteEmployeeTests
         _employeeRepositoryMock = new Mock<IEmployeeRepository>();
         _bookingRepositoryMock = new Mock<IBookingRepository>();
         _employeeBookingPolicyRepositoryMock = new Mock<IEmployeeBookingPolicyRepository>();
-        _deleteEmployeeCommandHandler = new DeleteEmployeeCommandHandler(_employeeRepositoryMock.Object, _bookingRepositoryMock.Object, _employeeBookingPolicyRepositoryMock.Object);
+        _deleteEmployeeCommandHandler = new DeleteEmployeeCommandHandler(
+            _employeeRepositoryMock.Object,
+            _bookingRepositoryMock.Object,
+            _employeeBookingPolicyRepositoryMock.Object);
     }
 
     [Fact]

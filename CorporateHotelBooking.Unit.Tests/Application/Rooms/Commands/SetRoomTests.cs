@@ -8,55 +8,56 @@ namespace CorporateHotelBooking.Unit.Tests.Application.Rooms.Commands;
 
 public class SetRoomTests
 {
+    private readonly SetRoomCommand _setRoomCommand;
+    private readonly Mock<IRoomRepository> _roomRepositoryMock;
+    private readonly Mock<IHotelRepository> _hotelRepositoryMock;
+    private readonly SetRoomCommandHandler _setRoomCommandHandler;
+
+    public SetRoomTests()
+    {
+        _setRoomCommand = new SetRoomCommand(1, 100, RoomType.Standard);
+        _roomRepositoryMock = new Mock<IRoomRepository>();
+        _hotelRepositoryMock = new Mock<IHotelRepository>();
+        _setRoomCommandHandler = new SetRoomCommandHandler(_hotelRepositoryMock.Object, _roomRepositoryMock.Object);
+    }
+
     [Fact]
     public void AddNewRoom()
     {
         // Arrange
-        var setRoomCommand = new SetRoomCommand(1, 100, RoomType.Standard);
-        var roomRepository = new Mock<IRoomRepository>();
-        roomRepository.Setup(x => x.ExistsRoomNumber(It.IsAny<int>(), It.IsAny<int>())).Returns(false);
-        var hotelRepositoryMock = new Mock<IHotelRepository>();
-        hotelRepositoryMock.Setup(x => x.Exists(setRoomCommand.HotelId)).Returns(true);
-        var setRoomCommandHandler = new SetRoomCommandHandler(hotelRepositoryMock.Object, roomRepository.Object);
+        _roomRepositoryMock.Setup(x => x.ExistsRoomNumber(It.IsAny<int>(), It.IsAny<int>())).Returns(false);
+        _hotelRepositoryMock.Setup(x => x.Exists(_setRoomCommand.HotelId)).Returns(true);
 
         // Act
-        setRoomCommandHandler.Handle(setRoomCommand);
+        _setRoomCommandHandler.Handle(_setRoomCommand);
 
         // Assert
-        roomRepository.Verify(x => x.Add(It.Is<Room>(r => r.Equals(new Room(1, 100, RoomType.Standard)))));
+        _roomRepositoryMock.Verify(x => x.Add(It.Is<Room>(r => r.Equals(new Room(1, 100, RoomType.Standard)))));
     }
 
     [Fact]
     public void UpdateExistingRoom()
     {
         // Arrange
-        var setRoomCommand = new SetRoomCommand(1, 100, RoomType.Standard);
-        var roomRepository = new Mock<IRoomRepository>();
-        roomRepository.Setup(x => x.ExistsRoomNumber(It.IsAny<int>(), It.IsAny<int>())).Returns(true);
-        var hotelRepositoryMock = new Mock<IHotelRepository>();
-        hotelRepositoryMock.Setup(x => x.Exists(setRoomCommand.HotelId)).Returns(true);
-        var setRoomCommandHandler = new SetRoomCommandHandler(hotelRepositoryMock.Object, roomRepository.Object);
+        _roomRepositoryMock.Setup(x => x.ExistsRoomNumber(It.IsAny<int>(), It.IsAny<int>())).Returns(true);
+        _hotelRepositoryMock.Setup(x => x.Exists(_setRoomCommand.HotelId)).Returns(true);
 
         // Act
-        setRoomCommandHandler.Handle(setRoomCommand);
+        _setRoomCommandHandler.Handle(_setRoomCommand);
 
         // Assert
-        roomRepository.Verify(x => x.Update(It.Is<Room>(r => r.Equals(new Room(1, 100, RoomType.Standard)))));
+        _roomRepositoryMock.Verify(x => x.Update(It.Is<Room>(r => r.Equals(new Room(1, 100, RoomType.Standard)))));
     }
 
     [Fact]
     public void SetRoomFromNonExistingHotel()
     {
         // Arrange
-        var setRoomCommand = new SetRoomCommand(1, 100, RoomType.Standard);
-        var roomRepository = new Mock<IRoomRepository>();
-        roomRepository.Setup(x => x.ExistsRoomNumber(It.IsAny<int>(), It.IsAny<int>())).Returns(false);
-        var hotelRepositoryMock = new Mock<IHotelRepository>();
-        hotelRepositoryMock.Setup(x => x.Exists(setRoomCommand.HotelId)).Returns(false);
-        var setRoomCommandHandler = new SetRoomCommandHandler(hotelRepositoryMock.Object, roomRepository.Object);
+        _roomRepositoryMock.Setup(x => x.ExistsRoomNumber(It.IsAny<int>(), It.IsAny<int>())).Returns(false);
+        _hotelRepositoryMock.Setup(x => x.Exists(_setRoomCommand.HotelId)).Returns(false);
 
         // Act
-        void act() => setRoomCommandHandler.Handle(setRoomCommand);
+        void act() => _setRoomCommandHandler.Handle(_setRoomCommand);
 
         // Assert
         Assert.Throws<HotelNotFoundException>(act);
