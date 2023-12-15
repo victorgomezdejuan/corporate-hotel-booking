@@ -20,6 +20,7 @@ public class DeleteEmployeeTests
         bookingRepository.Add(new Booking(employeeId: 1, hotelId: 10, RoomType.Standard, new DateOnly(2021, 1, 1), new DateOnly(2021, 1, 2)));
         IEmployeeBookingPolicyRepository employeeBookingPolicyRepository = new InMemoryEmployeeBookingPolicyRepository();
         employeeBookingPolicyRepository.Add(new EmployeeBookingPolicy(employeeId: 1, new List<RoomType> { RoomType.Standard }));
+        
         var companyService = new CompanyService(employeeRepository, bookingRepository, employeeBookingPolicyRepository);
         companyService.AddEmployee(companyId: 100, employeeId: 1);
 

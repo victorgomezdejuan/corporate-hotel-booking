@@ -20,6 +20,7 @@ public class BookingServiceTests
     private readonly IEmployeeRepository _employeeRepository;
     private readonly IEmployeeBookingPolicyRepository _employeeBookingPolicyRepository;
     private readonly ICompanyBookingPolicyRepository _companyBookingPolicyRepository;
+    private readonly BookingService _bookingService;
 
     public BookingServiceTests()
     {
@@ -29,6 +30,13 @@ public class BookingServiceTests
         _employeeRepository = new InMemoryEmployeeRepository();
         _employeeBookingPolicyRepository = new InMemoryEmployeeBookingPolicyRepository();
         _companyBookingPolicyRepository = new InMemoryCompanyBookingPolicyRepository();
+        _bookingService = new BookingService(
+            _bookingRepository,
+            _hotelRepository,
+            _roomRepository,
+            _employeeRepository,
+            _employeeBookingPolicyRepository,
+            _companyBookingPolicyRepository);
     }
 
     [Fact]
@@ -48,16 +56,9 @@ public class BookingServiceTests
         _roomRepository.Add(new Room(3, 100, RoomType.Standard));
         _employeeRepository.Add(new Employee(2, 4));
         _companyBookingPolicyRepository.Add(new CompanyBookingPolicy(4, new List<RoomType> { RoomType.Standard }));
-        var bookingService = new BookingService(
-            _bookingRepository,
-            _hotelRepository,
-            _roomRepository,
-            _employeeRepository,
-            _employeeBookingPolicyRepository,
-            _companyBookingPolicyRepository);
 
         // Act
-        var booking = bookingService.Book(2, 3, RoomType.Standard, DateOnly.FromDateTime(DateTime.Now), DateOnly.FromDateTime(DateTime.Now.AddDays(1)));
+        var booking = _bookingService.Book(2, 3, RoomType.Standard, DateOnly.FromDateTime(DateTime.Now), DateOnly.FromDateTime(DateTime.Now.AddDays(1)));
 
         // Assert
         booking.Should().BeEquivalentTo(expectedBooking);
@@ -73,16 +74,9 @@ public class BookingServiceTests
         _employeeRepository.Add(new Employee(2, 4));
         _companyBookingPolicyRepository.Add(new CompanyBookingPolicy(4, new List<RoomType> { RoomType.Standard }));
         _bookingRepository.Add(new Booking(2, 3, RoomType.Standard, DateOnly.FromDateTime(DateTime.Now), DateOnly.FromDateTime(DateTime.Now.AddDays(1))));
-        var bookingService = new BookingService(
-            _bookingRepository,
-            _hotelRepository,
-            _roomRepository,
-            _employeeRepository,
-            _employeeBookingPolicyRepository,
-            _companyBookingPolicyRepository);
 
         // Act
-        Action action = () => bookingService.Book(2, 3, RoomType.Standard, DateOnly.FromDateTime(DateTime.Now), DateOnly.FromDateTime(DateTime.Now.AddDays(1)));
+        Action action = () => _bookingService.Book(2, 3, RoomType.Standard, DateOnly.FromDateTime(DateTime.Now), DateOnly.FromDateTime(DateTime.Now.AddDays(1)));
 
         // Assert
         action.Should().Throw<NoRoomsAvailableException>();
