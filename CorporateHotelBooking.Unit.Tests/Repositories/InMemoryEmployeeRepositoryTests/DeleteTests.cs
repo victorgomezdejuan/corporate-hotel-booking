@@ -11,14 +11,14 @@ public class DeleteTests
     public void DeleteExistingEmployee()
     {
         // Arrange
-        var employeeRepository = new InMemoryEmployeeRepository();
-        employeeRepository.Add(new Employee(1, 100));
+        var repository = new InMemoryEmployeeRepository();
+        repository.Add(new Employee(1, 100));
 
         // Act
-        employeeRepository.Delete(1);
+        repository.Delete(1);
 
         // Assert
-        Action getEmployeeAction = () => employeeRepository.Get(1);
+        Action getEmployeeAction = () => repository.Get(1);
         getEmployeeAction.Should().Throw<EmployeeNotFoundException>();
     }
 }

@@ -6,11 +6,11 @@ namespace CorporateHotelBooking.Unit.Tests.Repositories.InMemoryEmployeeReposito
 
 public class ExistsTests
 {
-    private readonly InMemoryEmployeeRepository _employeeRepository;
+    private readonly InMemoryEmployeeRepository _repository;
 
     public ExistsTests()
     {
-        _employeeRepository = new InMemoryEmployeeRepository();
+        _repository = new InMemoryEmployeeRepository();
     }
 
     [Fact]
@@ -18,10 +18,10 @@ public class ExistsTests
     {
         // Arrange
         var employeeToBeAdded = new Employee(1, 100);
-        _employeeRepository.Add(employeeToBeAdded);
+        _repository.Add(employeeToBeAdded);
 
         // Act
-        var employeeExists = _employeeRepository.Exists(1);
+        var employeeExists = _repository.Exists(1);
 
         // Assert
         employeeExists.Should().BeTrue();
@@ -31,7 +31,7 @@ public class ExistsTests
     public void EmployeeDoesNotExist()
     {
         // Act
-        var employeeExists = _employeeRepository.Exists(1);
+        var employeeExists = _repository.Exists(1);
 
         // Assert
         employeeExists.Should().BeFalse();

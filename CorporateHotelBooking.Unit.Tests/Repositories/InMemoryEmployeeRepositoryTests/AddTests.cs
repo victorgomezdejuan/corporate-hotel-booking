@@ -10,14 +10,14 @@ public class AddTests
     public void AddEmployee()
     {
         // Arrange
-        var employeeRepository = new InMemoryEmployeeRepository();
+        var repository = new InMemoryEmployeeRepository();
         var employeeToBeAdded = new Employee(1, 100);
 
         // Act
-        employeeRepository.Add(employeeToBeAdded);
+        repository.Add(employeeToBeAdded);
 
         // Assert
-        var retrievedEmployee = employeeRepository.Get(1);
+        var retrievedEmployee = repository.Get(1);
         retrievedEmployee.Should().Be(employeeToBeAdded);
     }
 }
