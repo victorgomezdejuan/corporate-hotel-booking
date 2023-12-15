@@ -7,31 +7,36 @@ namespace CorporateHotelBooking.Unit.Tests.Repositories.InMemoryEmployeeBookingP
 
 public class Delete
 {
+    private readonly InMemoryEmployeeBookingPolicyRepository _repository;
+
+    public Delete()
+    {
+        _repository = new InMemoryEmployeeBookingPolicyRepository();
+    }
+
     [Fact]
     public void DeleteEmployeeBookingPolicy()
     {
         // Arrange
-        var employeeBookingPolicyRepository = new InMemoryEmployeeBookingPolicyRepository();
-        employeeBookingPolicyRepository.Add(new EmployeeBookingPolicy(1, new List<RoomType> { RoomType.Standard }));
+        _repository.Add(new EmployeeBookingPolicy(1, new List<RoomType> { RoomType.Standard }));
 
         // Act
-        employeeBookingPolicyRepository.Delete(1);
+        _repository.Delete(1);
 
         // Assert
-        employeeBookingPolicyRepository.Exists(1).Should().BeFalse();
+        _repository.Exists(1).Should().BeFalse();
     }
 
     [Fact]
     public void DoNotDeleteOtherEmployeesPolicies()
     {
         // Arrange
-        var employeeBookingPolicyRepository = new InMemoryEmployeeBookingPolicyRepository();
-        employeeBookingPolicyRepository.Add(new EmployeeBookingPolicy(1, new List<RoomType> { RoomType.Standard }));
+        _repository.Add(new EmployeeBookingPolicy(1, new List<RoomType> { RoomType.Standard }));
 
         // Act
-        employeeBookingPolicyRepository.Delete(2);
+        _repository.Delete(2);
 
         // Assert
-        employeeBookingPolicyRepository.Exists(1).Should().BeTrue();
+        _repository.Exists(1).Should().BeTrue();
     }
 }

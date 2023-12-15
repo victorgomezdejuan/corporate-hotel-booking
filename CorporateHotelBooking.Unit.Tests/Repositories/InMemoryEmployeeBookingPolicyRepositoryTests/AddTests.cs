@@ -12,7 +12,9 @@ public class AddTests
     {
         // Arrange
         var employeePolicyRepository = new InMemoryEmployeeBookingPolicyRepository();
-        var employeePolicyToBeAdded = new EmployeeBookingPolicy(1, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite });
+        var employeePolicyToBeAdded = new EmployeeBookingPolicy(
+            1,
+            new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite });
 
         // Act
         employeePolicyRepository.Add(employeePolicyToBeAdded);

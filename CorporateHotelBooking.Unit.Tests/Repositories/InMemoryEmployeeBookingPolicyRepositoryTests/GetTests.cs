@@ -8,31 +8,32 @@ namespace CorporateHotelBooking.Unit.Tests.Repositories.InMemoryEmployeePolicyRe
 
 public class GetTests
 {
-    private readonly InMemoryEmployeeBookingPolicyRepository _employeePolicyRepository;
+    private readonly InMemoryEmployeeBookingPolicyRepository _repository;
 
     public GetTests()
     {
-        _employeePolicyRepository = new InMemoryEmployeeBookingPolicyRepository();
+        _repository = new InMemoryEmployeeBookingPolicyRepository();
     }
 
     [Fact]
     public void GetExistingEmployeePolicy()
     {
         // Arrange
-        _employeePolicyRepository.Add(new EmployeeBookingPolicy(1, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite }));
+        _repository.Add(new EmployeeBookingPolicy(1, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite }));
 
         // Act
-        var retrievedEmployeePolicy = _employeePolicyRepository.Get(1);
+        var retrievedEmployeePolicy = _repository.Get(1);
 
         // Assert
-        retrievedEmployeePolicy.Should().Be(new EmployeeBookingPolicy(1, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite }));
+        retrievedEmployeePolicy
+            .Should().Be(new EmployeeBookingPolicy(1, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite }));
     }
 
     [Fact]
     public void GetNonExistingEmployeePolicy()
     {
         // Act
-        EmployeeBookingPolicy action() => _employeePolicyRepository.Get(1);
+        EmployeeBookingPolicy action() => _repository.Get(1);
 
         // Assert
         Assert.Throws<EmployeeNotFoundException>(action);
