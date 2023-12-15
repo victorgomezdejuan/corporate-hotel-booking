@@ -27,13 +27,15 @@ public class SetCompanyBookingPolicyCommandHandler
 
     public void Handle(SetCompanyBookingPolicyCommand command)
     {
+        var companyPoliciy = new CompanyBookingPolicy(command.CompanyId, command.RoomTypes);
+
         if (_companyPolicyRepository.Exists(command.CompanyId))
         {
-            _companyPolicyRepository.Update(new CompanyBookingPolicy(command.CompanyId, command.RoomTypes));
+            _companyPolicyRepository.Update(companyPoliciy);
         }
         else
         {
-            _companyPolicyRepository.Add(new CompanyBookingPolicy(command.CompanyId, command.RoomTypes));
+            _companyPolicyRepository.Add(companyPoliciy);
         }
     }
 }
