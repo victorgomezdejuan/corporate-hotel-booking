@@ -11,12 +11,12 @@ public class GetTests
     public void GetExistingCompanyPolicy()
     {
         // Arrange
-        var companyPolicyRepository = new InMemoryCompanyBookingPolicyRepository();
+        var repository = new InMemoryCompanyBookingPolicyRepository();
         var companyPolicyToBeAdded = new CompanyBookingPolicy(1, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite });
-        companyPolicyRepository.Add(companyPolicyToBeAdded);
+        repository.Add(companyPolicyToBeAdded);
 
         // Act
-        var retrievedCompanyPolicy = companyPolicyRepository.Get(1);
+        var retrievedCompanyPolicy = repository.Get(1);
 
         // Assert
         retrievedCompanyPolicy.Should().Be(companyPolicyToBeAdded);

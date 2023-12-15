@@ -7,15 +7,21 @@ namespace CorporateHotelBooking.Unit.Tests.Repositories.InMemoryCompanyBookingPo
 
 public class ExistsTests
 {
+    private readonly InMemoryCompanyBookingPolicyRepository _repository;
+
+    public ExistsTests()
+    {
+        _repository = new InMemoryCompanyBookingPolicyRepository();
+    }
+
     [Fact]
     public void CompanyPolicyExists()
     {
         // Arrange
-        var companyPolicyRepository = new InMemoryCompanyBookingPolicyRepository();
-        companyPolicyRepository.Add(new CompanyBookingPolicy(1, new List<RoomType> { RoomType.Standard }));
+        _repository.Add(new CompanyBookingPolicy(1, new List<RoomType> { RoomType.Standard }));
 
         // Act
-        var companyPolicyExists = companyPolicyRepository.Exists(1);
+        var companyPolicyExists = _repository.Exists(1);
 
         // Assert
         companyPolicyExists.Should().BeTrue();
@@ -24,11 +30,8 @@ public class ExistsTests
     [Fact]
     public void CompanyPolicyDoesNotExist()
     {
-        // Arrange
-        var companyPolicyRepository = new InMemoryCompanyBookingPolicyRepository();
-
         // Act
-        var companyPolicyExists = companyPolicyRepository.Exists(1);
+        var companyPolicyExists = _repository.Exists(1);
 
         // Assert
         companyPolicyExists.Should().BeFalse();

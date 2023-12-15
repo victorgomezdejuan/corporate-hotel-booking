@@ -11,16 +11,22 @@ public class UpdateTests
     public void UpdateCompanyPolicy()
     {
         // Arrange
-        var companyPolicyRepository = new InMemoryCompanyBookingPolicyRepository();
-        var companyPolicyToBeAdded = new CompanyBookingPolicy(1, new List<RoomType> { RoomType.Standard });
-        companyPolicyRepository.Add(companyPolicyToBeAdded);
-        var updatedCompanyPolicy = new CompanyBookingPolicy(1, new List<RoomType> { RoomType.JuniorSuite, RoomType.MasterSuite });
+        var repository = new InMemoryCompanyBookingPolicyRepository();
+
+        var companyPolicyToBeAdded = new CompanyBookingPolicy(
+            1,
+            new List<RoomType> { RoomType.Standard });
+        repository.Add(companyPolicyToBeAdded);
+        
+        var updatedCompanyPolicy = new CompanyBookingPolicy(
+            1,
+            new List<RoomType> { RoomType.JuniorSuite, RoomType.MasterSuite });
 
         // Act
-        companyPolicyRepository.Update(updatedCompanyPolicy);
+        repository.Update(updatedCompanyPolicy);
 
         // Assert
-        var retrievedCompanyPolicy = companyPolicyRepository.Get(1);
+        var retrievedCompanyPolicy = repository.Get(1);
         retrievedCompanyPolicy.Should().Be(updatedCompanyPolicy);
     }    
 }

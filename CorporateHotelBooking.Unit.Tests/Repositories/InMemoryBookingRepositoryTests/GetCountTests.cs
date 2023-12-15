@@ -5,14 +5,18 @@ namespace CorporateHotelBooking.Unit.Tests.Repositories.InMemoryBookingRepositor
 
 public class GetCountTests
 {
+    private readonly InMemoryBookingRepository _repository;
+
+    public GetCountTests()
+    {
+        _repository = new InMemoryBookingRepository();
+    }
+
     [Fact]
     public void NoBookings()
     {
-        // Arrange
-        var repository = new InMemoryBookingRepository();
-
         // Act
-        var count = repository.GetCount(1, RoomType.Standard, new DateOnly(2021, 1, 1), new DateOnly(2021, 1, 2));
+        var count = _repository.GetCount(1, RoomType.Standard, new DateOnly(2021, 1, 1), new DateOnly(2021, 1, 2));
 
         // Assert
         Assert.Equal(0, count);
@@ -22,11 +26,10 @@ public class GetCountTests
     public void OneBookingInTheSameDates()
     {
         // Arrange
-        var repository = new InMemoryBookingRepository();
-        repository.Add(new Booking(10, 1, RoomType.Standard, new DateOnly(2021, 1, 1), new DateOnly(2021, 1, 2)));
+        _repository.Add(new Booking(10, 1, RoomType.Standard, new DateOnly(2021, 1, 1), new DateOnly(2021, 1, 2)));
 
         // Act
-        var count = repository.GetCount(1, RoomType.Standard, new DateOnly(2021, 1, 1), new DateOnly(2021, 1, 2));
+        var count = _repository.GetCount(1, RoomType.Standard, new DateOnly(2021, 1, 1), new DateOnly(2021, 1, 2));
 
         // Assert
         Assert.Equal(1, count);
@@ -36,11 +39,10 @@ public class GetCountTests
     public void OneBookingInTheSameDatesButDifferentHotel()
     {
         // Arrange
-        var repository = new InMemoryBookingRepository();
-        repository.Add(new Booking(10, 1, RoomType.Standard, new DateOnly(2021, 1, 1), new DateOnly(2021, 1, 2)));
+        _repository.Add(new Booking(10, 1, RoomType.Standard, new DateOnly(2021, 1, 1), new DateOnly(2021, 1, 2)));
 
         // Act
-        var count = repository.GetCount(2, RoomType.Standard, new DateOnly(2021, 1, 1), new DateOnly(2021, 1, 2));
+        var count = _repository.GetCount(2, RoomType.Standard, new DateOnly(2021, 1, 1), new DateOnly(2021, 1, 2));
 
         // Assert
         Assert.Equal(0, count);
@@ -50,11 +52,10 @@ public class GetCountTests
     public void OneBookingInTheSameDatesButDifferentRoomType()
     {
         // Arrange
-        var repository = new InMemoryBookingRepository();
-        repository.Add(new Booking(10, 1, RoomType.Standard, new DateOnly(2021, 1, 1), new DateOnly(2021, 1, 2)));
+        _repository.Add(new Booking(10, 1, RoomType.Standard, new DateOnly(2021, 1, 1), new DateOnly(2021, 1, 2)));
 
         // Act
-        var count = repository.GetCount(1, RoomType.JuniorSuite, new DateOnly(2021, 1, 1), new DateOnly(2021, 1, 2));
+        var count = _repository.GetCount(1, RoomType.JuniorSuite, new DateOnly(2021, 1, 1), new DateOnly(2021, 1, 2));
 
         // Assert
         Assert.Equal(0, count);
@@ -64,11 +65,10 @@ public class GetCountTests
     public void OneBookingWithOnlyOverlappingFirstDay()
     {
         // Arrange
-        var repository = new InMemoryBookingRepository();
-        repository.Add(new Booking(10, 1, RoomType.Standard, new DateOnly(2021, 1, 1), new DateOnly(2021, 1, 2)));
+        _repository.Add(new Booking(10, 1, RoomType.Standard, new DateOnly(2021, 1, 1), new DateOnly(2021, 1, 2)));
 
         // Act
-        var count = repository.GetCount(1, RoomType.Standard, new DateOnly(2021, 1, 2), new DateOnly(2021, 1, 3));
+        var count = _repository.GetCount(1, RoomType.Standard, new DateOnly(2021, 1, 2), new DateOnly(2021, 1, 3));
 
         // Assert
         Assert.Equal(1, count);
@@ -78,11 +78,10 @@ public class GetCountTests
     public void OneBookingWithOnlyOverlappingLastDay()
     {
         // Arrange
-        var repository = new InMemoryBookingRepository();
-        repository.Add(new Booking(10, 1, RoomType.Standard, new DateOnly(2021, 1, 1), new DateOnly(2021, 1, 2)));
+        _repository.Add(new Booking(10, 1, RoomType.Standard, new DateOnly(2021, 1, 1), new DateOnly(2021, 1, 2)));
 
         // Act
-        var count = repository.GetCount(1, RoomType.Standard, new DateOnly(2020, 12, 31), new DateOnly(2021, 1, 1));
+        var count = _repository.GetCount(1, RoomType.Standard, new DateOnly(2020, 12, 31), new DateOnly(2021, 1, 1));
 
         // Assert
         Assert.Equal(1, count);
@@ -92,11 +91,10 @@ public class GetCountTests
     public void OneBookingWithNoOverlappingDates()
     {
         // Arrange
-        var repository = new InMemoryBookingRepository();
-        repository.Add(new Booking(10, 1, RoomType.Standard, new DateOnly(2021, 1, 1), new DateOnly(2021, 1, 2)));
+        _repository.Add(new Booking(10, 1, RoomType.Standard, new DateOnly(2021, 1, 1), new DateOnly(2021, 1, 2)));
 
         // Act
-        var count = repository.GetCount(1, RoomType.Standard, new DateOnly(2021, 1, 3), new DateOnly(2021, 1, 4));
+        var count = _repository.GetCount(1, RoomType.Standard, new DateOnly(2021, 1, 3), new DateOnly(2021, 1, 4));
 
         // Assert
         Assert.Equal(0, count);

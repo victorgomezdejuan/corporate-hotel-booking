@@ -6,14 +6,18 @@ namespace CorporateHotelBooking.Unit.Tests.Repositories.InMemoryBookingRepositor
 
 public class GetTests
 {
+    private readonly InMemoryBookingRepository _repository;
+
+    public GetTests()
+    {
+        _repository = new InMemoryBookingRepository();
+    }
+
     [Fact]
     public void BookingDoesNotExist()
     {
-        // Arrange
-        var repository = new InMemoryBookingRepository();
-
         // Act
-        Action action = () => repository.Get(1);
+        Action action = () => _repository.Get(1);
 
         // Assert
         action.Should().Throw<BookingNotFoundException>();
@@ -23,12 +27,11 @@ public class GetTests
     public void BookingExists()
     {
         // Arrange
-        var repository = new InMemoryBookingRepository();
         var booking = new Booking(1, 10, 100, RoomType.Standard, new DateOnly(2021, 1, 1), new DateOnly(2021, 1, 2));
-        repository.Add(booking);
+        _repository.Add(booking);
 
         // Act
-        var result = repository.Get(1);
+        var result = _repository.Get(1);
 
         // Assert
         result.Should().Be(booking);

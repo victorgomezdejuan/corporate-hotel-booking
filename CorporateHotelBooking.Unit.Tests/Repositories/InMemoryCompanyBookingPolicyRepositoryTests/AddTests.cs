@@ -11,14 +11,16 @@ public class AddTests
     public void AddCompanyPolicy()
     {
         // Arrange
-        var companyPolicyRepository = new InMemoryCompanyBookingPolicyRepository();
-        var companyPolicyToBeAdded = new CompanyBookingPolicy(1, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite });
+        var repository = new InMemoryCompanyBookingPolicyRepository();
+        var companyPolicyToBeAdded = new CompanyBookingPolicy(
+            1,
+            new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite });
 
         // Act
-        companyPolicyRepository.Add(companyPolicyToBeAdded);
+        repository.Add(companyPolicyToBeAdded);
 
         // Assert
-        var retrievedCompanyPolicy = companyPolicyRepository.Get(1);
+        var retrievedCompanyPolicy = repository.Get(1);
         retrievedCompanyPolicy.Should().Be(companyPolicyToBeAdded);
     }
 }
