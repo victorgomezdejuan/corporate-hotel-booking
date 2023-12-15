@@ -1,3 +1,4 @@
+using AutoFixture.Xunit2;
 using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Domain.Entities.BookingPolicies;
 using CorporateHotelBooking.Integrated.Tests.BookingPolicyServiceTests.Helpers;
@@ -24,29 +25,35 @@ public class SetEmployeeBookingPolicyTests
             new NotImplementedEmployeeRepository());
     }
 
-    [Fact]
-    public void AddNewEmployeePolicy()
+    [Theory, AutoData]
+    public void AddNewEmployeePolicy(int employeeId, [CollectionSize(2)] List<RoomType> roomTypes)
     {
         // Act
-        _bookingPolicyService.SetEmployeePolicy(1, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite });
+        _bookingPolicyService.SetEmployeePolicy(employeeId, roomTypes);
 
         // Assert
-        var retrievedEmployeePolicy = _employeePolicyRepository.Get(1);
-        retrievedEmployeePolicy.Should().Be(new EmployeeBookingPolicy(1, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite }));
+        var retrievedEmployeePolicy = _employeePolicyRepository.Get(employeeId);
+        retrievedEmployeePolicy.Should().Be(new EmployeeBookingPolicy(employeeId, roomTypes));
     }
 
-    [Fact]
-    public void UpdateExistingEmployeePolicy()
+    [Theory, AutoData]
+    public void UpdateExistingEmployeePolicy(int employeeId)
     {
         // Arrange
-        _bookingPolicyService.SetEmployeePolicy(1, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite });
+        _bookingPolicyService.SetEmployeePolicy(
+            employeeId,
+            new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite });
 
         // Act
-        _bookingPolicyService.SetEmployeePolicy(1, new List<RoomType> { RoomType.JuniorSuite, RoomType.MasterSuite });
+        _bookingPolicyService.SetEmployeePolicy(
+            employeeId,
+            new List<RoomType> { RoomType.JuniorSuite, RoomType.MasterSuite });
 
         // Assert
-        var retrievedEmployeePolicy = _employeePolicyRepository.Get(1);
-        retrievedEmployeePolicy.Should().Be(new EmployeeBookingPolicy(1, new List<RoomType> { RoomType.JuniorSuite, RoomType.MasterSuite }));
+        var retrievedEmployeePolicy = _employeePolicyRepository.Get(employeeId);
+        retrievedEmployeePolicy.Should().Be(new EmployeeBookingPolicy(
+            employeeId,
+            new List<RoomType> { RoomType.JuniorSuite, RoomType.MasterSuite }));
     }
 }
 

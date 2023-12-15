@@ -26,32 +26,34 @@ public class SetCompanyBookingPolicyTests
     }
 
     [Theory, AutoData]
-    public void AddNewCompanyPolicy(int companyId)
+    public void AddNewCompanyPolicy(int companyId, [CollectionSize(2)] List<RoomType> roomTypes)
     {
         // Act
+        _bookingPolicyService.SetCompanyPolicy(companyId, roomTypes);
+
+        // Assert
+        var retrievedCompanyPolicy = _companyPolicyRepository.Get(companyId);
+        retrievedCompanyPolicy.Should().Be(new CompanyBookingPolicy(companyId, roomTypes));
+    }
+
+    [Theory, AutoData]
+    public void UpdateExistingCompanyPolicy(int companyId)
+    {
+        // Arrange
         _bookingPolicyService.SetCompanyPolicy(
             companyId,
             new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite });
+
+        // Act
+        _bookingPolicyService.SetCompanyPolicy(
+            companyId,
+            new List<RoomType> { RoomType.JuniorSuite, RoomType.MasterSuite });
 
         // Assert
         var retrievedCompanyPolicy = _companyPolicyRepository.Get(companyId);
         retrievedCompanyPolicy.Should().Be(new CompanyBookingPolicy(
             companyId,
-            new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite }));
-    }
-
-    [Fact]
-    public void UpdateExistingCompanyPolicy()
-    {
-        // Arrange
-        _bookingPolicyService.SetCompanyPolicy(100, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite });
-
-        // Act
-        _bookingPolicyService.SetCompanyPolicy(100, new List<RoomType> { RoomType.JuniorSuite, RoomType.MasterSuite });
-
-        // Assert
-        var retrievedCompanyPolicy = _companyPolicyRepository.Get(100);
-        retrievedCompanyPolicy.Should().Be(new CompanyBookingPolicy(100, new List<RoomType> { RoomType.JuniorSuite, RoomType.MasterSuite }));
+            new List<RoomType> { RoomType.JuniorSuite, RoomType.MasterSuite }));
     }
 }
 
