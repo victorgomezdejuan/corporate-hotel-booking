@@ -7,7 +7,12 @@ Developed with dotnet (c#) and Visual Studio Code.
 # Practice objectives
 
 - TDD
+- Evolutionary design
 - GitHub Copilot
+
+Another important thing that I tried to do is to avoid writing end-to-end tests for all the acceptance criteria that was included in the description of the exercise. That is, I added at least one integrated test that makes sure that all the pieces work together properly, but, if I felt that all the scenarios where already cover by the integrated test and the unit tests, I didn't add additional integrated or end-to-end tests.
+
+Finally I end up adding more than one integrated test in some cases that I didn't feel so confident just with the existing unit tests, but you may notice that the tests located in the project that holds the integrated tests by no means cover all the acceptante test scenarios.
 
 # Introduction
 
