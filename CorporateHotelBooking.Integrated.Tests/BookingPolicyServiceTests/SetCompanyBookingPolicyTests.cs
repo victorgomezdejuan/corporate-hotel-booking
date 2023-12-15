@@ -1,3 +1,4 @@
+using AutoFixture.Xunit2;
 using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Domain.Entities.BookingPolicies;
 using CorporateHotelBooking.Integrated.Tests.BookingPolicyServiceTests.Helpers;
@@ -24,15 +25,19 @@ public class SetCompanyBookingPolicyTests
             new NotImplementedEmployeeRepository()); 
     }
 
-    [Fact]
-    public void AddNewCompanyPolicy()
+    [Theory, AutoData]
+    public void AddNewCompanyPolicy(int companyId)
     {
         // Act
-        _bookingPolicyService.SetCompanyPolicy(100, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite });
+        _bookingPolicyService.SetCompanyPolicy(
+            companyId,
+            new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite });
 
         // Assert
-        var retrievedCompanyPolicy = _companyPolicyRepository.Get(100);
-        retrievedCompanyPolicy.Should().Be(new CompanyBookingPolicy(100, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite }));
+        var retrievedCompanyPolicy = _companyPolicyRepository.Get(companyId);
+        retrievedCompanyPolicy.Should().Be(new CompanyBookingPolicy(
+            companyId,
+            new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite }));
     }
 
     [Fact]
