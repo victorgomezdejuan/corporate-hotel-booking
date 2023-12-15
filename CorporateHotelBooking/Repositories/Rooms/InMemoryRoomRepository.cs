@@ -1,4 +1,3 @@
-using System.Collections.ObjectModel;
 using CorporateHotelBooking.Domain.Entities;
 
 namespace CorporateHotelBooking.Repositories.Rooms;
@@ -14,6 +13,13 @@ public class InMemoryRoomRepository : IRoomRepository
 
     public void Add(Room room)
     {
+        _rooms.Add(room);
+    }
+
+    public void Update(Room room)
+    {
+        var existingRoom = Get(room.HotelId, room.Number);
+        _rooms.Remove(existingRoom);
         _rooms.Add(room);
     }
 
@@ -37,15 +43,8 @@ public class InMemoryRoomRepository : IRoomRepository
         return _rooms.Count(r => r.HotelId == hotelId && r.Type == roomType);
     }
 
-    public ReadOnlyCollection<Room> GetMany(int hotelId)
+    public IReadOnlyCollection<Room> GetMany(int hotelId)
     {
         return _rooms.Where(r => r.HotelId == hotelId).ToList().AsReadOnly();
-    }
-
-    public void Update(Room room)
-    {
-        var existingRoom = Get(room.HotelId, room.Number);
-        _rooms.Remove(existingRoom);
-        _rooms.Add(room);
     }
 }
