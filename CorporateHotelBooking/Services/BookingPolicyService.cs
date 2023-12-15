@@ -10,8 +10,8 @@ namespace CorporateHotelBooking.Services;
 
 public class BookingPolicyService
 {
-    private ICompanyBookingPolicyRepository _companyPolicyRepository;
-    private IEmployeeBookingPolicyRepository _employeePolicyRepository;
+    private readonly ICompanyBookingPolicyRepository _companyPolicyRepository;
+    private readonly IEmployeeBookingPolicyRepository _employeePolicyRepository;
     private readonly IEmployeeRepository _employeeRepository;
     
     public BookingPolicyService(
