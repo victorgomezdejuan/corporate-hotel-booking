@@ -6,24 +6,33 @@ namespace CorporateHotelBooking.Unit.Tests.Repositories.InMemoryRoomRepositoryTe
 
 public class GetManyTests
 {
+    private readonly InMemoryRoomRepository _repository;
+
+    public GetManyTests()
+    {
+        _repository = new InMemoryRoomRepository();
+    }
+
     [Fact]
     public void GetNoRooms()
     {
-        var repository = new InMemoryRoomRepository();
+        // Act
+        var rooms = _repository.GetMany(1);
 
-        var rooms = repository.GetMany(1);
-
+        // Assert
         rooms.Should().BeEmpty();
     }
 
     [Fact]
     public void GetOneRoom()
     {
-        var repository = new InMemoryRoomRepository();
-        repository.Add(new Room(1, 100, RoomType.Standard));
+        // Arrange
+        _repository.Add(new Room(1, 100, RoomType.Standard));
 
-        var rooms = repository.GetMany(1);
+        // Act
+        var rooms = _repository.GetMany(1);
 
+        // Assert
         rooms.Should().HaveCount(1);
         rooms.First().Number.Should().Be(100);
         rooms.First().Type.Should().Be(RoomType.Standard);
@@ -32,12 +41,14 @@ public class GetManyTests
     [Fact]
     public void GetMultipleRooms()
     {
-        var repository = new InMemoryRoomRepository();
-        repository.Add(new Room(1, 100, RoomType.Standard));
-        repository.Add(new Room(1, 101, RoomType.JuniorSuite));
+        // Arrange
+        _repository.Add(new Room(1, 100, RoomType.Standard));
+        _repository.Add(new Room(1, 101, RoomType.JuniorSuite));
 
-        var rooms = repository.GetMany(1);
+        // Act
+        var rooms = _repository.GetMany(1);
 
+        // Assert
         rooms.Should().HaveCount(2);
         rooms.First().Number.Should().Be(100);
         rooms.First().Type.Should().Be(RoomType.Standard);

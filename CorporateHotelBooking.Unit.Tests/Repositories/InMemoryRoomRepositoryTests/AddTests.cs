@@ -5,24 +5,18 @@ namespace CorporateHotelBooking.Unit.Tests.Repositories.InMemoryRoomRepositoryTe
 
 public class AddTests
 {
-    private readonly InMemoryRoomRepository _repository;
-
-    public AddTests()
-    {
-        _repository = new InMemoryRoomRepository();
-    }
-
     [Fact]
     public void AddNewRoom()
     {
         // Arrange
+        var repository = new InMemoryRoomRepository();
         var roomToBeAdded = new Room(1, 100, RoomType.Standard);
 
         // Act
-        _repository.Add(roomToBeAdded);
+        repository.Add(roomToBeAdded);
 
         // Assert
-        var retrievedRoom = _repository.Get(1, 100);
+        var retrievedRoom = repository.Get(1, 100);
         Assert.Equal(roomToBeAdded, retrievedRoom);
     }
 }

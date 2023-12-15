@@ -5,14 +5,18 @@ namespace CorporateHotelBooking.Unit.Tests.Repositories.InMemoryRoomRepositoryTe
 
 public class GetRoomCountTests
 {
+    private readonly InMemoryRoomRepository _repository;
+
+    public GetRoomCountTests()
+    {
+        _repository = new InMemoryRoomRepository();
+    }
+
     [Fact]
     public void NoRooms()
     {
-        // Arrange
-        var repository = new InMemoryRoomRepository();
-
         // Act
-        var count = repository.GetCount(1, RoomType.Standard);
+        var count = _repository.GetCount(1, RoomType.Standard);
 
         // Assert
         Assert.Equal(0, count);
@@ -22,11 +26,10 @@ public class GetRoomCountTests
     public void OneRoom()
     {
         // Arrange
-        var repository = new InMemoryRoomRepository();
-        repository.Add(new Room(1, 100, RoomType.Standard));
+        _repository.Add(new Room(1, 100, RoomType.Standard));
 
         // Act
-        var count = repository.GetCount(1, RoomType.Standard);
+        var count = _repository.GetCount(1, RoomType.Standard);
 
         // Assert
         Assert.Equal(1, count);
@@ -36,13 +39,12 @@ public class GetRoomCountTests
     public void MultipleRooms()
     {
         // Arrange
-        var repository = new InMemoryRoomRepository();
-        repository.Add(new Room(1, 100, RoomType.Standard));
-        repository.Add(new Room(1, 101, RoomType.Standard));
-        repository.Add(new Room(1, 102, RoomType.Standard));
+        _repository.Add(new Room(1, 100, RoomType.Standard));
+        _repository.Add(new Room(1, 101, RoomType.Standard));
+        _repository.Add(new Room(1, 102, RoomType.Standard));
 
         // Act
-        var count = repository.GetCount(1, RoomType.Standard);
+        var count = _repository.GetCount(1, RoomType.Standard);
 
         // Assert
         Assert.Equal(3, count);
