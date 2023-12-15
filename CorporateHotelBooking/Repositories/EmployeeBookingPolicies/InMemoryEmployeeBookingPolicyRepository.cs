@@ -17,9 +17,9 @@ public class InMemoryEmployeeBookingPolicyRepository : IEmployeeBookingPolicyRep
         _employeePolicies[employeePolicy.EmployeeId] = employeePolicy;
     }
 
-    public void DeleteByEmployee(int employeeId)
+    public void Delete(int employeeId)
     {
-        throw new NotImplementedException();
+        _employeePolicies.Remove(employeeId);
     }
 
     public bool Exists(int employeeId)

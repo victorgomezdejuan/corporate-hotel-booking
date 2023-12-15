@@ -38,7 +38,7 @@ public class DeleteEmployeeCommandHandler
             throw new EmployeeNotFoundException(command.EmployeeId);
         }
         _bookingRepository.DeleteByEmployee(command.EmployeeId);
-        _employeeBookingPolicyRepository.DeleteByEmployee(command.EmployeeId);
+        _employeeBookingPolicyRepository.Delete(command.EmployeeId);
         _employeeRepository.Delete(command.EmployeeId);
     }
 }

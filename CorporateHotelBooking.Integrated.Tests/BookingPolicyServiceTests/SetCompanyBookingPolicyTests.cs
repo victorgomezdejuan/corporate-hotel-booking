@@ -57,7 +57,7 @@ public class NotImplementedEmployeeBookingPolicyRepository : IEmployeeBookingPol
         throw new NotImplementedException();
     }
 
-    public void DeleteByEmployee(int employeeId)
+    public void Delete(int employeeId)
     {
         throw new NotImplementedException();
     }
