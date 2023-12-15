@@ -4,12 +4,12 @@ namespace CorporateHotelBooking.Application.Bookings.Commands;
 
 public class RoomTypeNotProvidedByTheHotelException : Exception
 {
-    private int hotelId;
-    private RoomType roomType;
-
     public RoomTypeNotProvidedByTheHotelException(int hotelId, RoomType roomType)
     {
-        this.hotelId = hotelId;
-        this.roomType = roomType;
+        HotelId = hotelId;
+        RoomType = roomType;
     }
+
+    public int HotelId { get; }
+    public RoomType RoomType { get; }
 }
