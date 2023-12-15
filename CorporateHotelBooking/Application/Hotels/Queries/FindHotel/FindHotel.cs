@@ -4,15 +4,7 @@ using CorporateHotelBooking.Repositories.Rooms;
 
 namespace CorporateHotelBooking.Application.Hotels.Queries.FindHotel;
 
-public record FindHotelQuery
-{
-    public int Id { get; }
-
-    public FindHotelQuery(int id)
-    {
-        Id = id;
-    }
-}
+public record FindHotelQuery(int Id);
 
 public class FindHotelQueryHandler
 {
@@ -23,13 +15,13 @@ public class FindHotelQueryHandler
     {
         _hotelRepository = hotelRepository;
         _roomRepository = rommRepository;
-
     }
 
     public HotelDto Handle(FindHotelQuery query)
     {
         var hotel = _hotelRepository.Get(query.Id);
-        var rooms = _roomRepository.GetMany(query.Id).Select(x => new RoomDto(x.Number, x.Type)).ToList();
+        var rooms = _roomRepository.GetMany(query.Id).Select(r => new RoomDto(r.Number, r.Type));
+
         return new HotelDto(hotel.Id, hotel.Name, rooms);
     }
 }

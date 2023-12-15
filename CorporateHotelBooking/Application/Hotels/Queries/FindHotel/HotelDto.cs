@@ -1,20 +1,19 @@
-using System.Collections.ObjectModel;
-using CorporateHotelBooking.Application.Hotels.Queries.FindHotel;
+using CorporateHotelBooking.Domain.Entities;
 
 namespace CorporateHotelBooking.Application;
 
-public class HotelDto
+public record HotelDto
 {
-    public int Id { get; }
-
-    public string Name { get; }
-
-    public ReadOnlyCollection<RoomDto> Rooms { get; }
-
-    public HotelDto(int id, string name, ICollection<RoomDto> rooms)
+    public HotelDto(int id, string name, IEnumerable<RoomDto> rooms)
     {
         Id = id;
         Name = name;
         Rooms = rooms.ToList().AsReadOnly();
     }
+
+    public int Id { get; }
+    public string Name { get; }
+    public IReadOnlyCollection<RoomDto> Rooms { get; }
 }
+
+public record RoomDto(int Number, RoomType Type);

@@ -3,17 +3,7 @@ using CorporateHotelBooking.Repositories.Hotels;
 
 namespace CorporateHotelBooking.Application.Hotels.Commands.AddHotel;
 
-public record AddHotelCommand
-{
-    public int HotelId { get; }
-    public string HotelName { get; }
-
-    public AddHotelCommand(int hotelId, string hotelName)
-    {
-        HotelId = hotelId;
-        HotelName = hotelName;
-    }
-}
+public record AddHotelCommand(int HotelId, string HotelName);
 
 public class AddHotelCommandHandler
 {
@@ -30,8 +20,6 @@ public class AddHotelCommandHandler
         {
             throw new HotelAlreadyExistsException();
         }
-        
-        var hotel = new Hotel(command.HotelId, command.HotelName);
-        _hotelRepository.Add(hotel);
+        _hotelRepository.Add(new Hotel(command.HotelId, command.HotelName));
     }
 }

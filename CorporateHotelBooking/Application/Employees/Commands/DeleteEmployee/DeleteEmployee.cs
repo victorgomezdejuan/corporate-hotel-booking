@@ -5,15 +5,7 @@ using CorporateHotelBooking.Repositories.Employees;
 
 namespace CorporateHotelBooking.Application.Employees.Commands.DeleteEmployee;
 
-public record DeleteEmployeeCommand
-{
-    public int EmployeeId { get; }
-
-    public DeleteEmployeeCommand(int employeeId)
-    {
-        EmployeeId = employeeId;
-    }
-}
+public record DeleteEmployeeCommand(int EmployeeId);
 
 public class DeleteEmployeeCommandHandler
 {
