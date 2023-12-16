@@ -1,6 +1,8 @@
+using AutoFixture.Xunit2;
 using CorporateHotelBooking.Application.Common.Exceptions;
 using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Domain.Entities.BookingPolicies;
+using CorporateHotelBooking.Integrated.Tests.BookingPolicyServiceTests.Helpers;
 using CorporateHotelBooking.Repositories.Bookings;
 using CorporateHotelBooking.Repositories.EmployeeBookingPolicies;
 using CorporateHotelBooking.Repositories.Employees;
@@ -11,26 +13,31 @@ namespace CorporateHotelBooking.Integrated.Tests.CompanyServiceTests;
 
 public class DeleteEmployeeTests
 {
-    [Fact]
-    public void DeleteEmployeeAndTheirAssociatedItems()
+    [Theory, AutoData]
+    public void DeleteEmployeeAndTheirAssociatedItems(int companyId)
     {
         // Arrange
+        var booking = BookingFactory.CreateRandom();
         IEmployeeRepository employeeRepository = new InMemoryEmployeeRepository();
         IBookingRepository bookingRepository = new InMemoryBookingRepository();
-        bookingRepository.Add(new Booking(employeeId: 1, hotelId: 10, RoomType.Standard, new DateOnly(2021, 1, 1), new DateOnly(2021, 1, 2)));
-        IEmployeeBookingPolicyRepository employeeBookingPolicyRepository = new InMemoryEmployeeBookingPolicyRepository();
-        employeeBookingPolicyRepository.Add(new EmployeeBookingPolicy(employeeId: 1, new List<RoomType> { RoomType.Standard }));
+        bookingRepository.Add(booking);
+        IEmployeeBookingPolicyRepository employeeBookingPolicyRepository =
+            new InMemoryEmployeeBookingPolicyRepository();
+        employeeBookingPolicyRepository
+            .Add(new EmployeeBookingPolicy(booking.EmployeeId, new List<RoomType> { booking.RoomType }));
         
         var companyService = new CompanyService(employeeRepository, bookingRepository, employeeBookingPolicyRepository);
-        companyService.AddEmployee(companyId: 100, employeeId: 1);
+        companyService.AddEmployee(companyId, booking.EmployeeId);
 
         // Act
-        companyService.DeleteEmployee(1);
+        companyService.DeleteEmployee(booking.EmployeeId);
 
         // Assert
-        Action action = () => employeeRepository.Get(1);
+        Action action = () => employeeRepository.Get(booking.EmployeeId);
         action.Should().Throw<EmployeeNotFoundException>();
-        bookingRepository.GetCount(1, RoomType.Standard, new DateOnly(2021, 1, 1), new DateOnly(2021, 1, 2)).Should().Be(0);
-        employeeBookingPolicyRepository.Exists(1).Should().BeFalse();
+        bookingRepository
+            .GetCount(booking.EmployeeId, booking.RoomType, booking.CheckInDate, booking.CheckOutDate)
+            .Should().Be(0);
+        employeeBookingPolicyRepository.Exists(booking.EmployeeId).Should().BeFalse();
     }
 }

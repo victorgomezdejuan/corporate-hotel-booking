@@ -1,6 +1,8 @@
+using AutoFixture.Xunit2;
 using CorporateHotelBooking.Application.Bookings.Commands;
 using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Domain.Entities.BookingPolicies;
+using CorporateHotelBooking.Integrated.Tests.BookingPolicyServiceTests.Helpers;
 using CorporateHotelBooking.Repositories.Bookings;
 using CorporateHotelBooking.Repositories.CompanyBookingPolicies;
 using CorporateHotelBooking.Repositories.EmployeeBookingPolicies;
@@ -39,44 +41,52 @@ public class BookingServiceTests
             _companyBookingPolicyRepository);
     }
 
-    [Fact]
-    public void BookARoom()
+    [Theory, AutoData]
+    public void BookARoom(string hotelName, int roomNumber, int companyId)
     {
         // Arrange
-        var expectedBooking = new Booking
-        (
-            id: 1,
-            employeeId: 2,
-            hotelId: 3,
-            roomType: RoomType.Standard,
-            checkInDate: DateOnly.FromDateTime(DateTime.Now),
-            checkOutDate: DateOnly.FromDateTime(DateTime.Now.AddDays(1))
-        );
-        _hotelRepository.Add(new Hotel(3, "Hotel 3"));
-        _roomRepository.Add(new Room(3, 100, RoomType.Standard));
-        _employeeRepository.Add(new Employee(2, 4));
-        _companyBookingPolicyRepository.Add(new CompanyBookingPolicy(4, new List<RoomType> { RoomType.Standard }));
+        var booking = BookingFactory.CreateRandom();
+        _hotelRepository.Add(new Hotel(booking.HotelId, hotelName));
+        _roomRepository.Add(new Room(booking.HotelId, roomNumber, booking.RoomType));
+        _employeeRepository.Add(new Employee(booking.EmployeeId, companyId));
+        _companyBookingPolicyRepository
+            .Add(new CompanyBookingPolicy(companyId, new List<RoomType> { booking.RoomType }));
 
         // Act
-        var booking = _bookingService.Book(2, 3, RoomType.Standard, DateOnly.FromDateTime(DateTime.Now), DateOnly.FromDateTime(DateTime.Now.AddDays(1)));
+        var result = _bookingService.Book(
+            booking.EmployeeId,
+            booking.HotelId,
+            booking.RoomType,
+            booking.CheckInDate,
+            booking.CheckOutDate);
 
         // Assert
-        booking.Should().BeEquivalentTo(expectedBooking);
-        _bookingRepository.Get(1).Should().Be(expectedBooking);
+        result.Should().BeEquivalentTo(booking, options => options.Excluding(b => b.Id));
+        _bookingRepository.Get(1).Should().BeEquivalentTo(booking, options => options.Excluding(b => b.Id));
     }
 
-    [Fact]
-    public void TryToBookARoomThatIsNotAvailableAtThatTime()
+    [Theory, AutoData]
+    public void TryToBookARoomThatIsNotAvailableAtThatTime(
+        string hotelName,
+        int roomNumber,
+        int companyId)
     {
         // Arrange
-        _hotelRepository.Add(new Hotel(3, "Hotel 3"));
-        _roomRepository.Add(new Room(3, 100, RoomType.Standard));
-        _employeeRepository.Add(new Employee(2, 4));
-        _companyBookingPolicyRepository.Add(new CompanyBookingPolicy(4, new List<RoomType> { RoomType.Standard }));
-        _bookingRepository.Add(new Booking(2, 3, RoomType.Standard, DateOnly.FromDateTime(DateTime.Now), DateOnly.FromDateTime(DateTime.Now.AddDays(1))));
+        var booking = BookingFactory.CreateRandom();
+        _hotelRepository.Add(new Hotel(booking.HotelId, hotelName));
+        _roomRepository.Add(new Room(booking.HotelId, roomNumber, RoomType.Standard));
+        _employeeRepository.Add(new Employee(booking.EmployeeId, companyId));
+        _companyBookingPolicyRepository.Add(
+            new CompanyBookingPolicy(companyId, new List<RoomType> { RoomType.Standard }));
+        _bookingRepository.Add(booking);
 
         // Act
-        Action action = () => _bookingService.Book(2, 3, RoomType.Standard, DateOnly.FromDateTime(DateTime.Now), DateOnly.FromDateTime(DateTime.Now.AddDays(1)));
+        Action action = () => _bookingService.Book(
+            booking.EmployeeId,
+            booking.HotelId,
+            booking.RoomType,
+            booking.CheckInDate,
+            booking.CheckOutDate);
 
         // Assert
         action.Should().Throw<NoRoomsAvailableException>();

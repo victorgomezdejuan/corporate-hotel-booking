@@ -4,6 +4,7 @@ using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Repositories.Hotels;
 using CorporateHotelBooking.Repositories.Rooms;
 using CorporateHotelBooking.Services;
+using AutoFixture.Xunit2;
 
 namespace CorporateHotelBooking.Integrated.Tests.HotelServiceTests;
 
@@ -20,42 +21,42 @@ public class SetRoomTests
         _hotelService = new HotelService(_hotelRepository, _roomRepository);
     }
 
-    [Fact]
-    public void AddNewRoom()
+    [Theory, AutoData]
+    public void AddNewRoom(int hotelId, string hotelName, int roomNumber, RoomType roomType)
     {
         // Arrange
-        _hotelService.AddHotel(1, "Hotel 1");
+        _hotelService.AddHotel(hotelId, hotelName);
 
         // Act
-        _hotelService.SetRoom(1, 101, RoomType.Standard);
+        _hotelService.SetRoom(hotelId, roomNumber, roomType);
 
         // Assert
-        var rooms = _roomRepository.GetMany(1);
+        var rooms = _roomRepository.GetMany(hotelId);
         rooms.Should().HaveCount(1);
-        rooms.Should().Contain(r => r.Number == 101 && r.Type == RoomType.Standard);
+        rooms.Should().Contain(r => r.Number == roomNumber && r.Type == roomType);
     }
 
-    [Fact]
-    public void UpdateExistingRoom()
+    [Theory, AutoData]
+    public void UpdateExistingRoom(int hotelId, string hotelName, int roomNumber)
     {
         // Arrange
-        _hotelService.AddHotel(1, "Hotel 1");
-        _hotelService.SetRoom(1, 101, RoomType.Standard);
+        _hotelService.AddHotel(hotelId, hotelName);
+        _hotelService.SetRoom(hotelId, roomNumber, RoomType.Standard);
 
         // Act
-        _hotelService.SetRoom(1, 101, RoomType.JuniorSuite);
+        _hotelService.SetRoom(hotelId, roomNumber, RoomType.JuniorSuite);
 
         // Assert
-        var rooms = _roomRepository.GetMany(1);
+        var rooms = _roomRepository.GetMany(hotelId);
         rooms.Should().HaveCount(1);
-        rooms.Should().Contain(r => r.Number == 101 && r.Type == RoomType.JuniorSuite);
+        rooms.Should().Contain(r => r.Number == roomNumber && r.Type == RoomType.JuniorSuite);
     }
 
-    [Fact]
-    public void AddRoomAssignedToNonExistingHotel()
+    [Theory, AutoData]
+    public void AddRoomAssignedToNonExistingHotel(int hotelId, int roomNumber, RoomType roomType)
     {
         // Act
-        void Act() => _hotelService.SetRoom(1, 101, RoomType.Standard);
+        void Act() => _hotelService.SetRoom(hotelId, roomNumber, roomType);
 
         // Assert
         Assert.Throws<HotelNotFoundException>(Act);

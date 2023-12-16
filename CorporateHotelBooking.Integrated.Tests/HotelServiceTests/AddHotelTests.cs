@@ -1,7 +1,9 @@
+using AutoFixture.Xunit2;
 using CorporateHotelBooking.Application.Hotels.Commands.AddHotel;
 using CorporateHotelBooking.Repositories.Hotels;
 using CorporateHotelBooking.Repositories.Rooms;
 using CorporateHotelBooking.Services;
+using FluentAssertions;
 
 namespace CorporateHotelBooking.Integrated.Tests.HotelServiceTests;
 
@@ -18,26 +20,26 @@ public class AddHotelTests
         _hotelService = new HotelService(_hotelRepository, _roomRepository);
     }
 
-    [Fact]
-    public void AddNewHotel()
+    [Theory, AutoData]
+    public void AddNewHotel(int hotelId, string hotelName)
     {
         // Act
-        _hotelService.AddHotel(1, "Hotel 1");
+        _hotelService.AddHotel(hotelId, hotelName);
 
         // Assert
-        var hotel = _hotelService.FindHotelBy(1);
-        Assert.Equal(1, hotel.Id);
-        Assert.Equal("Hotel 1", hotel.Name);
+        var hotel = _hotelService.FindHotelBy(hotelId);
+        hotel.Id.Should().Be(hotelId);
+        hotel.Name.Should().Be(hotelName);
     }
 
-    [Fact]
-    public void AddHotelWithExistingHotelId()
+    [Theory, AutoData]
+    public void AddHotelWithExistingHotelId(int hotelId)
     {
         // Arrange
-        _hotelService.AddHotel(1, "Hotel 1");
+        _hotelService.AddHotel(hotelId, "One name");
 
         // Act
-        void Act() => _hotelService.AddHotel(1, "Hotel 2");
+        void Act() => _hotelService.AddHotel(hotelId, "Another name");
 
         // Assert
         Assert.Throws<HotelAlreadyExistsException>(Act);

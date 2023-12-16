@@ -1,3 +1,4 @@
+using AutoFixture.Xunit2;
 using CorporateHotelBooking.Application.Employees.Commands.AddEmployee;
 using CorporateHotelBooking.Repositories.Bookings;
 using CorporateHotelBooking.Repositories.EmployeeBookingPolicies;
@@ -22,26 +23,26 @@ public class AddEmployeeTests
         _companyService = new CompanyService(_employeeRepository, _bookingRepository, _employeeBookingPolicyRepository);
     }
 
-    [Fact]
-    public void AddEmployee()
+    [Theory, AutoData]
+    public void AddEmployee(int companyId, int employeeId)
     {
         // Act
-        _companyService.AddEmployee(companyId: 100, employeeId: 1);
+        _companyService.AddEmployee(companyId, employeeId);
 
         // Assert
-        var employee = _employeeRepository.Get(1);
-        employee.Id.Should().Be(1);
-        employee.CompanyId.Should().Be(100);
+        var employee = _employeeRepository.Get(employeeId);
+        employee.Id.Should().Be(employeeId);
+        employee.CompanyId.Should().Be(companyId);
     }
 
-    [Fact]
-    public void AddExistingEmployee()
+    [Theory, AutoData]
+    public void AddExistingEmployee(int companyId, int employeeId)
     {
         // Arrange
-        _companyService.AddEmployee(companyId: 100, employeeId: 1);
+        _companyService.AddEmployee(companyId, employeeId);
 
         // Act
-        Action action = () => _companyService.AddEmployee(companyId: 100, employeeId: 1);
+        Action action = () => _companyService.AddEmployee(companyId, employeeId);
 
         // Assert
         action.Should().Throw<EmployeeAlreadyExistsException>();
