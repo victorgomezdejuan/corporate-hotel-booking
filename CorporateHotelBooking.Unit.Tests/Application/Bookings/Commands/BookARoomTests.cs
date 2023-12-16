@@ -1,4 +1,3 @@
-using System.Text.Json.Serialization.Metadata;
 using AutoFixture;
 using AutoFixture.Xunit2;
 using CorporateHotelBooking.Application.Bookings.Commands;
@@ -11,7 +10,6 @@ using CorporateHotelBooking.Repositories.EmployeeBookingPolicies;
 using CorporateHotelBooking.Repositories.Employees;
 using CorporateHotelBooking.Repositories.Hotels;
 using CorporateHotelBooking.Repositories.Rooms;
-using CorporateHotelBooking.Unit.Tests.Helpers;
 using CorporateHotelBooking.Unit.Tests.Helpers.AutoFixture;
 using FluentAssertions;
 using Moq;
