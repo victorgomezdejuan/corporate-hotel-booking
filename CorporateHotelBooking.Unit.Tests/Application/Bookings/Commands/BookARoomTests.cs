@@ -1,3 +1,6 @@
+using System.Text.Json.Serialization.Metadata;
+using AutoFixture;
+using AutoFixture.Xunit2;
 using CorporateHotelBooking.Application.Bookings.Commands;
 using CorporateHotelBooking.Application.Rooms.Commands.SetRoom;
 using CorporateHotelBooking.Domain.Entities;
@@ -9,6 +12,7 @@ using CorporateHotelBooking.Repositories.Employees;
 using CorporateHotelBooking.Repositories.Hotels;
 using CorporateHotelBooking.Repositories.Rooms;
 using CorporateHotelBooking.Unit.Tests.Helpers;
+using CorporateHotelBooking.Unit.Tests.Helpers.AutoFixture;
 using FluentAssertions;
 using Moq;
 
@@ -46,16 +50,8 @@ public class BookARoomTests
     public void HotelDoesNotExist()
     {
         // Arrange
-        _hotelRepositoryMock.Setup(x => x.Exists(1)).Returns(false);
-
-        var command = new BookARoomCommand
-        (
-            EmployeeId: 1,
-            HotelId: 1,
-            RoomType: RoomType.Standard,
-            CheckInDate: DateUtils.Today(),
-            CheckOutDate: DateUtils.Today().AddDays(1)
-        );
+        var command = CreateRandomCommand();
+        _hotelRepositoryMock.Setup(x => x.Exists(command.HotelId)).Returns(false);
 
         // Act
         Action act = () => _handler.Handle(command);
@@ -68,17 +64,9 @@ public class BookARoomTests
     public void RoomTypeIsNotProvidedByTheHotel()
     {
         // Arrange
-        _hotelRepositoryMock.Setup(x => x.Exists(1)).Returns(true);
-        _roomRepositoryMock.Setup(x => x.ExistsRoomType(1, RoomType.Standard)).Returns(false);
-
-        var command = new BookARoomCommand
-        (
-            EmployeeId: 1,
-            HotelId: 1,
-            RoomType: RoomType.Standard,
-            CheckInDate: DateUtils.Today(),
-            CheckOutDate: DateUtils.Today().AddDays(1)
-        );
+        var command = CreateRandomCommand();
+        _hotelRepositoryMock.Setup(x => x.Exists(command.HotelId)).Returns(true);
+        _roomRepositoryMock.Setup(x => x.ExistsRoomType(command.HotelId, command.RoomType)).Returns(false);
 
         // Act
         Action act = () => _handler.Handle(command);
@@ -87,26 +75,21 @@ public class BookARoomTests
         act.Should().Throw<RoomTypeNotProvidedByTheHotelException>();
     }
 
-    [Fact]
-    public void BookingIsNotAllowedByEmployeeBookingPolicy()
+    [Theory, AutoData]
+    public void BookingIsNotAllowedByEmployeeBookingPolicy(int companyId)
     {
         // Arrange
-        _hotelRepositoryMock.Setup(x => x.Exists(1)).Returns(true);
-        _roomRepositoryMock.Setup(x => x.ExistsRoomType(1, RoomType.Standard)).Returns(true);
-        _employeeRepositoryMock.Setup(x => x.Get(10)).Returns(new Employee(10, 100));
-        _employeeBookingPolicyRepositoryMock.Setup(x => x.Exists(10)).Returns(true);
-        _employeeBookingPolicyRepositoryMock.Setup(x => x.Get(10))
-            .Returns(new EmployeeBookingPolicy(1, new List<RoomType> { RoomType.JuniorSuite }));
-        _companyBookingPolicyRepositoryMock.Setup(x => x.Exists(100)).Returns(false);
-
-        var command = new BookARoomCommand
-        (
-            EmployeeId: 10,
-            HotelId: 1,
-            RoomType: RoomType.Standard,
-            CheckInDate: DateUtils.Today(),
-            CheckOutDate: DateUtils.Today().AddDays(1)
-        );
+        var command = CreateRandomCommand();
+        _hotelRepositoryMock.Setup(x => x.Exists(command.HotelId)).Returns(true);
+        _roomRepositoryMock.Setup(x => x.ExistsRoomType(command.HotelId, command.RoomType)).Returns(true);
+        _employeeRepositoryMock.Setup(x => x.Get(command.EmployeeId))
+            .Returns(new Employee(command.EmployeeId, companyId));
+        _employeeBookingPolicyRepositoryMock.Setup(x => x.Exists(command.EmployeeId)).Returns(true);
+        _employeeBookingPolicyRepositoryMock.Setup(x => x.Get(command.EmployeeId))
+            .Returns(new EmployeeBookingPolicy(
+                    command.EmployeeId,
+                    new List<RoomType> { DifferentRoomTypeFrom(command.RoomType) }));
+        _companyBookingPolicyRepositoryMock.Setup(x => x.Exists(companyId)).Returns(false);
 
         // Act
         Action act = () => _handler.Handle(command);
@@ -115,26 +98,21 @@ public class BookARoomTests
         act.Should().Throw<BookingNotAllowedException>();
     }
 
-    [Fact]
-    public void BookingNotAllowedByCompanyBookingPolicy()
+    [Theory, AutoData]
+    public void BookingNotAllowedByCompanyBookingPolicy(int companyId)
     {
         // Arrange
-        _hotelRepositoryMock.Setup(x => x.Exists(1)).Returns(true);
-        _roomRepositoryMock.Setup(x => x.ExistsRoomType(1, RoomType.Standard)).Returns(true);
-        _employeeRepositoryMock.Setup(x => x.Get(10)).Returns(new Employee(10, 100));
-        _employeeBookingPolicyRepositoryMock.Setup(x => x.Exists(10)).Returns(false);
-        _companyBookingPolicyRepositoryMock.Setup(x => x.Exists(100)).Returns(true);
-        _companyBookingPolicyRepositoryMock.Setup(x => x.Get(100))
-            .Returns(new CompanyBookingPolicy(1, new List<RoomType> { RoomType.JuniorSuite }));
-
-        var command = new BookARoomCommand
-        (
-            EmployeeId: 10,
-            HotelId: 1,
-            RoomType: RoomType.Standard,
-            CheckInDate: DateUtils.Today(),
-            CheckOutDate: DateUtils.Today().AddDays(1)
-        );
+        var command = CreateRandomCommand();
+        _hotelRepositoryMock.Setup(x => x.Exists(command.HotelId)).Returns(true);
+        _roomRepositoryMock.Setup(x => x.ExistsRoomType(command.HotelId, command.RoomType)).Returns(true);
+        _employeeRepositoryMock.Setup(x => x.Get(command.EmployeeId))
+            .Returns(new Employee(command.EmployeeId, companyId));
+        _employeeBookingPolicyRepositoryMock.Setup(x => x.Exists(command.EmployeeId)).Returns(false);
+        _companyBookingPolicyRepositoryMock.Setup(x => x.Exists(companyId)).Returns(true);
+        _companyBookingPolicyRepositoryMock.Setup(x => x.Get(companyId))
+            .Returns(new CompanyBookingPolicy(
+                companyId,
+                new List<RoomType> { DifferentRoomTypeFrom(command.RoomType) }));
 
         // Act
         Action act = () => _handler.Handle(command);
@@ -143,28 +121,21 @@ public class BookARoomTests
         act.Should().Throw<BookingNotAllowedException>();
     }
 
-    [Fact]
-    public void NoRoomsOfThatTypeAvailableForTheRequestedPeriod()
+    [Theory, AutoData]
+    public void NoRoomsOfThatTypeAvailableForTheRequestedPeriod(int companyId)
     {
         // Arrange
-        _hotelRepositoryMock.Setup(x => x.Exists(1)).Returns(true);
-        _roomRepositoryMock.Setup(x => x.ExistsRoomType(1, RoomType.Standard)).Returns(true);
-        _employeeRepositoryMock.Setup(x => x.Get(10)).Returns(new Employee(10, 100));
-        _employeeBookingPolicyRepositoryMock.Setup(x => x.Exists(10)).Returns(false);
-        _companyBookingPolicyRepositoryMock.Setup(x => x.Exists(100)).Returns(false);
-        _roomRepositoryMock.Setup(x => x.GetCount(1, RoomType.Standard)).Returns(1);
+        var command = CreateRandomCommand();
+        _hotelRepositoryMock.Setup(x => x.Exists(command.HotelId)).Returns(true);
+        _roomRepositoryMock.Setup(x => x.ExistsRoomType(command.HotelId, command.RoomType)).Returns(true);
+        _employeeRepositoryMock.Setup(x => x.Get(command.EmployeeId))
+            .Returns(new Employee(command.EmployeeId, companyId));
+        _employeeBookingPolicyRepositoryMock.Setup(x => x.Exists(command.EmployeeId)).Returns(false);
+        _companyBookingPolicyRepositoryMock.Setup(x => x.Exists(companyId)).Returns(false);
+        _roomRepositoryMock.Setup(x => x.GetCount(command.HotelId, command.RoomType)).Returns(1);
         _bookingRepositoryMock
-            .Setup(x => x.GetCount(1, RoomType.Standard, DateUtils.Today(), DateUtils.Today().AddDays(1)))
+            .Setup(x => x.GetCount(command.HotelId, command.RoomType, command.CheckInDate, command.CheckOutDate))
             .Returns(1);
-
-        var command = new BookARoomCommand
-        (
-            EmployeeId: 10,
-            HotelId: 1,
-            RoomType: RoomType.Standard,
-            CheckInDate: DateUtils.Today(),
-            CheckOutDate: DateUtils.Today().AddDays(1)
-        );
 
         // Act
         Action act = () => _handler.Handle(command);
@@ -173,41 +144,76 @@ public class BookARoomTests
         act.Should().Throw<NoRoomsAvailableException>();
     }
 
-    [Fact]
-    public void RoomIsBooked()
+    [Theory, AutoData]
+    public void RoomIsBooked(int companyId, int bookingId)
     {
         // Arrange
-        _hotelRepositoryMock.Setup(x => x.Exists(1)).Returns(true);
-        _roomRepositoryMock.Setup(x => x.ExistsRoomType(1, RoomType.Standard)).Returns(true);
-        _employeeRepositoryMock.Setup(x => x.Get(10)).Returns(new Employee(10, 100));
-        _employeeBookingPolicyRepositoryMock.Setup(x => x.Exists(10)).Returns(true);
-        _employeeBookingPolicyRepositoryMock.Setup(x => x.Get(10))
-            .Returns(new EmployeeBookingPolicy(10, new List<RoomType> { RoomType.Standard }));
-        _companyBookingPolicyRepositoryMock.Setup(x => x.Exists(100)).Returns(false);
-        _roomRepositoryMock.Setup(x => x.GetCount(1, RoomType.Standard)).Returns(1);
+        var command = CreateRandomCommand();
+        _hotelRepositoryMock.Setup(x => x.Exists(command.HotelId)).Returns(true);
+        _roomRepositoryMock.Setup(x => x.ExistsRoomType(command.HotelId, RoomType.Standard)).Returns(true);
+        _employeeRepositoryMock.Setup(x => x.Get(command.EmployeeId))
+            .Returns(new Employee(command.EmployeeId, companyId));
+        _employeeBookingPolicyRepositoryMock.Setup(x => x.Exists(command.EmployeeId)).Returns(true);
+        _employeeBookingPolicyRepositoryMock.Setup(x => x.Get(command.EmployeeId))
+            .Returns(new EmployeeBookingPolicy(command.EmployeeId, new List<RoomType> { command.RoomType }));
+        _companyBookingPolicyRepositoryMock.Setup(x => x.Exists(companyId)).Returns(false);
+        _roomRepositoryMock.Setup(x => x.GetCount(command.HotelId, RoomType.Standard)).Returns(1);
         _bookingRepositoryMock
-            .Setup(x => x.GetCount(1, RoomType.Standard, DateUtils.Today(), DateUtils.Today().AddDays(1)))
+            .Setup(x => x.GetCount(command.HotelId, command.RoomType, command.CheckInDate, command.CheckOutDate))
             .Returns(0);
         _bookingRepositoryMock.Setup(x => x.Add(It.IsAny<Booking>()))
-            .Returns(new Booking(1, 10, 1, RoomType.Standard, DateUtils.Today(), DateUtils.Today().AddDays(1)));
-
-        var command = new BookARoomCommand
-        (
-            EmployeeId: 10,
-            HotelId: 1,
-            RoomType: RoomType.Standard,
-            CheckInDate: DateUtils.Today(),
-            CheckOutDate: DateUtils.Today().AddDays(1)
-        );
+            .Returns(new Booking(
+                bookingId,
+                command.EmployeeId,
+                command.HotelId,
+                command.RoomType,
+                command.CheckInDate,
+                command.CheckOutDate));
 
         // Act
         NewBooking newBooking = _handler.Handle(command);
 
         // Assert
         _bookingRepositoryMock.Verify(
-            x => x.Add(new Booking(10, 1, RoomType.Standard, DateUtils.Today(), DateUtils.Today().AddDays(1))),
+            x => x.Add(new Booking(
+                command.EmployeeId,
+                command.HotelId,
+                command.RoomType,
+                command.CheckInDate,
+                command.CheckOutDate)),
             Times.Once);
         newBooking.Should().BeEquivalentTo(
-            new NewBooking(1, 10, 1, RoomType.Standard, DateUtils.Today(), DateUtils.Today().AddDays(1)));
+            new NewBooking(
+                bookingId,
+                command.EmployeeId,
+                command.HotelId,
+                command.RoomType,
+                command.CheckInDate,
+                command.CheckOutDate));
+    }
+
+    private static BookARoomCommand CreateRandomCommand()
+    {
+        var fixture = new Fixture().Customize(new DateOnlyFixtureCustomization());
+        var checkInDate = fixture.Create<DateOnly>();
+
+         return new BookARoomCommand(
+            EmployeeId: fixture.Create<int>(),
+            HotelId: fixture.Create<int>(),
+            RoomType: fixture.Create<RoomType>(),
+            CheckInDate: checkInDate,
+            CheckOutDate: checkInDate.AddDays(fixture.Create<int>())
+         );
+    }
+
+    private static RoomType DifferentRoomTypeFrom(RoomType roomType)
+    {
+        return roomType switch
+        {
+            RoomType.Standard => RoomType.JuniorSuite,
+            RoomType.JuniorSuite => RoomType.MasterSuite,
+            RoomType.MasterSuite => RoomType.Standard,
+            _ => throw new ArgumentOutOfRangeException(nameof(roomType), roomType, null)
+        };
     }
 }
