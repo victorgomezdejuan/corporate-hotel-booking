@@ -2,7 +2,7 @@ using AutoFixture.Xunit2;
 using CorporateHotelBooking.Application.Bookings.Commands;
 using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Domain.Entities.BookingPolicies;
-using CorporateHotelBooking.Integrated.Tests.BookingPolicyServiceTests.Helpers;
+using CorporateHotelBooking.Integrated.Tests.Helpers;
 using CorporateHotelBooking.Repositories.Bookings;
 using CorporateHotelBooking.Repositories.CompanyBookingPolicies;
 using CorporateHotelBooking.Repositories.EmployeeBookingPolicies;

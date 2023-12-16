@@ -1,8 +1,8 @@
 using AutoFixture;
 using CorporateHotelBooking.Domain.Entities;
-using CorporateHotelBooking.Integrated.Tests.BookingPolicyServiceTests.Helpers.AutoFixture;
+using CorporateHotelBooking.Integrated.Tests.Helpers.AutoFixture;
 
-namespace CorporateHotelBooking.Integrated.Tests.BookingPolicyServiceTests.Helpers;
+namespace CorporateHotelBooking.Integrated.Tests.Helpers;
 
 public class BookingFactory
 {
