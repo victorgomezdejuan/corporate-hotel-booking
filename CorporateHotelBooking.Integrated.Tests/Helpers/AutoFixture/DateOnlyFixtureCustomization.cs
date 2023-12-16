@@ -1,6 +1,6 @@
 using AutoFixture;
 
-namespace CorporateHotelBooking.Integrated.Tests.BookingPolicyServiceTests.Helpers.AutoFixture;
+namespace CorporateHotelBooking.Integrated.Tests.Helpers.AutoFixture;
 
 public class DateOnlyFixtureCustomization: ICustomization
 {

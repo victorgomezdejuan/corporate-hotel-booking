@@ -1,7 +1,7 @@
 using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Repositories.Employees;
 
-namespace CorporateHotelBooking.Integrated.Tests.BookingPolicyServiceTests.Helpers;
+namespace CorporateHotelBooking.Integrated.Tests.Helpers;
 
 public class NotImplementedEmployeeRepository: IEmployeeRepository
 {

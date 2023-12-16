@@ -3,7 +3,7 @@ using AutoFixture;
 using AutoFixture.Kernel;
 using AutoFixture.Xunit2;
 
-namespace CorporateHotelBooking.Integrated.Tests.BookingPolicyServiceTests.Helpers.AutoFixture;
+namespace CorporateHotelBooking.Integrated.Tests.Helpers.AutoFixture;
 
 public class CollectionSizeAttribute : CustomizeAttribute
 {
