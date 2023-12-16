@@ -38,17 +38,17 @@ public class SetCompanyBookingPolicyTests
                 roomTypes)));
     }
 
-    [Fact]
-    public void UpdateExistingCompanyPolicy()
+    [Theory, AutoData]
+    public void UpdateExistingCompanyPolicy(int companyId, [CollectionSize(2)] List<RoomType> roomTypes)
     {
         // Arrange
-        _companyPolicyRepositoryMock.Setup(r => r.Exists(100)).Returns(true);
-        var setCompanyPolicyCommand = new SetCompanyBookingPolicyCommand(100, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite });
+        _companyPolicyRepositoryMock.Setup(r => r.Exists(companyId)).Returns(true);
+        var setCompanyPolicyCommand = new SetCompanyBookingPolicyCommand(companyId, roomTypes);
 
         // Act
         _setCompanyPolicyCommandHandler.Handle(setCompanyPolicyCommand);
 
         // Assert
-        _companyPolicyRepositoryMock.Verify(r => r.Update(new CompanyBookingPolicy(100, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite })));
+        _companyPolicyRepositoryMock.Verify(r => r.Update(new CompanyBookingPolicy(companyId, roomTypes)));
     }
 }

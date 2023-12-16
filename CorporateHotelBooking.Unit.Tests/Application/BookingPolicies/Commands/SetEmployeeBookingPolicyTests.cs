@@ -1,7 +1,9 @@
+using AutoFixture.Xunit2;
 using CorporateHotelBooking.Application.BookingPolicies.Commands.SetEmployeeBookingPolicy;
 using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Domain.Entities.BookingPolicies;
 using CorporateHotelBooking.Repositories.EmployeeBookingPolicies;
+using CorporateHotelBooking.Unit.Tests.Helpers.AutoFixture;
 using Moq;
 
 namespace CorporateHotelBooking.Unit.Tests.Application.BookingPolicies.Commands;
@@ -14,33 +16,34 @@ public class SetEmployeeBookingPolicyTests
     public SetEmployeeBookingPolicyTests()
     {
         _employeePolicyRepositoryMock = new Mock<IEmployeeBookingPolicyRepository>();
-        _setEmployeePolicyCommandHandler = new SetEmployeeBookingPolicyCommandHandler(_employeePolicyRepositoryMock.Object);
+        _setEmployeePolicyCommandHandler =
+            new SetEmployeeBookingPolicyCommandHandler(_employeePolicyRepositoryMock.Object);
     }
 
-    [Fact]
-    public void AddNewEmployeePolicy()
+    [Theory, AutoData]
+    public void AddNewEmployeePolicy(int employeeId, [CollectionSize(2)] List<RoomType> roomTypes)
     {
         // Arrange
-        var setEmployeePolicyCommand = new SetEmployeeBookingPolicyCommand(1, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite });
+        var setEmployeePolicyCommand = new SetEmployeeBookingPolicyCommand(employeeId, roomTypes);
 
         // Act
         _setEmployeePolicyCommandHandler.Handle(setEmployeePolicyCommand);
 
         // Assert
-        _employeePolicyRepositoryMock.Verify(r => r.Add(new EmployeeBookingPolicy(1, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite })));
+        _employeePolicyRepositoryMock.Verify(r => r.Add(new EmployeeBookingPolicy(employeeId, roomTypes)));
     }
 
-    [Fact]
-    public void UpdateExistingEmployeePolicy()
+    [Theory, AutoData]
+    public void UpdateExistingEmployeePolicy(int employeeId, [CollectionSize(2)] List<RoomType> roomTypes)
     {
         // Arrange
-        _employeePolicyRepositoryMock.Setup(r => r.Exists(1)).Returns(true);
-        var setEmployeePolicyCommand = new SetEmployeeBookingPolicyCommand(1, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite });
+        _employeePolicyRepositoryMock.Setup(r => r.Exists(employeeId)).Returns(true);
+        var setEmployeePolicyCommand = new SetEmployeeBookingPolicyCommand(employeeId, roomTypes);
 
         // Act
         _setEmployeePolicyCommandHandler.Handle(setEmployeePolicyCommand);
 
         // Assert
-        _employeePolicyRepositoryMock.Verify(r => r.Update(new EmployeeBookingPolicy(1, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite })));
+        _employeePolicyRepositoryMock.Verify(r => r.Update(new EmployeeBookingPolicy(employeeId, roomTypes)));
     }
 }

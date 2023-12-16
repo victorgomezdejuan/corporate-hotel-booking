@@ -1,3 +1,4 @@
+using AutoFixture.Xunit2;
 using CorporateHotelBooking.Application.BookingPolicies.Queries.IsBookingAllowed;
 using CorporateHotelBooking.Application.Common.Exceptions;
 using CorporateHotelBooking.Domain.Entities;
@@ -5,6 +6,7 @@ using CorporateHotelBooking.Domain.Entities.BookingPolicies;
 using CorporateHotelBooking.Repositories.CompanyBookingPolicies;
 using CorporateHotelBooking.Repositories.EmployeeBookingPolicies;
 using CorporateHotelBooking.Repositories.Employees;
+using CorporateHotelBooking.Unit.Tests.Helpers.AutoFixture;
 using FluentAssertions;
 using Moq;
 
@@ -29,13 +31,13 @@ public class IsBookingAllowedTests
     }
 
 
-    [Fact]
-    public void NonExistingEmployee()
+    [Theory, AutoData]
+    public void NonExistingEmployee(int employeeId, RoomType roomType)
     {
         // Arrange
-        _employeeRepositoryMock.Setup(x => x.Exists(1)).Returns(false);
+        _employeeRepositoryMock.Setup(x => x.Exists(employeeId)).Returns(false);
 
-        var query = new IsBookingAllowedQuery(1, RoomType.Standard);
+        var query = new IsBookingAllowedQuery(employeeId, roomType);
 
         // Act
         Action act = () => _handler.Handle(query);
@@ -44,19 +46,22 @@ public class IsBookingAllowedTests
         act.Should().Throw<EmployeeNotFoundException>();
     }
 
-    [Fact]
-    public void BookingAllowedByCompanyBookingPolicy()
+    [Theory, AutoData]
+    public void BookingAllowedByCompanyBookingPolicy(
+        int employeeId,
+        int companyId,
+        [CollectionSize(1)] List<RoomType> roomTypes)
     {
         // Arrange
-        SetEmployeeRepositoryWithEmployeeAndCompany(1, 100);
+        SetEmployeeRepositoryWithEmployeeAndCompany(employeeId, companyId);
 
-        _employeePolicyRepositoryMock.Setup(x => x.Exists(1)).Returns(false);
+        _employeePolicyRepositoryMock.Setup(x => x.Exists(companyId)).Returns(false);
 
-        _companyPolicyRepositoryMock.Setup(x => x.Exists(100)).Returns(true);
-        _companyPolicyRepositoryMock.Setup(x => x.Get(100))
-            .Returns(new CompanyBookingPolicy(100, new List<RoomType> { RoomType.Standard }));
+        _companyPolicyRepositoryMock.Setup(x => x.Exists(companyId)).Returns(true);
+        _companyPolicyRepositoryMock.Setup(x => x.Get(companyId))
+            .Returns(new CompanyBookingPolicy(companyId, roomTypes));
 
-        var query = new IsBookingAllowedQuery(1, RoomType.Standard);
+        var query = new IsBookingAllowedQuery(employeeId, roomTypes[0]);
 
         // Act
         var result = _handler.Handle(query);
@@ -65,19 +70,22 @@ public class IsBookingAllowedTests
         result.Should().BeTrue();
     }
 
-    [Fact]
-    public void BookingAllowedByEmployeeBookingPolicy()
+    [Theory, AutoData]
+    public void BookingAllowedByEmployeeBookingPolicy(
+        int employeeId,
+        int companyId,
+        [CollectionSize(1)] List<RoomType> roomTypes)
     {
         // Arrange
-        SetEmployeeRepositoryWithEmployeeAndCompany(1, 100);
+        SetEmployeeRepositoryWithEmployeeAndCompany(employeeId, companyId);
 
-        _employeePolicyRepositoryMock.Setup(x => x.Exists(1)).Returns(true);
-        _employeePolicyRepositoryMock.Setup(x => x.Get(1))
-            .Returns(new EmployeeBookingPolicy(1, new List<RoomType> { RoomType.Standard }));
+        _employeePolicyRepositoryMock.Setup(x => x.Exists(employeeId)).Returns(true);
+        _employeePolicyRepositoryMock.Setup(x => x.Get(employeeId))
+            .Returns(new EmployeeBookingPolicy(1, roomTypes));
 
-        _companyPolicyRepositoryMock.Setup(x => x.Exists(100)).Returns(false);
+        _companyPolicyRepositoryMock.Setup(x => x.Exists(companyId)).Returns(false);
 
-        var query = new IsBookingAllowedQuery(1, RoomType.Standard);
+        var query = new IsBookingAllowedQuery(employeeId, roomTypes[0]);
 
         // Act
         var result = _handler.Handle(query);
@@ -86,21 +94,21 @@ public class IsBookingAllowedTests
         result.Should().BeTrue();
     }
 
-    [Fact]
-    public void BookingAllowedByEmployeeBookingPolicyButNotByCompanyBookingPolicy()
+    [Theory, AutoData]
+    public void BookingAllowedByEmployeeBookingPolicyButNotByCompanyBookingPolicy(int employeeId, int companyId)
     {
         // Arrange
-        SetEmployeeRepositoryWithEmployeeAndCompany(1, 100);
+        SetEmployeeRepositoryWithEmployeeAndCompany(employeeId, companyId);
 
-        _companyPolicyRepositoryMock.Setup(x => x.Exists(100)).Returns(true);
-        _companyPolicyRepositoryMock.Setup(x => x.Get(100))
-            .Returns(new CompanyBookingPolicy(100, new List<RoomType> { RoomType.JuniorSuite }));
+        _companyPolicyRepositoryMock.Setup(x => x.Exists(companyId)).Returns(true);
+        _companyPolicyRepositoryMock.Setup(x => x.Get(companyId))
+            .Returns(new CompanyBookingPolicy(companyId, new List<RoomType> { RoomType.JuniorSuite }));
 
-        _employeePolicyRepositoryMock.Setup(x => x.Exists(1)).Returns(true);
-        _employeePolicyRepositoryMock.Setup(x => x.Get(1))
-            .Returns(new EmployeeBookingPolicy(1, new List<RoomType> { RoomType.Standard }));
+        _employeePolicyRepositoryMock.Setup(x => x.Exists(employeeId)).Returns(true);
+        _employeePolicyRepositoryMock.Setup(x => x.Get(employeeId))
+            .Returns(new EmployeeBookingPolicy(employeeId, new List<RoomType> { RoomType.Standard }));
 
-        var query = new IsBookingAllowedQuery(1, RoomType.Standard);
+        var query = new IsBookingAllowedQuery(employeeId, RoomType.Standard);
 
         // Act
         var result = _handler.Handle(query);
@@ -109,21 +117,21 @@ public class IsBookingAllowedTests
         result.Should().BeTrue();
     }
 
-    [Fact]
-    public void BookingAllowedByCompanyBookingPolicyButNotByEmployeeBookingPolicy()
+    [Theory, AutoData]
+    public void BookingAllowedByCompanyBookingPolicyButNotByEmployeeBookingPolicy(int employeeId, int companyId)
     {
         // Arrange
-        SetEmployeeRepositoryWithEmployeeAndCompany(1, 100);
+        SetEmployeeRepositoryWithEmployeeAndCompany(employeeId, companyId);
 
-        _companyPolicyRepositoryMock.Setup(x => x.Exists(100)).Returns(true);
-        _companyPolicyRepositoryMock.Setup(x => x.Get(100))
-            .Returns(new CompanyBookingPolicy(100, new List<RoomType> { RoomType.Standard }));
+        _companyPolicyRepositoryMock.Setup(x => x.Exists(companyId)).Returns(true);
+        _companyPolicyRepositoryMock.Setup(x => x.Get(companyId))
+            .Returns(new CompanyBookingPolicy(companyId, new List<RoomType> { RoomType.Standard }));
 
-        _employeePolicyRepositoryMock.Setup(x => x.Exists(1)).Returns(true);
-        _employeePolicyRepositoryMock.Setup(x => x.Get(1))
-            .Returns(new EmployeeBookingPolicy(1, new List<RoomType> { RoomType.JuniorSuite }));
+        _employeePolicyRepositoryMock.Setup(x => x.Exists(employeeId)).Returns(true);
+        _employeePolicyRepositoryMock.Setup(x => x.Get(employeeId))
+            .Returns(new EmployeeBookingPolicy(employeeId, new List<RoomType> { RoomType.JuniorSuite }));
 
-        var query = new IsBookingAllowedQuery(1, RoomType.Standard);
+        var query = new IsBookingAllowedQuery(employeeId, RoomType.Standard);
 
         // Act
         var result = _handler.Handle(query);
@@ -132,21 +140,21 @@ public class IsBookingAllowedTests
         result.Should().BeFalse();
     }
 
-    [Fact]
-    public void BookingNotAllowedByAnyBookingPolicy()
+    [Theory, AutoData]
+    public void BookingNotAllowedByAnyBookingPolicy(int employeeId, int companyId)
     {
         // Arrange
-        SetEmployeeRepositoryWithEmployeeAndCompany(1, 100);
+        SetEmployeeRepositoryWithEmployeeAndCompany(employeeId, companyId);
 
-        _companyPolicyRepositoryMock.Setup(x => x.Exists(100)).Returns(true);
-        _companyPolicyRepositoryMock.Setup(x => x.Get(100))
-            .Returns(new CompanyBookingPolicy(100, new List<RoomType> { RoomType.JuniorSuite }));
+        _companyPolicyRepositoryMock.Setup(x => x.Exists(companyId)).Returns(true);
+        _companyPolicyRepositoryMock.Setup(x => x.Get(companyId))
+            .Returns(new CompanyBookingPolicy(companyId, new List<RoomType> { RoomType.JuniorSuite }));
 
-        _employeePolicyRepositoryMock.Setup(x => x.Exists(1)).Returns(true);
-        _employeePolicyRepositoryMock.Setup(x => x.Get(1))
-            .Returns(new EmployeeBookingPolicy(1, new List<RoomType> { RoomType.MasterSuite }));
+        _employeePolicyRepositoryMock.Setup(x => x.Exists(employeeId)).Returns(true);
+        _employeePolicyRepositoryMock.Setup(x => x.Get(employeeId))
+            .Returns(new EmployeeBookingPolicy(employeeId, new List<RoomType> { RoomType.MasterSuite }));
 
-        var query = new IsBookingAllowedQuery(1, RoomType.Standard);
+        var query = new IsBookingAllowedQuery(employeeId, RoomType.Standard);
 
         // Act
         var result = _handler.Handle(query);
@@ -155,16 +163,16 @@ public class IsBookingAllowedTests
         result.Should().BeFalse();
     }
 
-    [Fact]
-    public void NoBookingPoliciesForAnEmployee()
+    [Theory, AutoData]
+    public void NoBookingPoliciesForAnEmployee(int employeeId, int companyId)
     {
         // Arrange
-        SetEmployeeRepositoryWithEmployeeAndCompany(1, 100);
+        SetEmployeeRepositoryWithEmployeeAndCompany(employeeId, companyId);
 
-        _companyPolicyRepositoryMock.Setup(x => x.Exists(100)).Returns(false);
-        _employeePolicyRepositoryMock.Setup(x => x.Exists(1)).Returns(false);
+        _companyPolicyRepositoryMock.Setup(x => x.Exists(companyId)).Returns(false);
+        _employeePolicyRepositoryMock.Setup(x => x.Exists(employeeId)).Returns(false);
 
-        var query = new IsBookingAllowedQuery(1, RoomType.Standard);
+        var query = new IsBookingAllowedQuery(employeeId, RoomType.Standard);
 
         // Act
         var result = _handler.Handle(query);
