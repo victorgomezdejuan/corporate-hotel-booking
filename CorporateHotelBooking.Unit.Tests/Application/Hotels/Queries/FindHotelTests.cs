@@ -5,32 +5,33 @@ using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Repositories.Hotels;
 using CorporateHotelBooking.Repositories.Rooms;
 using Moq;
+using AutoFixture.Xunit2;
 
 namespace CorporateHotelBooking.Unit.Tests.Application.Hotels.Queries;
 
 public class FindHotelTests
 {
-    [Fact]
-    public void FindAHotel()
+    [Theory, AutoData]
+    public void FindAHotel(int hotelId, string hotelName, int roomNumber, RoomType roomType)
     {
         // Arrange
         var hotelRepositoryMock = new Mock<IHotelRepository>();
-        hotelRepositoryMock.Setup(x => x.Get(1)).Returns(new Hotel(1, "Hilton"));
+        hotelRepositoryMock.Setup(x => x.Get(hotelId)).Returns(new Hotel(hotelId, hotelName));
         var roomRepositoryMock = new Mock<IRoomRepository>();
-        roomRepositoryMock.Setup(x => x.GetMany(1))
-            .Returns(new List<Room>() { new(1, 100, RoomType.Standard) }.AsReadOnly());
+        roomRepositoryMock.Setup(x => x.GetMany(hotelId))
+            .Returns(new List<Room>() { new(hotelId, roomNumber, roomType) }.AsReadOnly());
         var handler = new FindHotelQueryHandler(hotelRepositoryMock.Object, roomRepositoryMock.Object);
 
         // Act
-        HotelDto result = handler.Handle(new FindHotelQuery(1));
+        HotelDto result = handler.Handle(new FindHotelQuery(hotelId));
 
         // Assert
         result.Should().NotBeNull();
         result.Should().BeOfType<HotelDto>();
-        result.Id.Should().Be(1);
+        result.Id.Should().Be(hotelId);
         result.Rooms.Should().NotBeNull();
         result.Rooms.Should().HaveCount(1);
-        result.Rooms.First().Number.Should().Be(100);
-        result.Rooms.First().Type.Should().Be(RoomType.Standard);
+        result.Rooms.First().Number.Should().Be(roomNumber);
+        result.Rooms.First().Type.Should().Be(roomType);
     }
 }

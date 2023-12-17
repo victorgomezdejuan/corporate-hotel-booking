@@ -1,3 +1,4 @@
+using AutoFixture.Xunit2;
 using CorporateHotelBooking.Application.Hotels.Commands.AddHotel;
 using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Repositories.Hotels;
@@ -16,25 +17,25 @@ public class AddHotelTests
             _handler = new AddHotelCommandHandler(_hotelRepositoryMock.Object);
         }
 
-        [Fact]
-        public void AddNewHotel()
+        [Theory, AutoData]
+        public void AddNewHotel(int hotelId, string hotelName)
         {
             // Arrange
-            var command = new AddHotelCommand(1, "Hilton");
+            var command = new AddHotelCommand(hotelId, hotelName);
 
             // Act
             _handler.Handle(command);
 
             // Assert
-            _hotelRepositoryMock.Verify(x => x.Add(It.Is<Hotel>(h => h.Id == 1 && h.Name == "Hilton")));
+            _hotelRepositoryMock.Verify(x => x.Add(It.Is<Hotel>(h => h.Id == hotelId && h.Name == hotelName)));
         }
 
-        [Fact]
-        public void AddExistingHotel()
+        [Theory, AutoData]
+        public void AddExistingHotel(int hotelId, string hotelName)
         {
             // Arrange
-            _hotelRepositoryMock.Setup(x => x.Exists(1)).Returns(true);
-            var command = new AddHotelCommand(1, "Hilton");
+            _hotelRepositoryMock.Setup(x => x.Exists(hotelId)).Returns(true);
+            var command = new AddHotelCommand(hotelId, hotelName);
 
             // Act
             void act() => _handler.Handle(command);

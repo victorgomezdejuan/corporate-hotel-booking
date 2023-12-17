@@ -1,3 +1,4 @@
+using AutoFixture.Xunit2;
 using CorporateHotelBooking.Application.Employees.Commands.AddEmployee;
 using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Repositories.Employees;
@@ -17,27 +18,27 @@ public class AddEmployeeTests
         _addEmployeeCommandHandler = new AddEmployeeCommandHandler(_employeeRepository.Object);
     }
 
-    [Fact]
-    public void AddEmployee()
+    [Theory, AutoData]
+    public void AddEmployee(int employeeId, int companyId)
     {
         // Arrange
-        var addEmployeeCommand = new AddEmployeeCommand(1, 100);
+        var addEmployeeCommand = new AddEmployeeCommand(employeeId, companyId);
 
         // Act
         _addEmployeeCommandHandler.Handle(addEmployeeCommand);
 
         // Assert
-        _employeeRepository.Verify(r => r.Add(new Employee(1, 100)));
+        _employeeRepository.Verify(r => r.Add(new Employee(employeeId, companyId)));
     }
 
-    [Fact]
-    public void AddExistingEmployee()
+    [Theory, AutoData]
+    public void AddExistingEmployee(int employeeId, int companyId)
     {
         // Arrange
-        _employeeRepository.Setup(r => r.Exists(1)).Returns(true);
+        _employeeRepository.Setup(r => r.Exists(employeeId)).Returns(true);
 
         // Act
-        Action action = () => _addEmployeeCommandHandler.Handle(new AddEmployeeCommand(1, 100));
+        Action action = () => _addEmployeeCommandHandler.Handle(new AddEmployeeCommand(employeeId, companyId));
 
         // Assert
         action.Should().Throw<EmployeeAlreadyExistsException>();

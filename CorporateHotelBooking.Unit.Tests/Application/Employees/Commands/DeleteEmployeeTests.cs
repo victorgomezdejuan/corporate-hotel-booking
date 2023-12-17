@@ -1,3 +1,4 @@
+using AutoFixture.Xunit2;
 using CorporateHotelBooking.Application.Common.Exceptions;
 using CorporateHotelBooking.Application.Employees.Commands.DeleteEmployee;
 using CorporateHotelBooking.Repositories.Bookings;
@@ -26,55 +27,55 @@ public class DeleteEmployeeTests
             _employeeBookingPolicyRepositoryMock.Object);
     }
 
-    [Fact]
-    public void DeleteExistingEmployee()
+    [Theory, AutoData]
+    public void DeleteExistingEmployee(int employeeId)
     {
         // Arrange
-        _employeeRepositoryMock.Setup(r => r.Exists(1)).Returns(true);
+        _employeeRepositoryMock.Setup(r => r.Exists(employeeId)).Returns(true);
 
         // Act
-        _deleteEmployeeCommandHandler.Handle(new DeleteEmployeeCommand(1));
+        _deleteEmployeeCommandHandler.Handle(new DeleteEmployeeCommand(employeeId));
 
         // Assert
-        _employeeRepositoryMock.Verify(r => r.Delete(1));
+        _employeeRepositoryMock.Verify(r => r.Delete(employeeId));
     }
 
-    [Fact]
-    public void DeleteNonExistingEmployee()
+    [Theory, AutoData]
+    public void DeleteNonExistingEmployee(int employeeId)
     {
         // Arrange
-        _employeeRepositoryMock.Setup(r => r.Exists(1)).Returns(false);
+        _employeeRepositoryMock.Setup(r => r.Exists(employeeId)).Returns(false);
 
         // Act
-        Action action = () => _deleteEmployeeCommandHandler.Handle(new DeleteEmployeeCommand(1));
+        Action action = () => _deleteEmployeeCommandHandler.Handle(new DeleteEmployeeCommand(employeeId));
 
         // Assert
         action.Should().Throw<EmployeeNotFoundException>();
     }
 
-    [Fact]
-    public void DeleteEmployeeBookingsWhenDeletingEmployee()
+    [Theory, AutoData]
+    public void DeleteEmployeeBookingsWhenDeletingEmployee(int employeeId)
     {
         // Arrange
-        _employeeRepositoryMock.Setup(r => r.Exists(1)).Returns(true);
+        _employeeRepositoryMock.Setup(r => r.Exists(employeeId)).Returns(true);
 
         // Act
-        _deleteEmployeeCommandHandler.Handle(new DeleteEmployeeCommand(1));
+        _deleteEmployeeCommandHandler.Handle(new DeleteEmployeeCommand(employeeId));
 
         // Assert
-        _bookingRepositoryMock.Verify(r => r.DeleteByEmployee(1));
+        _bookingRepositoryMock.Verify(r => r.DeleteByEmployee(employeeId));
     }
 
-    [Fact]
-    public void DeleteEmployeeBookingPoliciesWhenDeletingEmployee()
+    [Theory, AutoData]
+    public void DeleteEmployeeBookingPoliciesWhenDeletingEmployee(int employeeId)
     {
         // Arrange
-        _employeeRepositoryMock.Setup(r => r.Exists(1)).Returns(true);
+        _employeeRepositoryMock.Setup(r => r.Exists(employeeId)).Returns(true);
 
         // Act
-        _deleteEmployeeCommandHandler.Handle(new DeleteEmployeeCommand(1));
+        _deleteEmployeeCommandHandler.Handle(new DeleteEmployeeCommand(employeeId));
 
         // Assert
-        _employeeBookingPolicyRepositoryMock.Verify(r => r.Delete(1));
+        _employeeBookingPolicyRepositoryMock.Verify(r => r.Delete(employeeId));
     }
 }
