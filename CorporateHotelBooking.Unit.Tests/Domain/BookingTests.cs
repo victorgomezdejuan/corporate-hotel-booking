@@ -1,3 +1,4 @@
+using AutoFixture.Xunit2;
 using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Domain.Exceptions;
 using CorporateHotelBooking.Unit.Tests.Helpers;
@@ -10,22 +11,55 @@ public class BookingTests
     [Fact]
     public void CheckOutDateIsTheSameDayAsCheckInDate()
     {
-        Action act = () => new Booking(1, 2, 3, RoomType.Standard, DateUtils.Today(), DateUtils.Today());
+        // Arrange
+        var booking = BookingFactory.CreateRandom();
+
+        // Act
+        Action act = () => new Booking(
+            booking.EmployeeId,
+            booking.HotelId,
+            booking.RoomType,
+            DateUtils.Today(),
+            DateUtils.Today());
+        
+        // Assert
         act.Should().Throw<CheckOutDateMustBeAfterCheckInDateException>();
     }
 
     [Fact]
     public void CheckOutDateIsBeforeCheckInDate()
     {
-        Action act = () => new Booking(1, 2, 3, RoomType.Standard, DateUtils.Today(), DateUtils.Today().AddDays(-1));
+        // Arrange
+        var booking = BookingFactory.CreateRandom();
+
+        // Act
+        Action act = () => new Booking(
+            booking.EmployeeId,
+            booking.HotelId,
+            booking.RoomType,
+            DateUtils.Today(),
+            DateUtils.Today().AddDays(-1));
+
+        // Assert
         act.Should().Throw<CheckOutDateMustBeAfterCheckInDateException>();
     }
 
     [Fact]
     public void CheckOutDateIsAfterCheckInDate()
     {
-        var booking = new Booking(1, 2, 3, RoomType.Standard, DateUtils.Today(), DateUtils.Today().AddDays(1));
-        booking.CheckInDate.Should().Be(DateUtils.Today());
-        booking.CheckOutDate.Should().Be(DateUtils.Today().AddDays(1));
+        // Arrange
+        var booking = BookingFactory.CreateRandom();
+
+        // Act
+        var createdBooking = new Booking(
+            booking.EmployeeId,
+            booking.HotelId,
+            booking.RoomType,
+            DateUtils.Today(),
+            DateUtils.Today().AddDays(1));
+
+        // Assert
+        createdBooking.CheckInDate.Should().Be(DateUtils.Today());
+        createdBooking.CheckOutDate.Should().Be(DateUtils.Today().AddDays(1));
     }
 }
