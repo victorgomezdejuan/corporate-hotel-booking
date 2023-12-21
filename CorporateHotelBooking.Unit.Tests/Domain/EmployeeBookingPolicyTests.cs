@@ -1,31 +1,34 @@
+using AutoFixture.Xunit2;
 using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Domain.Entities.BookingPolicies;
+using CorporateHotelBooking.Unit.Tests.Helpers;
+using CorporateHotelBooking.Unit.Tests.Helpers.AutoFixture;
 
 namespace CorporateHotelBooking.Unit.Tests.Domain;
 
 public class EmployeeBookingPolicyTests
 {
-    [Fact]
-    public void BookingAllowed()
+    [Theory, AutoData]
+    public void BookingAllowed(int employeeId, [CollectionSize(2)] List<RoomType> allowedRoomTypes)
     {
         // Arrange
-        var employeeBookingPolicy = new EmployeeBookingPolicy(1, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite });
+        var employeeBookingPolicy = new EmployeeBookingPolicy(employeeId, allowedRoomTypes);
 
         // Act
-        var bookingAllowed = employeeBookingPolicy.BookingAllowed(RoomType.Standard);
+        var bookingAllowed = employeeBookingPolicy.BookingAllowed(allowedRoomTypes[1]);
 
         // Assert
         Assert.True(bookingAllowed);
     }
 
-    [Fact]
-    public void BookingNotAllowed()
+    [Theory, AutoData]
+    public void BookingNotAllowed(int employeeId, [CollectionSize(2)] List<RoomType> allowedRoomTypes)
     {
         // Arrange
-        var employeeBookingPolicy = new EmployeeBookingPolicy(1, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite });
+        var employeeBookingPolicy = new EmployeeBookingPolicy(employeeId, allowedRoomTypes);
 
         // Act
-        var bookingAllowed = employeeBookingPolicy.BookingAllowed(RoomType.MasterSuite);
+        var bookingAllowed = employeeBookingPolicy.BookingAllowed(RoomTypeProvider.NotContainedIn(allowedRoomTypes));
 
         // Assert
         Assert.False(bookingAllowed);
