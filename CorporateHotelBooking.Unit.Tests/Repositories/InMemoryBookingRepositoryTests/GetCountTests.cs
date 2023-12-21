@@ -63,7 +63,7 @@ public class GetCountTests
         // Act
         var count = _repository.GetCount(
             booking.HotelId,
-            RoomTypeProvider.NotContainedIn(booking.RoomType),
+            RoomTypeProvider.DifferentFrom(booking.RoomType),
             booking.CheckInDate,
             booking.CheckOutDate);
 

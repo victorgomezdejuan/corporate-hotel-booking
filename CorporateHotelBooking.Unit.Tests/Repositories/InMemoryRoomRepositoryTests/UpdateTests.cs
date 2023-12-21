@@ -13,7 +13,7 @@ public class UpdateTests
         // Arrange
         var repository = new InMemoryRoomRepository();
         repository.Add(room);
-        var updatedRoom = new Room(room.HotelId, room.Number, RoomTypeProvider.NotContainedIn(room.Type));
+        var updatedRoom = new Room(room.HotelId, room.Number, RoomTypeProvider.DifferentFrom(room.Type));
 
         // Act
         repository.Update(updatedRoom);
