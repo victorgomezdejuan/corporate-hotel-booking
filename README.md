@@ -14,6 +14,9 @@ Another important thing that I tried to do is to avoid writing end-to-end tests 
 
 Finally I end up adding more than one integrated test in some cases that I didn't feel so confident just with the existing unit tests, but you may notice that the tests located in the project that holds the integrated tests by no means cover all the acceptante test scenarios.
 
+> [!NOTE]  
+> I implemented the Observer pattern for handling the additional logic when deleting an employee. This may seem an overkill, and I think that seems to me, but I wanted to take advantage of the opportunity to add that design and practice with it a little bit.
+
 # Introduction
 
 Build a corporate hotel booking engine. This engine has to satisfy the needs of 3 different types of **actors**:
