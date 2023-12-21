@@ -1,53 +1,55 @@
+using AutoFixture.Xunit2;
 using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Domain.Entities.BookingPolicies;
+using CorporateHotelBooking.Unit.Tests.Helpers.AutoFixture;
 
 namespace CorporateHotelBooking.Unit.Tests.Domain;
 
 public class AggregatedBookingPolicyTests
 {
-    [Fact]
-    public void BookingAllowedByCompanyBookingPolicy()
+    [Theory, AutoData]
+    public void BookingAllowedByCompanyBookingPolicy(int companyId, [CollectionSize(2)] List<RoomType> allowedRoomTypes)
     {
         // Arrange
         var employeeBookingPolicy = new NonApplicableBookingPolicy();
-        var companyBookingPolicy = new CompanyBookingPolicy(
-            100,
-            new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite });
+        var companyBookingPolicy = new CompanyBookingPolicy(companyId, allowedRoomTypes);
         var bookingPolicy = new AggregatedBookingPolicy(employeeBookingPolicy, companyBookingPolicy);
 
         // Act
-        var bookingAllowed = bookingPolicy.BookingAllowed(RoomType.Standard);
+        var bookingAllowed = bookingPolicy.BookingAllowed(allowedRoomTypes[0]);
 
         // Assert
         Assert.True(bookingAllowed);
     }
 
-    [Fact]
-    public void BookingAllowedByEmployeeBookingPolicy()
+    [Theory, AutoData]
+    public void BookingAllowedByEmployeeBookingPolicy(
+        int employeeId,
+        [CollectionSize(2)] List<RoomType> allowedRoomTypes)
     {
         // Arrange
         var employeeBookingPolicy = new EmployeeBookingPolicy(
-            1,
-            new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite });
+            employeeId,
+            allowedRoomTypes);
         var companyBookingPolicy = new NonApplicableBookingPolicy();
         var bookingPolicy = new AggregatedBookingPolicy(employeeBookingPolicy, companyBookingPolicy);
 
         // Act
-        var bookingAllowed = bookingPolicy.BookingAllowed(RoomType.Standard);
+        var bookingAllowed = bookingPolicy.BookingAllowed(allowedRoomTypes[1]);
 
         // Assert
         Assert.True(bookingAllowed);
     }
 
-    [Fact]
-    public void BookingAllowedByEmployeeBookingPolicyButNotByCompanyBookingPolicy()
+    [Theory, AutoData]
+    public void BookingAllowedByEmployeeBookingPolicyButNotByCompanyBookingPolicy(int employeeId, int companyId)
     {
         // Arrange
         var employeeBookingPolicy = new EmployeeBookingPolicy(
-            1,
+            employeeId,
             new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite });
         var companyBookingPolicy = new CompanyBookingPolicy(
-            100,
+            companyId,
             new List<RoomType> { RoomType.JuniorSuite });
         var bookingPolicy = new AggregatedBookingPolicy(employeeBookingPolicy, companyBookingPolicy);
 
@@ -58,15 +60,15 @@ public class AggregatedBookingPolicyTests
         Assert.True(bookingAllowed);
     }
 
-    [Fact]
-    public void BookingAllowedByCompanyBookingPolicyButNotByEmployeeBookingPolicy()
+    [Theory, AutoData]
+    public void BookingAllowedByCompanyBookingPolicyButNotByEmployeeBookingPolicy(int employeeId, int companyId)
     {
         // Arrange
         var employeeBookingPolicy = new EmployeeBookingPolicy(
-            1,
+            employeeId,
             new List<RoomType> { RoomType.JuniorSuite });
         var companyBookingPolicy = new CompanyBookingPolicy(
-            100,
+            companyId,
             new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite });
         var bookingPolicy = new AggregatedBookingPolicy(employeeBookingPolicy, companyBookingPolicy);
 
@@ -77,12 +79,12 @@ public class AggregatedBookingPolicyTests
         Assert.False(bookingAllowed);
     }
 
-    [Fact]
-    public void BookingAllowedByNeitherCompanyNorEmployeeBookingPolicy()
+    [Theory, AutoData]
+    public void BookingAllowedByNeitherCompanyNorEmployeeBookingPolicy(int employeeId, int companyId)
     {
         // Arrange
-        var employeeBookingPolicy = new EmployeeBookingPolicy(1, new List<RoomType> { RoomType.JuniorSuite });
-        var companyBookingPolicy = new CompanyBookingPolicy(100, new List<RoomType> { RoomType.JuniorSuite });
+        var employeeBookingPolicy = new EmployeeBookingPolicy(employeeId, new List<RoomType> { RoomType.JuniorSuite });
+        var companyBookingPolicy = new CompanyBookingPolicy(companyId, new List<RoomType> { RoomType.JuniorSuite });
         var bookingPolicy = new AggregatedBookingPolicy(employeeBookingPolicy, companyBookingPolicy);
 
         // Act
@@ -92,8 +94,8 @@ public class AggregatedBookingPolicyTests
         Assert.False(bookingAllowed);
     }
 
-    [Fact]
-    public void NoBookingPoliciesForAnEmployee()
+    [Theory, AutoData]
+    public void NoBookingPoliciesForAnEmployee(RoomType roomType)
     {
         // Arrange
         var employeeBookingPolicy = new NonApplicableBookingPolicy();
@@ -101,7 +103,7 @@ public class AggregatedBookingPolicyTests
         var bookingPolicy = new AggregatedBookingPolicy(employeeBookingPolicy, companyBookingPolicy);
 
         // Act
-        var bookingAllowed = bookingPolicy.BookingAllowed(RoomType.Standard);
+        var bookingAllowed = bookingPolicy.BookingAllowed(roomType);
 
         // Assert
         Assert.True(bookingAllowed);
