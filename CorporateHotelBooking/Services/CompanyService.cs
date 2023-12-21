@@ -29,7 +29,9 @@ public class CompanyService
 
     public void DeleteEmployee(int employeeId)
     {
-        new DeleteEmployeeCommandHandler(_employeeRepository, _bookingRepository, _employeeBookingPolicyRepository)
-            .Handle(new DeleteEmployeeCommand(employeeId));
+        var handler = new DeleteEmployeeCommandHandler(_employeeRepository);
+        handler.Subscribe(new EmployeeBookingDeleter(_bookingRepository));
+        handler.Subscribe(new EmployeeBookingPoliciesDeleter(_employeeBookingPolicyRepository));
+        handler.Handle(new DeleteEmployeeCommand(employeeId));
     }
 }
