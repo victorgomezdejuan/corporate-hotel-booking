@@ -1,7 +1,9 @@
+using AutoFixture.Xunit2;
 using CorporateHotelBooking.Application.Common.Exceptions;
 using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Domain.Entities.BookingPolicies;
 using CorporateHotelBooking.Repositories.EmployeeBookingPolicies;
+using CorporateHotelBooking.Unit.Tests.Helpers.AutoFixture;
 using FluentAssertions;
 
 namespace CorporateHotelBooking.Unit.Tests.Repositories.InMemoryEmployeePolicyRepositoryTests;
@@ -15,25 +17,25 @@ public class GetTests
         _repository = new InMemoryEmployeeBookingPolicyRepository();
     }
 
-    [Fact]
-    public void GetExistingEmployeePolicy()
+    [Theory, AutoData]
+    public void GetExistingEmployeePolicy(int employeeId, [CollectionSize(2)] List<RoomType> allowedRoomTypes)
     {
         // Arrange
-        _repository.Add(new EmployeeBookingPolicy(1, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite }));
+        var employeeBookingPolicy = new EmployeeBookingPolicy(employeeId, allowedRoomTypes);
+        _repository.Add(employeeBookingPolicy);
 
         // Act
-        var retrievedEmployeePolicy = _repository.Get(1);
+        var retrievedEmployeePolicy = _repository.Get(employeeId);
 
         // Assert
-        retrievedEmployeePolicy
-            .Should().Be(new EmployeeBookingPolicy(1, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite }));
+        retrievedEmployeePolicy.Should().Be(employeeBookingPolicy);
     }
 
-    [Fact]
-    public void GetNonExistingEmployeePolicy()
+    [Theory, AutoData]
+    public void GetNonExistingEmployeePolicy(int employeeId)
     {
         // Act
-        EmployeeBookingPolicy action() => _repository.Get(1);
+        EmployeeBookingPolicy action() => _repository.Get(employeeId);
 
         // Assert
         Assert.Throws<EmployeeNotFoundException>(action);

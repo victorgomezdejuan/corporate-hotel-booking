@@ -1,3 +1,4 @@
+using AutoFixture.Xunit2;
 using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Domain.Entities.BookingPolicies;
 using CorporateHotelBooking.Repositories.CompanyBookingPolicies;
@@ -7,26 +8,26 @@ namespace CorporateHotelBooking.Unit.Tests.Repositories.InMemoryCompanyBookingPo
 
 public class UpdateTests
 {
-    [Fact]
-    public void UpdateCompanyPolicy()
+    [Theory, AutoData]
+    public void UpdateCompanyPolicy(int companyId)
     {
         // Arrange
         var repository = new InMemoryCompanyBookingPolicyRepository();
 
         var companyPolicyToBeAdded = new CompanyBookingPolicy(
-            1,
+            companyId,
             new List<RoomType> { RoomType.Standard });
         repository.Add(companyPolicyToBeAdded);
         
         var updatedCompanyPolicy = new CompanyBookingPolicy(
-            1,
+            companyId,
             new List<RoomType> { RoomType.JuniorSuite, RoomType.MasterSuite });
 
         // Act
         repository.Update(updatedCompanyPolicy);
 
         // Assert
-        var retrievedCompanyPolicy = repository.Get(1);
+        var retrievedCompanyPolicy = repository.Get(companyId);
         retrievedCompanyPolicy.Should().Be(updatedCompanyPolicy);
     }    
 }

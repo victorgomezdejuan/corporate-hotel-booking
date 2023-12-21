@@ -1,6 +1,8 @@
+using AutoFixture.Xunit2;
 using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Domain.Entities.BookingPolicies;
 using CorporateHotelBooking.Repositories.EmployeeBookingPolicies;
+using CorporateHotelBooking.Unit.Tests.Helpers.AutoFixture;
 using FluentAssertions;
 
 namespace CorporateHotelBooking.Unit.Tests.Repositories.InMemoryEmployeeBookingPolicyRepositoryTests;
@@ -14,29 +16,30 @@ public class Delete
         _repository = new InMemoryEmployeeBookingPolicyRepository();
     }
 
-    [Fact]
-    public void DeleteEmployeeBookingPolicy()
+    [Theory, AutoData]
+    public void DeleteEmployeeBookingPolicy(int employeeId, [CollectionSize(1)] List<RoomType> allowedRoomTypes)
     {
         // Arrange
-        _repository.Add(new EmployeeBookingPolicy(1, new List<RoomType> { RoomType.Standard }));
+        _repository.Add(new EmployeeBookingPolicy(employeeId, allowedRoomTypes));
 
         // Act
-        _repository.Delete(1);
+        _repository.Delete(employeeId);
 
         // Assert
-        _repository.Exists(1).Should().BeFalse();
+        _repository.Exists(employeeId).Should().BeFalse();
     }
 
-    [Fact]
-    public void DoNotDeleteOtherEmployeesPolicies()
+    [Theory, AutoData]
+    public void DoNotDeleteOtherEmployeesPolicies(int employeeId, [CollectionSize(1)] List<RoomType> allowedRoomTypes)
     {
         // Arrange
-        _repository.Add(new EmployeeBookingPolicy(1, new List<RoomType> { RoomType.Standard }));
+        _repository.Add(new EmployeeBookingPolicy(employeeId, allowedRoomTypes));
+        var anotherEmployeeId = employeeId + 1;
 
         // Act
-        _repository.Delete(2);
+        _repository.Delete(anotherEmployeeId);
 
         // Assert
-        _repository.Exists(1).Should().BeTrue();
+        _repository.Exists(employeeId).Should().BeTrue();
     }
 }

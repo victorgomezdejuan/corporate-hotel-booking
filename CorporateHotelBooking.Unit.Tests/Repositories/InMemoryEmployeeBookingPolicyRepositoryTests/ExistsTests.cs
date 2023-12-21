@@ -1,6 +1,8 @@
+using AutoFixture.Xunit2;
 using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Domain.Entities.BookingPolicies;
 using CorporateHotelBooking.Repositories.EmployeeBookingPolicies;
+using CorporateHotelBooking.Unit.Tests.Helpers.AutoFixture;
 using FluentAssertions;
 
 namespace CorporateHotelBooking.Unit.Tests.Repositories.InMemoryEmployeeBookingPolicyRepositoryTests;
@@ -14,24 +16,24 @@ public class ExistsTests
         _repository = new InMemoryEmployeeBookingPolicyRepository();
     }
 
-    [Fact]
-    public void ExistsEmployeePolicy()
+    [Theory, AutoData]
+    public void ExistsEmployeePolicy(int employeeId, [CollectionSize(2)] List<RoomType> allowedRoomTypes)
     {
         // Arrange
-        _repository.Add(new EmployeeBookingPolicy(1, new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite }));
+        _repository.Add(new EmployeeBookingPolicy(employeeId, allowedRoomTypes));
 
         // Act
-        var exists = _repository.Exists(1);
+        var exists = _repository.Exists(employeeId);
 
         // Assert
         exists.Should().BeTrue();
     }
 
-    [Fact]
-    public void DoesNotExistEmployeePolicy()
+    [Theory, AutoData]
+    public void DoesNotExistEmployeePolicy(int employeeId)
     {
         // Act
-        var exists = _repository.Exists(1);
+        var exists = _repository.Exists(employeeId);
 
         // Assert
         exists.Should().BeFalse();
