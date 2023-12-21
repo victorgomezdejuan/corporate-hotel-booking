@@ -1,5 +1,6 @@
-using CorporateHotelBooking.Domain.Entities;
+using AutoFixture.Xunit2;
 using CorporateHotelBooking.Repositories.Bookings;
+using CorporateHotelBooking.Unit.Tests.Helpers;
 using FluentAssertions;
 
 namespace CorporateHotelBooking.Unit.Tests.Repositories.InMemoryBookingRepositoryTests;
@@ -13,11 +14,11 @@ public class GetTests
         _repository = new InMemoryBookingRepository();
     }
 
-    [Fact]
-    public void BookingDoesNotExist()
+    [Theory, AutoData]
+    public void BookingDoesNotExist(int bookingId)
     {
         // Act
-        Action action = () => _repository.Get(1);
+        Action action = () => _repository.Get(bookingId);
 
         // Assert
         action.Should().Throw<BookingNotFoundException>();
@@ -27,13 +28,14 @@ public class GetTests
     public void BookingExists()
     {
         // Arrange
-        var booking = new Booking(1, 10, 100, RoomType.Standard, new DateOnly(2021, 1, 1), new DateOnly(2021, 1, 2));
-        _repository.Add(booking);
+        var booking = BookingFactory.CreateRandom();
+        var createdBooking = _repository.Add(booking);
 
         // Act
-        var result = _repository.Get(1);
+        var result = _repository.Get(createdBooking.Id.Value);
 
         // Assert
-        result.Should().Be(booking);
+        result.Id.Should().Be(createdBooking.Id.Value);
+        result.Should().BeEquivalentTo(booking, options => options.Excluding(b => b.Id));
     }
 }
