@@ -1,3 +1,4 @@
+using AutoFixture.Xunit2;
 using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Repositories.Hotels;
 
@@ -12,11 +13,10 @@ public class ExistsTests
         _repository = new InMemoryHotelRepository();
     }
 
-    [Fact]
-    public void HotelExists()
+    [Theory, AutoData]
+    public void HotelExists(Hotel hotel)
     {
         // Arrange
-        var hotel = new Hotel(1, "Hotel");
         _repository.Add(hotel);
 
         // Act
@@ -26,11 +26,11 @@ public class ExistsTests
         Assert.True(exists);
     }
 
-    [Fact]
-    public void HotelDoesNotExist()
+    [Theory, AutoData]
+    public void HotelDoesNotExist(int hotelId)
     {
         // Act
-        var exists = _repository.Exists(1);
+        var exists = _repository.Exists(hotelId);
 
         // Assert
         Assert.False(exists);

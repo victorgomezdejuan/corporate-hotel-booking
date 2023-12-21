@@ -1,3 +1,4 @@
+using AutoFixture.Xunit2;
 using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Repositories.Hotels;
 
@@ -5,18 +6,17 @@ namespace CorporateHotelBooking.Unit.Tests.Repositories.InMemoryHotelRepositoryT
 
 public class AddTests
 {
-    [Fact]
-    public void AddNewHotel()
+    [Theory, AutoData]
+    public void AddNewHotel(Hotel hotel)
     {
         // Arrange
         var repository = new InMemoryHotelRepository();
-        var hotelToBeAdded = new Hotel(1, "Hotel 1");
         
         // Act
-        repository.Add(hotelToBeAdded);
+        repository.Add(hotel);
         
         // Assert
-        var retrievedHotel = repository.Get(1);
-        Assert.Equal(hotelToBeAdded, retrievedHotel);
+        var retrievedHotel = repository.Get(hotel.Id);
+        Assert.Equal(hotel, retrievedHotel);
     }
 }
