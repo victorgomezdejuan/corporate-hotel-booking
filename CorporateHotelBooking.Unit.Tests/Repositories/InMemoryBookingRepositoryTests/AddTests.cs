@@ -11,30 +11,15 @@ public class AddTests
     public void AddABooking()
     {
         // Arrange
-        var booking = new Booking
-        (
-            employeeId: 1,
-            hotelId: 1,
-            roomType: RoomType.Standard,
-            checkInDate: DateUtils.Today(),
-            checkOutDate: DateUtils.Today().AddDays(1)
-        );
+        var booking = BookingFactory.CreateRandom();
         var repository = new InMemoryBookingRepository();
 
         // Act
         Booking result = repository.Add(booking);
 
         // Assert
-        var expectedBooking = new Booking
-        (
-            id: 1,
-            employeeId: 1,
-            hotelId: 1,
-            roomType: RoomType.Standard,
-            checkInDate: DateUtils.Today(),
-            checkOutDate: DateUtils.Today().AddDays(1)
-        );
-        result.Should().BeEquivalentTo(expectedBooking);
-        repository.Get(result.Id.Value).Should().Be(expectedBooking);
+        result.Id.Should().NotBeNull();
+        result.Should().BeEquivalentTo(booking, options => options.Excluding(b => b.Id));
+        repository.Get(result.Id.Value).Should().BeEquivalentTo(booking, options => options.Excluding(b => b.Id));
     }
 }
