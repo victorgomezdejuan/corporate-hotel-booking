@@ -1,24 +1,25 @@
+using AutoFixture.Xunit2;
 using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Repositories.Rooms;
+using CorporateHotelBooking.Unit.Tests.Helpers;
 
 namespace CorporateHotelBooking.Unit.Tests.Repositories.InMemoryRoomRepositoryTests;
 
 public class UpdateTests
 {
-    [Fact]
-    public void UpdateExistingRoom()
+    [Theory, AutoData]
+    public void UpdateExistingRoom(Room room)
     {
         // Arrange
         var repository = new InMemoryRoomRepository();
-        var existingRoom = new Room(1, 100, RoomType.Standard);
-        repository.Add(existingRoom);
-        var updatedRoom = new Room(1, 100, RoomType.JuniorSuite);
+        repository.Add(room);
+        var updatedRoom = new Room(room.HotelId, room.Number, RoomTypeProvider.NotContainedIn(room.Type));
 
         // Act
         repository.Update(updatedRoom);
 
         // Assert
-        var retrievedRoom = repository.Get(1, 100);
+        var retrievedRoom = repository.Get(room.HotelId, room.Number);
         Assert.Equal(updatedRoom, retrievedRoom);
     }
 }

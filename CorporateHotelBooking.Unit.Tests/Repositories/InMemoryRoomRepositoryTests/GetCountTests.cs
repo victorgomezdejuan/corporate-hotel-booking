@@ -1,3 +1,4 @@
+using AutoFixture.Xunit2;
 using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Repositories.Rooms;
 
@@ -12,39 +13,39 @@ public class GetRoomCountTests
         _repository = new InMemoryRoomRepository();
     }
 
-    [Fact]
-    public void NoRooms()
+    [Theory, AutoData]
+    public void NoRooms(int hotelId, RoomType roomType)
     {
         // Act
-        var count = _repository.GetCount(1, RoomType.Standard);
+        var count = _repository.GetCount(hotelId, roomType);
 
         // Assert
         Assert.Equal(0, count);
     }
 
-    [Fact]
-    public void OneRoom()
+    [Theory, AutoData]
+    public void OneRoom(Room room)
     {
         // Arrange
-        _repository.Add(new Room(1, 100, RoomType.Standard));
+        _repository.Add(room);
 
         // Act
-        var count = _repository.GetCount(1, RoomType.Standard);
+        var count = _repository.GetCount(room.HotelId, room.Type);
 
         // Assert
         Assert.Equal(1, count);
     }
 
-    [Fact]
-    public void MultipleRooms()
+    [Theory, AutoData]
+    public void MultipleRooms(int hotelId, RoomType roomType)
     {
         // Arrange
-        _repository.Add(new Room(1, 100, RoomType.Standard));
-        _repository.Add(new Room(1, 101, RoomType.Standard));
-        _repository.Add(new Room(1, 102, RoomType.Standard));
+        _repository.Add(new Room(hotelId, 100, roomType));
+        _repository.Add(new Room(hotelId, 101, roomType));
+        _repository.Add(new Room(hotelId, 102, roomType));
 
         // Act
-        var count = _repository.GetCount(1, RoomType.Standard);
+        var count = _repository.GetCount(hotelId, roomType);
 
         // Assert
         Assert.Equal(3, count);

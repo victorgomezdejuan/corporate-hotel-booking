@@ -1,6 +1,7 @@
 using FluentAssertions;
 using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Repositories.Rooms;
+using AutoFixture.Xunit2;
 
 namespace CorporateHotelBooking.Unit.Tests.Repositories.InMemoryRoomRepositoryTests;
 
@@ -13,46 +14,45 @@ public class GetManyTests
         _repository = new InMemoryRoomRepository();
     }
 
-    [Fact]
-    public void GetNoRooms()
+    [Theory, AutoData]
+    public void GetNoRooms(int hotelId)
     {
         // Act
-        var rooms = _repository.GetMany(1);
+        var rooms = _repository.GetMany(hotelId);
 
         // Assert
         rooms.Should().BeEmpty();
     }
 
-    [Fact]
-    public void GetOneRoom()
+    [Theory, AutoData]
+    public void GetOneRoom(Room room)
     {
         // Arrange
-        _repository.Add(new Room(1, 100, RoomType.Standard));
+        _repository.Add(room);
 
         // Act
-        var rooms = _repository.GetMany(1);
+        var rooms = _repository.GetMany(room.HotelId);
 
         // Assert
         rooms.Should().HaveCount(1);
-        rooms.First().Number.Should().Be(100);
-        rooms.First().Type.Should().Be(RoomType.Standard);
+        rooms.First().Should().Be(room);
     }
 
-    [Fact]
-    public void GetMultipleRooms()
+    [Theory, AutoData]
+    public void GetMultipleRooms(int hotelId, int roomNumber1, int roomNumber2, RoomType roomType1, RoomType roomType2)
     {
         // Arrange
-        _repository.Add(new Room(1, 100, RoomType.Standard));
-        _repository.Add(new Room(1, 101, RoomType.JuniorSuite));
+        _repository.Add(new Room(hotelId, roomNumber1, roomType1));
+        _repository.Add(new Room(hotelId, roomNumber2, roomType2));
 
         // Act
-        var rooms = _repository.GetMany(1);
+        var rooms = _repository.GetMany(hotelId);
 
         // Assert
         rooms.Should().HaveCount(2);
-        rooms.First().Number.Should().Be(100);
-        rooms.First().Type.Should().Be(RoomType.Standard);
-        rooms.Last().Number.Should().Be(101);
-        rooms.Last().Type.Should().Be(RoomType.JuniorSuite);
+        rooms.First().Number.Should().Be(roomNumber1);
+        rooms.First().Type.Should().Be(roomType1);
+        rooms.Last().Number.Should().Be(roomNumber2);
+        rooms.Last().Type.Should().Be(roomType2);
     }
 }

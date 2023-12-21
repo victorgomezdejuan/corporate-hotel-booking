@@ -1,3 +1,4 @@
+using AutoFixture.Xunit2;
 using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Repositories.Rooms;
 
@@ -12,47 +13,47 @@ public class ExistsTests
         _repository = new InMemoryRoomRepository();
     }
 
-    [Fact]
-    public void RoomNumberExists()
+    [Theory, AutoData]
+    public void RoomNumberExists(Room room)
     {
         // Arrange
-        _repository.Add(new Room(1, 100, RoomType.Standard));
+        _repository.Add(room);
 
         // Act
-        var exists = _repository.ExistsRoomNumber(1, 100);
+        var exists = _repository.ExistsRoomNumber(room.HotelId, room.Number);
 
         // Assert
         Assert.True(exists);
     }
 
-    [Fact]
-    public void RoomNumberDoesNotExist()
+    [Theory, AutoData]
+    public void RoomNumberDoesNotExist(int hotelId, int roomNumber)
     {
         // Act
-        var exists = _repository.ExistsRoomNumber(1, 100);
+        var exists = _repository.ExistsRoomNumber(hotelId, roomNumber);
 
         // Assert
         Assert.False(exists);
     }
 
-    [Fact]
-    public void RoomTypeExists()
+    [Theory, AutoData]
+    public void RoomTypeExists(Room room)
     {
         // Arrange
-        _repository.Add(new Room(1, 100, RoomType.Standard));
+        _repository.Add(room);
 
         // Act
-        var exists = _repository.ExistsRoomType(1, RoomType.Standard);
+        var exists = _repository.ExistsRoomType(room.HotelId, room.Type);
 
         // Assert
         Assert.True(exists);
     }
 
-    [Fact]
-    public void RoomTypeDoesNotExist()
+    [Theory, AutoData]
+    public void RoomTypeDoesNotExist(int hotelId, RoomType roomType)
     {
         // Act
-        var exists = _repository.ExistsRoomType(1, RoomType.Standard);
+        var exists = _repository.ExistsRoomType(hotelId, roomType);
 
         // Assert
         Assert.False(exists);
