@@ -1,3 +1,4 @@
+using AutoFixture.Xunit2;
 using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Repositories.Employees;
 using FluentAssertions;
@@ -6,18 +7,17 @@ namespace CorporateHotelBooking.Unit.Tests.Repositories.InMemoryEmployeeReposito
 
 public class AddTests
 {
-    [Fact]
-    public void AddEmployee()
+    [Theory, AutoData]
+    public void AddEmployee(Employee employee)
     {
         // Arrange
         var repository = new InMemoryEmployeeRepository();
-        var employeeToBeAdded = new Employee(1, 100);
 
         // Act
-        repository.Add(employeeToBeAdded);
+        repository.Add(employee);
 
         // Assert
-        var retrievedEmployee = repository.Get(1);
-        retrievedEmployee.Should().Be(employeeToBeAdded);
+        var retrievedEmployee = repository.Get(employee.Id);
+        retrievedEmployee.Should().Be(employee);
     }
 }

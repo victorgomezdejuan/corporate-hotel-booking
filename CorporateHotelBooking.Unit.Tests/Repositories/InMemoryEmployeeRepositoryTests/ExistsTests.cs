@@ -1,3 +1,4 @@
+using AutoFixture.Xunit2;
 using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Repositories.Employees;
 using FluentAssertions;
@@ -13,25 +14,24 @@ public class ExistsTests
         _repository = new InMemoryEmployeeRepository();
     }
 
-    [Fact]
-    public void EmployeeExists()
+    [Theory, AutoData]
+    public void EmployeeExists(Employee employee)
     {
         // Arrange
-        var employeeToBeAdded = new Employee(1, 100);
-        _repository.Add(employeeToBeAdded);
+        _repository.Add(employee);
 
         // Act
-        var employeeExists = _repository.Exists(1);
+        var employeeExists = _repository.Exists(employee.Id);
 
         // Assert
         employeeExists.Should().BeTrue();
     }
 
-    [Fact]
-    public void EmployeeDoesNotExist()
+    [Theory, AutoData]
+    public void EmployeeDoesNotExist(int employeeId)
     {
         // Act
-        var employeeExists = _repository.Exists(1);
+        var employeeExists = _repository.Exists(employeeId);
 
         // Assert
         employeeExists.Should().BeFalse();

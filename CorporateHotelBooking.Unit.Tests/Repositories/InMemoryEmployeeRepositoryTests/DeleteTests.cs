@@ -1,3 +1,4 @@
+using AutoFixture.Xunit2;
 using CorporateHotelBooking.Application.Common.Exceptions;
 using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Repositories.Employees;
@@ -7,18 +8,18 @@ namespace CorporateHotelBooking.Unit.Tests.Repositories.InMemoryEmployeeReposito
 
 public class DeleteTests
 {
-    [Fact]
-    public void DeleteExistingEmployee()
+    [Theory, AutoData]
+    public void DeleteExistingEmployee(Employee employee)
     {
         // Arrange
         var repository = new InMemoryEmployeeRepository();
-        repository.Add(new Employee(1, 100));
+        repository.Add(employee);
 
         // Act
-        repository.Delete(1);
+        repository.Delete(employee.Id);
 
         // Assert
-        Action getEmployeeAction = () => repository.Get(1);
+        Action getEmployeeAction = () => repository.Get(employee.Id);
         getEmployeeAction.Should().Throw<EmployeeNotFoundException>();
     }
 }

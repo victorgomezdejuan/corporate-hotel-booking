@@ -1,3 +1,4 @@
+using AutoFixture.Xunit2;
 using CorporateHotelBooking.Application.Common.Exceptions;
 using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Repositories.Employees;
@@ -14,25 +15,24 @@ public class GetTests
         _repository = new InMemoryEmployeeRepository();
     }
 
-    [Fact]
-    public void GetEmployee()
+    [Theory, AutoData]
+    public void GetEmployee(Employee employee)
     {
         // Arrange
-        var employeeToBeAdded = new Employee(1, 100);
-        _repository.Add(employeeToBeAdded);
+        _repository.Add(employee);
 
         // Act
-        var retrievedEmployee = _repository.Get(1);
+        var retrievedEmployee = _repository.Get(employee.Id);
 
         // Assert
-        retrievedEmployee.Should().Be(employeeToBeAdded);
+        retrievedEmployee.Should().Be(employee);
     }
 
-    [Fact]
-    public void GetNonExistingEmployee()
+    [Theory, AutoData]
+    public void GetNonExistingEmployee(int employeeId)
     {
         // Act
-        Action getAction = () => _repository.Get(1);
+        Action getAction = () => _repository.Get(employeeId);
 
         // Assert
         getAction.Should().Throw<EmployeeNotFoundException>();
