@@ -1,4 +1,5 @@
 ﻿using CorporateHotelBooking.Application;
+using CorporateHotelBooking.Application.Common;
 using CorporateHotelBooking.Application.Hotels.Commands.AddHotel;
 using CorporateHotelBooking.Application.Hotels.Queries.FindHotel;
 using CorporateHotelBooking.Application.Rooms.Commands.SetRoom;
@@ -19,9 +20,9 @@ public class HotelService
         _roomRepository = roomRepository;
     }
 
-    public void AddHotel(int hotelId, string hotelName)
+    public Result AddHotel(int hotelId, string hotelName)
     {
-        new AddHotelCommandHandler(_hotelRepository).Handle(new AddHotelCommand(hotelId, hotelName));
+        return new AddHotelCommandHandler(_hotelRepository).Handle(new AddHotelCommand(hotelId, hotelName));
     }
 
     public void SetRoom(int hotelId, int number, RoomType roomType)

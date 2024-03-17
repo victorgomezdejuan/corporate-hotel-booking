@@ -2,6 +2,7 @@ using AutoFixture.Xunit2;
 using CorporateHotelBooking.Application.Hotels.Commands.AddHotel;
 using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Repositories.Hotels;
+using FluentAssertions;
 using Moq;
 
 namespace CorporateHotelBooking.Unit.Tests.Application.Hotels.Commands;
@@ -38,9 +39,10 @@ public class AddHotelTests
             var command = new AddHotelCommand(hotelId, hotelName);
 
             // Act
-            void act() => _handler.Handle(command);
+            var result = _handler.Handle(command);
 
             // Assert
-            Assert.Throws<HotelAlreadyExistsException>(act);
+            result.IsFailure.Should().BeTrue();
+            result.Error.Should().Be("Hotel already exists");
         }
 }

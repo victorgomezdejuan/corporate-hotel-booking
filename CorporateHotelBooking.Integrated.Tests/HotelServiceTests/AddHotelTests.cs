@@ -39,9 +39,10 @@ public class AddHotelTests
         _hotelService.AddHotel(hotelId, "One name");
 
         // Act
-        void Act() => _hotelService.AddHotel(hotelId, "Another name");
+        var result = _hotelService.AddHotel(hotelId, "Another name");
 
         // Assert
-        Assert.Throws<HotelAlreadyExistsException>(Act);
+        result.IsFailure.Should().BeTrue();
+        result.Error.Should().Be("Hotel already exists");
     }
 }

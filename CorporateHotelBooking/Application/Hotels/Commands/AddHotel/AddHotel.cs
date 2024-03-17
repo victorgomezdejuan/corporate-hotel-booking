@@ -1,3 +1,4 @@
+using CorporateHotelBooking.Application.Common;
 using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Repositories.Hotels;
 
@@ -14,12 +15,15 @@ public class AddHotelCommandHandler
         _hotelRepository = hotelRepository;
     }
 
-    public void Handle(AddHotelCommand command)
+    public Result Handle(AddHotelCommand command)
     {
         if (_hotelRepository.Exists(command.HotelId))
         {
-            throw new HotelAlreadyExistsException();
+            return Result.Failure("Hotel already exists");
         }
+
         _hotelRepository.Add(new Hotel(command.HotelId, command.HotelName));
+
+        return Result.Success();
     }
 }
