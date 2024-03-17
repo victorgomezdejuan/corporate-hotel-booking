@@ -42,9 +42,10 @@ public class AddEmployeeTests
         _companyService.AddEmployee(companyId, employeeId);
 
         // Act
-        Action action = () => _companyService.AddEmployee(companyId, employeeId);
+        var result = _companyService.AddEmployee(companyId, employeeId);
 
         // Assert
-        action.Should().Throw<EmployeeAlreadyExistsException>();
+        result.IsFailure.Should().BeTrue();
+        result.Error.Should().Be("Employee already exists in the company");
     }
 }

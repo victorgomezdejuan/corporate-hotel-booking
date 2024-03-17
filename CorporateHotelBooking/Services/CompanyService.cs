@@ -1,3 +1,4 @@
+using CorporateHotelBooking.Application.Common;
 using CorporateHotelBooking.Application.Employees.Commands.AddEmployee;
 using CorporateHotelBooking.Application.Employees.Commands.DeleteEmployee;
 using CorporateHotelBooking.Repositories.Bookings;
@@ -22,9 +23,9 @@ public class CompanyService
         _employeeBookingPolicyRepository = employeeBookingPolicyRepository;
     }
 
-    public void AddEmployee(int companyId, int employeeId)
+    public Result AddEmployee(int companyId, int employeeId)
     {
-        new AddEmployeeCommandHandler(_employeeRepository).Handle(new AddEmployeeCommand(employeeId, companyId));
+        return new AddEmployeeCommandHandler(_employeeRepository).Handle(new AddEmployeeCommand(employeeId, companyId));
     }
 
     public void DeleteEmployee(int employeeId)

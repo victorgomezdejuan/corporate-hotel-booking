@@ -1,3 +1,4 @@
+using CorporateHotelBooking.Application.Common;
 using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Repositories.Employees;
 
@@ -14,12 +15,15 @@ public class AddEmployeeCommandHandler
         _employeeRepository = employeeRepository;
     }
 
-    public void Handle(AddEmployeeCommand command)
+    public Result Handle(AddEmployeeCommand command)
     {
         if (_employeeRepository.Exists(command.EmployeeId))
         {
-            throw new EmployeeAlreadyExistsException();
+            return Result.Failure("Employee already exists in the company");
         }
+
         _employeeRepository.Add(new Employee(command.EmployeeId, command.CompanyId));
+        
+        return Result.Success();
     }
 }

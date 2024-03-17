@@ -38,9 +38,10 @@ public class AddEmployeeTests
         _employeeRepository.Setup(r => r.Exists(employeeId)).Returns(true);
 
         // Act
-        Action action = () => _addEmployeeCommandHandler.Handle(new AddEmployeeCommand(employeeId, companyId));
+        var result = _addEmployeeCommandHandler.Handle(new AddEmployeeCommand(employeeId, companyId));
 
         // Assert
-        action.Should().Throw<EmployeeAlreadyExistsException>();
+        result.IsFailure.Should().BeTrue();
+        result.Error.Should().Be("Employee already exists in the company");
     }
 }
