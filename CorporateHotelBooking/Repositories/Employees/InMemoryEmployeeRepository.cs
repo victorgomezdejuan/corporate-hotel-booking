@@ -29,7 +29,7 @@ public class InMemoryEmployeeRepository : IEmployeeRepository
     {
         if (!_employees.ContainsKey(employeeId))
         {
-            throw new EmployeeNotFoundException(employeeId);
+            return null;
         }
         return _employees[employeeId];
     }

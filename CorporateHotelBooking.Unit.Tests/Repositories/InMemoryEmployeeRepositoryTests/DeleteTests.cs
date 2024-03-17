@@ -19,7 +19,6 @@ public class DeleteTests
         repository.Delete(employee.Id);
 
         // Assert
-        Action getEmployeeAction = () => repository.Get(employee.Id);
-        getEmployeeAction.Should().Throw<EmployeeNotFoundException>();
+        repository.Get(employee.Id).Should().BeNull();
     }
 }

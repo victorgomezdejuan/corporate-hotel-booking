@@ -31,10 +31,6 @@ public class GetTests
     [Theory, AutoData]
     public void GetNonExistingEmployee(int employeeId)
     {
-        // Act
-        Action getAction = () => _repository.Get(employeeId);
-
-        // Assert
-        getAction.Should().Throw<EmployeeNotFoundException>();
+        _repository.Get(employeeId).Should().BeNull();
     }
 }

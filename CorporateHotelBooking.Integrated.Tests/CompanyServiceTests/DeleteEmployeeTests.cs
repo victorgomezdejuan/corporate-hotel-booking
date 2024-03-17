@@ -1,4 +1,5 @@
 using AutoFixture.Xunit2;
+using CorporateHotelBooking.Application.Common;
 using CorporateHotelBooking.Application.Common.Exceptions;
 using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Domain.Entities.BookingPolicies;
@@ -33,8 +34,7 @@ public class DeleteEmployeeTests
         companyService.DeleteEmployee(booking.EmployeeId);
 
         // Assert
-        Action action = () => employeeRepository.Get(booking.EmployeeId);
-        action.Should().Throw<EmployeeNotFoundException>();
+        employeeRepository.Get(booking.EmployeeId).Should().BeNull();
         bookingRepository
             .GetCount(booking.EmployeeId, booking.RoomType, booking.CheckInDate, booking.CheckOutDate)
             .Should().Be(0);
