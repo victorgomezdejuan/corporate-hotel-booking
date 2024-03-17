@@ -25,9 +25,9 @@ public class HotelService
         return new AddHotelCommandHandler(_hotelRepository).Handle(new AddHotelCommand(hotelId, hotelName));
     }
 
-    public void SetRoom(int hotelId, int number, RoomType roomType)
+    public Result SetRoom(int hotelId, int number, RoomType roomType)
     {
-        new SetRoomCommandHandler(_hotelRepository, _roomRepository).Handle(new SetRoomCommand(hotelId, number, roomType));
+        return new SetRoomCommandHandler(_hotelRepository, _roomRepository).Handle(new SetRoomCommand(hotelId, number, roomType));
     }
 
     public HotelDto FindHotelBy(int hotelId)

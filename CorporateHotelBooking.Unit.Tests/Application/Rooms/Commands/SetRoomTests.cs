@@ -1,9 +1,9 @@
 using AutoFixture;
-using AutoFixture.Xunit2;
 using CorporateHotelBooking.Application.Rooms.Commands.SetRoom;
 using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Repositories.Hotels;
 using CorporateHotelBooking.Repositories.Rooms;
+using FluentAssertions;
 using Moq;
 
 namespace CorporateHotelBooking.Unit.Tests.Application.Rooms.Commands;
@@ -63,9 +63,10 @@ public class SetRoomTests
         _hotelRepositoryMock.Setup(x => x.Exists(_command.HotelId)).Returns(false);
 
         // Act
-        void act() => _setRoomCommandHandler.Handle(_command);
+        var result = _setRoomCommandHandler.Handle(_command);
 
         // Assert
-        Assert.Throws<HotelNotFoundException>(act);
+        result.IsFailure.Should().BeTrue();
+        result.Error.Should().Be("Hotel does not exist");
     }
 }

@@ -56,9 +56,10 @@ public class SetRoomTests
     public void AddRoomAssignedToNonExistingHotel(int hotelId, int roomNumber, RoomType roomType)
     {
         // Act
-        void Act() => _hotelService.SetRoom(hotelId, roomNumber, roomType);
+        var result = _hotelService.SetRoom(hotelId, roomNumber, roomType);
 
         // Assert
-        Assert.Throws<HotelNotFoundException>(Act);
+        result.IsFailure.Should().BeTrue();
+        result.Error.Should().Be("Hotel does not exist");
     }
 }

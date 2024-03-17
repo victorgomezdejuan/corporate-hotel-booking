@@ -1,3 +1,4 @@
+using CorporateHotelBooking.Application.Common;
 using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Repositories.Hotels;
 using CorporateHotelBooking.Repositories.Rooms;
@@ -17,22 +18,36 @@ public class SetRoomCommandHandler
         _roomRepository = roomRepository;
     }
 
-    public void Handle(SetRoomCommand command)
+    public Result Handle(SetRoomCommand command)
     {
         var room = new Room(command.HotelId, command.RoomNumber, command.RoomType);
         
         if (_roomRepository.ExistsRoomNumber(command.HotelId, command.RoomNumber))
         {
-            _roomRepository.Update(room);
+            return UpdateExistingRoom(room);
         }
         else
         {
-            if (!_hotelRepository.Exists(command.HotelId))
-            {
-                throw new HotelNotFoundException(command.HotelId);
-            }
-
-            _roomRepository.Add(room);
+            return AddNewRoom(command.HotelId, room);
         }
+    }
+
+    private Result UpdateExistingRoom(Room room)
+    {
+        _roomRepository.Update(room);
+
+        return Result.Success();
+    }
+
+    private Result AddNewRoom(int hotelId, Room room)
+    {
+        if (!_hotelRepository.Exists(hotelId))
+        {
+            return Result.Failure("Hotel does not exist");
+        }
+
+        _roomRepository.Add(room);
+
+        return Result.Success();
     }
 }
