@@ -68,10 +68,11 @@ public class BookARoomTests
         _roomRepositoryMock.Setup(x => x.ExistsRoomType(command.HotelId, command.RoomType)).Returns(false);
 
         // Act
-        Action act = () => _handler.Handle(command);
+        var result = _handler.Handle(command);
 
         // Assert
-        act.Should().Throw<RoomTypeNotProvidedByTheHotelException>();
+        result.IsFailure.Should().BeTrue();
+        result.Error.Should().Be("Room type not provided by the hotel.");
     }
 
     [Theory, AutoData]

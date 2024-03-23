@@ -48,13 +48,18 @@ public class BookARoomCommandHandler
 
     public Result<NewBooking> Handle(BookARoomCommand command)
     {
-        var hotelExist = DoesHotelExist(command.HotelId);
+        bool hotelExist = DoesHotelExist(command.HotelId);
         if (!hotelExist)
         {
             return Result<NewBooking>.Failure("Hotel not found.");
         }
 
-        CheckRoomTypeExistanceInTheHotel(command);
+        bool roomTypeProvided = CheckRoomTypeExistanceInTheHotel(command);
+        if (!roomTypeProvided)
+        {
+            return Result<NewBooking>.Failure("Room type not provided by the hotel.");
+        }
+
         CheckBookingPolicyAllowance(command);
 
         bool roomsAvailable = AreThereRoomsAvailable(command);
@@ -85,12 +90,14 @@ public class BookARoomCommandHandler
         return true;
     }
 
-    private void CheckRoomTypeExistanceInTheHotel(BookARoomCommand command)
+    private bool CheckRoomTypeExistanceInTheHotel(BookARoomCommand command)
     {
         if (!_roomRepository.ExistsRoomType(command.HotelId, command.RoomType))
         {
-            throw new RoomTypeNotProvidedByTheHotelException(command.HotelId, command.RoomType);
+            return false;
         }
+
+        return true;
     }
 
     private void CheckBookingPolicyAllowance(BookARoomCommand command)
