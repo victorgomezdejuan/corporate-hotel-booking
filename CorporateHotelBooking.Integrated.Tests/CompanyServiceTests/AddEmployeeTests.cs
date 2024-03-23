@@ -31,7 +31,7 @@ public class AddEmployeeTests
 
         // Assert
         var employee = _employeeRepository.Get(employeeId);
-        employee.Id.Should().Be(employeeId);
+        employee!.Id.Should().Be(employeeId);
         employee.CompanyId.Should().Be(companyId);
     }
 

@@ -48,10 +48,14 @@ public class BookARoomCommandHandler
 
     public Result<NewBooking> Handle(BookARoomCommand command)
     {
-        bool hotelExist = DoesHotelExist(command.HotelId);
-        if (!hotelExist)
+        if (!_hotelRepository.Exists(command.HotelId))
         {
             return Result<NewBooking>.Failure("Hotel not found.");
+        }
+
+        if (!_employeeRepository.Exists(command.EmployeeId))
+        {
+            return Result<NewBooking>.Failure("Employee not found.");
         }
 
         bool roomTypeProvided = IsRoomTypeProvidedByTheHotel(command);
@@ -82,16 +86,6 @@ public class BookARoomCommandHandler
         ));
 
         return Result<NewBooking>.Success(booking.AsNewBooking());
-    }
-
-    private bool DoesHotelExist(int hotelId)
-    {
-        if (!_hotelRepository.Exists(hotelId))
-        {
-            return false;
-        }
-
-        return true;
     }
 
     private bool IsRoomTypeProvidedByTheHotel(BookARoomCommand command)
@@ -137,7 +131,7 @@ public class BookARoomCommandHandler
     {
         BookingPolicy companyBookingPolicy;
         var employee = _employeeRepository.Get(command.EmployeeId);
-        if (_companyBookingPolicyRepository.Exists(employee.CompanyId))
+        if (_companyBookingPolicyRepository.Exists(employee!.CompanyId))
         {
             companyBookingPolicy = _companyBookingPolicyRepository.Get(employee.CompanyId);
         }
