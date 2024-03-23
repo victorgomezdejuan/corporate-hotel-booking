@@ -28,9 +28,10 @@ public class IsBookingAllowedTests
             employeeRepository);
 
         // Act
-        var isBookingAllowed = bookingPolicyService.IsBookingAllowed(employee.Id, roomTypes[0]);
+        var result = bookingPolicyService.IsBookingAllowed(employee.Id, roomTypes[0]);
 
         // Assert
-        isBookingAllowed.Should().BeTrue();
+        result.IsFailure.Should().BeFalse();
+        result.Value.Should().BeTrue();
     }
 }

@@ -1,6 +1,5 @@
 using AutoFixture.Xunit2;
 using CorporateHotelBooking.Application.BookingPolicies.Queries.IsBookingAllowed;
-using CorporateHotelBooking.Application.Common.Exceptions;
 using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Domain.Entities.BookingPolicies;
 using CorporateHotelBooking.Repositories.CompanyBookingPolicies;
@@ -40,10 +39,11 @@ public class IsBookingAllowedTests
         var query = new IsBookingAllowedQuery(employeeId, roomType);
 
         // Act
-        Action act = () => _handler.Handle(query);
+        var result = _handler.Handle(query);
 
         // Assert
-        act.Should().Throw<EmployeeNotFoundException>();
+        result.IsFailure.Should().BeTrue();
+        result.Error.Should().Be("Employee not found.");
     }
 
     [Theory, AutoData]
@@ -67,7 +67,8 @@ public class IsBookingAllowedTests
         var result = _handler.Handle(query);
 
         // Assert
-        result.Should().BeTrue();
+        result.IsFailure.Should().BeFalse();
+        result.Value.Should().BeTrue();
     }
 
     [Theory, AutoData]
@@ -91,7 +92,8 @@ public class IsBookingAllowedTests
         var result = _handler.Handle(query);
 
         // Assert
-        result.Should().BeTrue();
+        result.IsFailure.Should().BeFalse();
+        result.Value.Should().BeTrue();
     }
 
     [Theory, AutoData]
@@ -114,7 +116,8 @@ public class IsBookingAllowedTests
         var result = _handler.Handle(query);
 
         // Assert
-        result.Should().BeTrue();
+        result.IsFailure.Should().BeFalse();
+        result.Value.Should().BeTrue();
     }
 
     [Theory, AutoData]
@@ -137,7 +140,8 @@ public class IsBookingAllowedTests
         var result = _handler.Handle(query);
 
         // Assert
-        result.Should().BeFalse();
+        result.IsFailure.Should().BeFalse();
+        result.Value.Should().BeFalse();
     }
 
     [Theory, AutoData]
@@ -160,7 +164,8 @@ public class IsBookingAllowedTests
         var result = _handler.Handle(query);
 
         // Assert
-        result.Should().BeFalse();
+        result.IsFailure.Should().BeFalse();
+        result.Value.Should().BeFalse();
     }
 
     [Theory, AutoData]
@@ -178,7 +183,8 @@ public class IsBookingAllowedTests
         var result = _handler.Handle(query);
 
         // Assert
-        result.Should().BeTrue();
+        result.IsFailure.Should().BeFalse();
+        result.Value.Should().BeTrue();
     }
 
     private void SetEmployeeRepositoryWithEmployeeAndCompany(int employeeId, int companyId)

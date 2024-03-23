@@ -5,6 +5,7 @@ using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Repositories.CompanyBookingPolicies;
 using CorporateHotelBooking.Repositories.EmployeeBookingPolicies;
 using CorporateHotelBooking.Repositories.Employees;
+using CorporateHotelBooking.Application.Common;
 
 namespace CorporateHotelBooking.Services;
 
@@ -34,7 +35,7 @@ public class BookingPolicyService
         new SetEmployeeBookingPolicyCommandHandler(_employeePolicyRepository).Handle(new SetEmployeeBookingPolicyCommand(employeeId, roomTypes));
     }
 
-    public bool IsBookingAllowed(int employeeId, RoomType roomType)
+    public Result<bool> IsBookingAllowed(int employeeId, RoomType roomType)
     {
         return new IsBookingAllowedQueryHandler(_employeeRepository, _companyPolicyRepository, _employeePolicyRepository)
             .Handle(new IsBookingAllowedQuery(employeeId, roomType));
