@@ -1,3 +1,5 @@
+using CorporateHotelBooking.Application.Common;
+using CorporateHotelBooking.Application.Common.Mappings;
 using CorporateHotelBooking.Application.Rooms.Commands.SetRoom;
 using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Domain.Entities.BookingPolicies;
@@ -44,12 +46,17 @@ public class BookARoomCommandHandler
         _companyBookingPolicyRepository = companyBookingPolicyRepository;
     }
 
-    public NewBooking Handle(BookARoomCommand command)
+    public Result<NewBooking> Handle(BookARoomCommand command)
     {
         CheckHotelExistance(command.HotelId);
         CheckRoomTypeExistanceInTheHotel(command);
         CheckBookingPolicyAllowance(command);
-        CheckRoomAvailability(command);
+
+        bool roomsAvailable = AreThereRoomsAvailable(command);
+        if (!roomsAvailable)
+        {
+            return Result<NewBooking>.Failure("No rooms of that type available for the requested period.");
+        }
         
         Booking booking = _bookingRepository.Add(new Booking
         (
@@ -60,7 +67,7 @@ public class BookARoomCommandHandler
             checkOutDate: command.CheckOutDate
         ));
 
-        return new NewBooking(booking.Id!.Value, booking.EmployeeId, booking.HotelId, booking.RoomType, booking.CheckInDate, booking.CheckOutDate);
+        return Result<NewBooking>.Success(booking.AsNewBooking());
     }
 
     private void CheckHotelExistance(int hotelId)
@@ -122,14 +129,16 @@ public class BookARoomCommandHandler
         return companyBookingPolicy;
     }
 
-    private void CheckRoomAvailability(BookARoomCommand command)
+    private bool AreThereRoomsAvailable(BookARoomCommand command)
     {
         if (
             _bookingRepository.GetCount(command.HotelId, command.RoomType, command.CheckInDate, command.CheckOutDate)
             >=
             _roomRepository.GetCount(command.HotelId, command.RoomType))
         {
-            throw new NoRoomsAvailableException();
+            return false;
         }
+
+        return true;
     }
 }

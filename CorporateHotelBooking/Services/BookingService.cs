@@ -1,4 +1,5 @@
 using CorporateHotelBooking.Application.Bookings.Commands;
+using CorporateHotelBooking.Application.Common;
 using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Repositories.Bookings;
 using CorporateHotelBooking.Repositories.CompanyBookingPolicies;
@@ -35,7 +36,7 @@ public class BookingService
     }
 
 
-    public NewBooking Book(int employeeId, int hotelId, RoomType roomType, DateOnly checkInDate, DateOnly checkOutDate)
+    public Result<NewBooking> Book(int employeeId, int hotelId, RoomType roomType, DateOnly checkInDate, DateOnly checkOutDate)
     {
         return new BookARoomCommandHandler(
             _bookingRepository,

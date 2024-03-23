@@ -1,5 +1,6 @@
 using AutoFixture.Xunit2;
 using CorporateHotelBooking.Application.Bookings.Commands;
+using CorporateHotelBooking.Application.Common;
 using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Domain.Entities.BookingPolicies;
 using CorporateHotelBooking.Integrated.Tests.Helpers;
@@ -61,7 +62,8 @@ public class BookingServiceTests
             booking.CheckOutDate);
 
         // Assert
-        result.Should().BeEquivalentTo(booking, options => options.Excluding(b => b.Id));
+        result.IsFailure.Should().BeFalse();
+        result.Value.Should().BeEquivalentTo(booking, options => options.Excluding(b => b.Id));
         _bookingRepository.Get(1).Should().BeEquivalentTo(booking, options => options.Excluding(b => b.Id));
     }
 
@@ -81,7 +83,7 @@ public class BookingServiceTests
         _bookingRepository.Add(booking);
 
         // Act
-        Action action = () => _bookingService.Book(
+        var result = _bookingService.Book(
             booking.EmployeeId,
             booking.HotelId,
             booking.RoomType,
@@ -89,6 +91,7 @@ public class BookingServiceTests
             booking.CheckOutDate);
 
         // Assert
-        action.Should().Throw<NoRoomsAvailableException>();
+        result.IsFailure.Should().BeTrue();
+        result.Error.Should().Be("No rooms of that type available for the requested period.");
     }
 }

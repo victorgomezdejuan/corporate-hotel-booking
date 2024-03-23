@@ -1,6 +1,7 @@
 using AutoFixture;
 using AutoFixture.Xunit2;
 using CorporateHotelBooking.Application.Bookings.Commands;
+using CorporateHotelBooking.Application.Common;
 using CorporateHotelBooking.Application.Rooms.Commands.SetRoom;
 using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Domain.Entities.BookingPolicies;
@@ -136,10 +137,11 @@ public class BookARoomTests
             .Returns(1);
 
         // Act
-        Action act = () => _handler.Handle(command);
+        var result = _handler.Handle(command);
 
         // Assert
-        act.Should().Throw<NoRoomsAvailableException>();
+        result.IsFailure.Should().BeTrue();
+        result.Error.Should().Be("No rooms of that type available for the requested period.");
     }
 
     [Theory, AutoData]
@@ -169,9 +171,19 @@ public class BookARoomTests
                 command.CheckOutDate));
 
         // Act
-        NewBooking newBooking = _handler.Handle(command);
+        var result = _handler.Handle(command);
 
         // Assert
+        result.IsFailure.Should().BeFalse();
+        result.Value.Should().BeEquivalentTo(
+            new NewBooking(
+                bookingId,
+                command.EmployeeId,
+                command.HotelId,
+                command.RoomType,
+                command.CheckInDate,
+                command.CheckOutDate));
+
         _bookingRepositoryMock.Verify(
             x => x.Add(new Booking(
                 command.EmployeeId,
@@ -180,14 +192,6 @@ public class BookARoomTests
                 command.CheckInDate,
                 command.CheckOutDate)),
             Times.Once);
-        newBooking.Should().BeEquivalentTo(
-            new NewBooking(
-                bookingId,
-                command.EmployeeId,
-                command.HotelId,
-                command.RoomType,
-                command.CheckInDate,
-                command.CheckOutDate));
     }
 
     private static BookARoomCommand CreateRandomCommand()
