@@ -1,4 +1,3 @@
-using CorporateHotelBooking.Application.Common.Exceptions;
 using CorporateHotelBooking.Domain.Entities;
 
 namespace CorporateHotelBooking.Repositories.Employees;
