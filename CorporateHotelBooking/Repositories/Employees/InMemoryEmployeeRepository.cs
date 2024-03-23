@@ -25,7 +25,7 @@ public class InMemoryEmployeeRepository : IEmployeeRepository
         return _employees.ContainsKey(employeeId);
     }
 
-    public Employee Get(int employeeId)
+    public Employee? Get(int employeeId)
     {
         if (!_employees.ContainsKey(employeeId))
         {

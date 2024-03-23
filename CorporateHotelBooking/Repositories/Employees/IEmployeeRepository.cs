@@ -7,5 +7,5 @@ public interface IEmployeeRepository
     void Add(Employee employee);
     void Delete(int employeeId);
     bool Exists(int employeeId);
-    Employee Get(int employeeId);
+    Employee? Get(int employeeId);
 }
