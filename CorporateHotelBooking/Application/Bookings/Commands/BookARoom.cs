@@ -54,13 +54,17 @@ public class BookARoomCommandHandler
             return Result<NewBooking>.Failure("Hotel not found.");
         }
 
-        bool roomTypeProvided = CheckRoomTypeExistanceInTheHotel(command);
+        bool roomTypeProvided = IsRoomTypeProvidedByTheHotel(command);
         if (!roomTypeProvided)
         {
             return Result<NewBooking>.Failure("Room type not provided by the hotel.");
         }
 
-        CheckBookingPolicyAllowance(command);
+        bool allowed = IsBookingAllowed(command);
+        if (!allowed)
+        {
+            return Result<NewBooking>.Failure("Booking not allowed.");
+        }
 
         bool roomsAvailable = AreThereRoomsAvailable(command);
         if (!roomsAvailable)
@@ -90,7 +94,7 @@ public class BookARoomCommandHandler
         return true;
     }
 
-    private bool CheckRoomTypeExistanceInTheHotel(BookARoomCommand command)
+    private bool IsRoomTypeProvidedByTheHotel(BookARoomCommand command)
     {
         if (!_roomRepository.ExistsRoomType(command.HotelId, command.RoomType))
         {
@@ -100,7 +104,7 @@ public class BookARoomCommandHandler
         return true;
     }
 
-    private void CheckBookingPolicyAllowance(BookARoomCommand command)
+    private bool IsBookingAllowed(BookARoomCommand command)
     {
         BookingPolicy employeeBookingPolicy = GetEmployeeBookingPolicy(command.EmployeeId);
         BookingPolicy companyBookingPolicy = GetCompanyBookingPolicy(command);
@@ -108,8 +112,10 @@ public class BookARoomCommandHandler
         var bookingPolicy = new AggregatedBookingPolicy(employeeBookingPolicy, companyBookingPolicy);
         if (!bookingPolicy.BookingAllowed(command.RoomType))
         {
-            throw new BookingNotAllowedException();
+            return false;
         }
+
+        return true;
     }
 
     private BookingPolicy GetEmployeeBookingPolicy(int employeeId)

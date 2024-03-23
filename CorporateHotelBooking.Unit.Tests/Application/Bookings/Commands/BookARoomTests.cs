@@ -92,10 +92,11 @@ public class BookARoomTests
         _companyBookingPolicyRepositoryMock.Setup(x => x.Exists(companyId)).Returns(false);
 
         // Act
-        Action act = () => _handler.Handle(command);
+        var result = _handler.Handle(command);
 
         // Assert
-        act.Should().Throw<BookingNotAllowedException>();
+        result.IsFailure.Should().BeTrue();
+        result.Error.Should().Be("Booking not allowed.");
     }
 
     [Theory, AutoData]
@@ -115,10 +116,11 @@ public class BookARoomTests
                 new List<RoomType> { DifferentRoomTypeFrom(command.RoomType) }));
 
         // Act
-        Action act = () => _handler.Handle(command);
+        var result = _handler.Handle(command);
 
         // Assert
-        act.Should().Throw<BookingNotAllowedException>();
+        result.IsFailure.Should().BeTrue();
+        result.Error.Should().Be("Booking not allowed.");
     }
 
     [Theory, AutoData]
