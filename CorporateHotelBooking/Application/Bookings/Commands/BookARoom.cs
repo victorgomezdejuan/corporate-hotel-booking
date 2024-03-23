@@ -48,34 +48,13 @@ public class BookARoomCommandHandler
 
     public Result<NewBooking> Handle(BookARoomCommand command)
     {
-        if (!_hotelRepository.Exists(command.HotelId))
+        var validationResult = ValidateCommand(command);
+
+        if (validationResult.IsFailure)
         {
-            return Result<NewBooking>.Failure("Hotel not found.");
+            return Result<NewBooking>.Failure(validationResult.Error);
         }
 
-        if (!_employeeRepository.Exists(command.EmployeeId))
-        {
-            return Result<NewBooking>.Failure("Employee not found.");
-        }
-
-        bool roomTypeProvided = IsRoomTypeProvidedByTheHotel(command);
-        if (!roomTypeProvided)
-        {
-            return Result<NewBooking>.Failure("Room type not provided by the hotel.");
-        }
-
-        bool allowed = IsBookingAllowed(command);
-        if (!allowed)
-        {
-            return Result<NewBooking>.Failure("Booking not allowed.");
-        }
-
-        bool roomsAvailable = AreThereRoomsAvailable(command);
-        if (!roomsAvailable)
-        {
-            return Result<NewBooking>.Failure("No rooms of that type available for the requested period.");
-        }
-        
         Booking booking = _bookingRepository.Add(new Booking
         (
             employeeId: command.EmployeeId,
@@ -86,6 +65,39 @@ public class BookARoomCommandHandler
         ));
 
         return Result<NewBooking>.Success(booking.AsNewBooking());
+    }
+
+    private Result ValidateCommand(BookARoomCommand command)
+    {
+        if (!_hotelRepository.Exists(command.HotelId))
+        {
+            return Result.Failure("Hotel not found.");
+        }
+
+        if (!_employeeRepository.Exists(command.EmployeeId))
+        {
+            return Result.Failure("Employee not found.");
+        }
+
+        bool roomTypeProvided = IsRoomTypeProvidedByTheHotel(command);
+        if (!roomTypeProvided)
+        {
+            return Result.Failure("Room type not provided by the hotel.");
+        }
+
+        bool allowed = IsBookingAllowed(command);
+        if (!allowed)
+        {
+            return Result.Failure("Booking not allowed.");
+        }
+
+        bool roomsAvailable = AreThereRoomsAvailable(command);
+        if (!roomsAvailable)
+        {
+            return Result.Failure("No rooms of that type available for the requested period.");
+        }
+
+        return Result.Success();
     }
 
     private bool IsRoomTypeProvidedByTheHotel(BookARoomCommand command)
