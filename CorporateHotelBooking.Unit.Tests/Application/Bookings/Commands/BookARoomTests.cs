@@ -96,11 +96,8 @@ public class BookARoomTests
     {
         // Arrange
         var command = CreateRandomCommand();
-        _hotelRepositoryMock.Setup(x => x.Exists(command.HotelId)).Returns(true);
-        _employeeRepositoryMock.Setup(x => x.Exists(command.EmployeeId)).Returns(true);
-        _roomRepositoryMock.Setup(x => x.ExistsRoomType(command.HotelId, command.RoomType)).Returns(true);
-        _employeeRepositoryMock.Setup(x => x.Get(command.EmployeeId))
-            .Returns(new Employee(command.EmployeeId, companyId));
+        HotelAndEmployeeExistAndRoomTypeIsProvided(companyId, command);
+
         _employeeBookingPolicyRepositoryMock.Setup(x => x.Exists(command.EmployeeId)).Returns(true);
         _employeeBookingPolicyRepositoryMock.Setup(x => x.Get(command.EmployeeId))
             .Returns(new EmployeeBookingPolicy(
@@ -121,11 +118,8 @@ public class BookARoomTests
     {
         // Arrange
         var command = CreateRandomCommand();
-        _hotelRepositoryMock.Setup(x => x.Exists(command.HotelId)).Returns(true);
-        _employeeRepositoryMock.Setup(x => x.Exists(command.EmployeeId)).Returns(true);
-        _roomRepositoryMock.Setup(x => x.ExistsRoomType(command.HotelId, command.RoomType)).Returns(true);
-        _employeeRepositoryMock.Setup(x => x.Get(command.EmployeeId))
-            .Returns(new Employee(command.EmployeeId, companyId));
+        HotelAndEmployeeExistAndRoomTypeIsProvided(companyId, command);
+
         _employeeBookingPolicyRepositoryMock.Setup(x => x.Exists(command.EmployeeId)).Returns(false);
         _companyBookingPolicyRepositoryMock.Setup(x => x.Exists(companyId)).Returns(true);
         _companyBookingPolicyRepositoryMock.Setup(x => x.Get(companyId))
@@ -146,11 +140,8 @@ public class BookARoomTests
     {
         // Arrange
         var command = CreateRandomCommand();
-        _hotelRepositoryMock.Setup(x => x.Exists(command.HotelId)).Returns(true);
-        _employeeRepositoryMock.Setup(x => x.Exists(command.EmployeeId)).Returns(true);
-        _roomRepositoryMock.Setup(x => x.ExistsRoomType(command.HotelId, command.RoomType)).Returns(true);
-        _employeeRepositoryMock.Setup(x => x.Get(command.EmployeeId))
-            .Returns(new Employee(command.EmployeeId, companyId));
+        HotelAndEmployeeExistAndRoomTypeIsProvided(companyId, command);
+
         _employeeBookingPolicyRepositoryMock.Setup(x => x.Exists(command.EmployeeId)).Returns(false);
         _companyBookingPolicyRepositoryMock.Setup(x => x.Exists(companyId)).Returns(false);
         _roomRepositoryMock.Setup(x => x.GetCount(command.HotelId, command.RoomType)).Returns(1);
@@ -171,11 +162,8 @@ public class BookARoomTests
     {
         // Arrange
         var command = CreateRandomCommand();
-        _hotelRepositoryMock.Setup(x => x.Exists(command.HotelId)).Returns(true);
-        _employeeRepositoryMock.Setup(x => x.Exists(command.EmployeeId)).Returns(true);
-        _roomRepositoryMock.Setup(x => x.ExistsRoomType(command.HotelId, RoomType.Standard)).Returns(true);
-        _employeeRepositoryMock.Setup(x => x.Get(command.EmployeeId))
-            .Returns(new Employee(command.EmployeeId, companyId));
+        HotelAndEmployeeExistAndRoomTypeIsProvided(companyId, command);
+
         _employeeBookingPolicyRepositoryMock.Setup(x => x.Exists(command.EmployeeId)).Returns(true);
         _employeeBookingPolicyRepositoryMock.Setup(x => x.Get(command.EmployeeId))
             .Returns(new EmployeeBookingPolicy(command.EmployeeId, new List<RoomType> { command.RoomType }));
@@ -229,6 +217,15 @@ public class BookARoomTests
             CheckInDate: checkInDate,
             CheckOutDate: checkInDate.AddDays(fixture.Create<int>())
          );
+    }
+
+    private void HotelAndEmployeeExistAndRoomTypeIsProvided(int companyId, BookARoomCommand command)
+    {
+        _hotelRepositoryMock.Setup(x => x.Exists(command.HotelId)).Returns(true);
+        _employeeRepositoryMock.Setup(x => x.Exists(command.EmployeeId)).Returns(true);
+        _roomRepositoryMock.Setup(x => x.ExistsRoomType(command.HotelId, command.RoomType)).Returns(true);
+        _employeeRepositoryMock.Setup(x => x.Get(command.EmployeeId))
+            .Returns(new Employee(command.EmployeeId, companyId));
     }
 
     private static RoomType DifferentRoomTypeFrom(RoomType roomType)
