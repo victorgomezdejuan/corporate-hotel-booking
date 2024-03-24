@@ -11,10 +11,7 @@ public class ExistsTests
 {
     private readonly InMemoryCompanyBookingPolicyRepository _repository;
 
-    public ExistsTests()
-    {
-        _repository = new InMemoryCompanyBookingPolicyRepository();
-    }
+    public ExistsTests() => _repository = new InMemoryCompanyBookingPolicyRepository();
 
     [Theory, AutoData]
     public void CompanyPolicyExists(int companyId, [CollectionSize(1)] List<RoomType> allowedRoomTypes)
