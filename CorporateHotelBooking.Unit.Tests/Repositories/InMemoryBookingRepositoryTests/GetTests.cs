@@ -9,10 +9,7 @@ public class GetTests
 {
     private readonly InMemoryBookingRepository _repository;
 
-    public GetTests()
-    {
-        _repository = new InMemoryBookingRepository();
-    }
+    public GetTests() => _repository = new InMemoryBookingRepository();
 
     [Theory, AutoData]
     public void BookingDoesNotExist(int bookingId)
