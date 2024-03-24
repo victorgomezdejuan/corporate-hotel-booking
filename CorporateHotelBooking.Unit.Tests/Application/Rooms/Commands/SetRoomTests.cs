@@ -35,8 +35,7 @@ public class SetRoomTests
         _setRoomCommandHandler.Handle(_command);
 
         // Assert
-        _roomRepositoryMock
-        .Verify(x => x.Add(It.Is<Room>(r => r.Equals(
+        _roomRepositoryMock.Verify(x => x.Add(It.Is<Room>(r => r.Equals(
             new Room(_command.HotelId, _command.RoomNumber, _command.RoomType)))));
     }
 
