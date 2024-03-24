@@ -1,3 +1,4 @@
+using CorporateHotelBooking.Application.Common;
 using CorporateHotelBooking.Application.Common.Exceptions;
 using CorporateHotelBooking.Repositories.Employees;
 
@@ -16,15 +17,18 @@ public class DeleteEmployeeCommandHandler
         _employeeRepository = employeeRepository;
     }
 
-    public void Handle(DeleteEmployeeCommand command)
+    public Result Handle(DeleteEmployeeCommand command)
     {
         if (!_employeeRepository.Exists(command.EmployeeId))
         {
-            throw new EmployeeNotFoundException(command.EmployeeId);
+            return Result.Failure("Employee not found.");
         }
+
         _employeeRepository.Delete(command.EmployeeId);
         Notify(command.EmployeeId);
         DeleteTheirAssociatedItems(command);
+        
+        return Result.Success();
     }
 
     public void Subscribe(IEmployeeDeletedObserver observer)

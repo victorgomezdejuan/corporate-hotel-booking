@@ -1,5 +1,4 @@
 using AutoFixture.Xunit2;
-using CorporateHotelBooking.Application.Common.Exceptions;
 using CorporateHotelBooking.Application.Employees.Commands.DeleteEmployee;
 using CorporateHotelBooking.Repositories.Employees;
 using FluentAssertions;
@@ -15,8 +14,7 @@ public class DeleteEmployeeTests
     public DeleteEmployeeTests()
     {
         _employeeRepositoryMock = new Mock<IEmployeeRepository>();
-        _deleteEmployeeCommandHandler = new DeleteEmployeeCommandHandler(
-            _employeeRepositoryMock.Object);
+        _deleteEmployeeCommandHandler = new DeleteEmployeeCommandHandler(_employeeRepositoryMock.Object);
     }
 
     [Theory, AutoData]
@@ -26,9 +24,10 @@ public class DeleteEmployeeTests
         _employeeRepositoryMock.Setup(r => r.Exists(employeeId)).Returns(true);
 
         // Act
-        _deleteEmployeeCommandHandler.Handle(new DeleteEmployeeCommand(employeeId));
+        var result = _deleteEmployeeCommandHandler.Handle(new DeleteEmployeeCommand(employeeId));
 
         // Assert
+        result.IsFailure.Should().BeFalse();
         _employeeRepositoryMock.Verify(r => r.Delete(employeeId));
     }
 
@@ -39,10 +38,11 @@ public class DeleteEmployeeTests
         _employeeRepositoryMock.Setup(r => r.Exists(employeeId)).Returns(false);
 
         // Act
-        Action action = () => _deleteEmployeeCommandHandler.Handle(new DeleteEmployeeCommand(employeeId));
+        var result = _deleteEmployeeCommandHandler.Handle(new DeleteEmployeeCommand(employeeId));
 
         // Assert
-        action.Should().Throw<EmployeeNotFoundException>();
+        result.IsFailure.Should().BeTrue();
+        result.Error.Should().Be("Employee not found.");
     }
 
     [Theory, AutoData]
