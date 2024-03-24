@@ -3,6 +3,7 @@ using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Domain.Entities.BookingPolicies;
 using CorporateHotelBooking.Unit.Tests.Helpers;
 using CorporateHotelBooking.Unit.Tests.Helpers.AutoFixture;
+using FluentAssertions;
 
 namespace CorporateHotelBooking.Unit.Tests.Domain;
 
@@ -18,7 +19,7 @@ public class EmployeeBookingPolicyTests
         var bookingAllowed = employeeBookingPolicy.BookingAllowed(allowedRoomTypes[1]);
 
         // Assert
-        Assert.True(bookingAllowed);
+        bookingAllowed.Should().BeTrue();
     }
 
     [Theory, AutoData]
@@ -31,6 +32,6 @@ public class EmployeeBookingPolicyTests
         var bookingAllowed = employeeBookingPolicy.BookingAllowed(RoomTypeProvider.NotContainedIn(allowedRoomTypes));
 
         // Assert
-        Assert.False(bookingAllowed);
+        bookingAllowed.Should().BeFalse();
     }
 }
