@@ -35,9 +35,10 @@ public class SetEmployeeBookingPolicyTests
         var setEmployeePolicyCommand = new SetEmployeeBookingPolicyCommand(employeeId, roomTypes);
 
         // Act
-        _setEmployeePolicyCommandHandler.Handle(setEmployeePolicyCommand);
+        var result = _setEmployeePolicyCommandHandler.Handle(setEmployeePolicyCommand);
 
         // Assert
+        result.IsFailure.Should().BeFalse();
         _employeePolicyRepositoryMock.Verify(r => r.Add(new EmployeeBookingPolicy(employeeId, roomTypes)));
     }
 
@@ -51,9 +52,10 @@ public class SetEmployeeBookingPolicyTests
         var setEmployeePolicyCommand = new SetEmployeeBookingPolicyCommand(employeeId, roomTypes);
 
         // Act
-        _setEmployeePolicyCommandHandler.Handle(setEmployeePolicyCommand);
+        var result = _setEmployeePolicyCommandHandler.Handle(setEmployeePolicyCommand);
 
         // Assert
+        result.IsFailure.Should().BeFalse();
         _employeePolicyRepositoryMock.Verify(r => r.Update(new EmployeeBookingPolicy(employeeId, roomTypes)));
     }
 

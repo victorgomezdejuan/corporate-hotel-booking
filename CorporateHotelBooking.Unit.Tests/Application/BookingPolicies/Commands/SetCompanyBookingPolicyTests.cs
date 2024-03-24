@@ -4,6 +4,7 @@ using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Domain.Entities.BookingPolicies;
 using CorporateHotelBooking.Repositories.CompanyBookingPolicies;
 using CorporateHotelBooking.Unit.Tests.Helpers.AutoFixture;
+using FluentAssertions;
 using Moq;
 
 namespace CorporateHotelBooking.Unit.Tests.Application.BookingPolicies.Commands;
@@ -29,9 +30,10 @@ public class SetCompanyBookingPolicyTests
             roomTypes);
 
         // Act
-        _setCompanyPolicyCommandHandler.Handle(setCompanyPolicyCommand);
+        var result = _setCompanyPolicyCommandHandler.Handle(setCompanyPolicyCommand);
 
         // Assert
+        result.IsFailure.Should().BeFalse();
         _companyPolicyRepositoryMock.Verify(r => r.Add(
             new CompanyBookingPolicy(
                 companyId,
@@ -46,9 +48,10 @@ public class SetCompanyBookingPolicyTests
         var setCompanyPolicyCommand = new SetCompanyBookingPolicyCommand(companyId, roomTypes);
 
         // Act
-        _setCompanyPolicyCommandHandler.Handle(setCompanyPolicyCommand);
+        var result = _setCompanyPolicyCommandHandler.Handle(setCompanyPolicyCommand);
 
         // Assert
+        result.IsFailure.Should().BeFalse();
         _companyPolicyRepositoryMock.Verify(r => r.Update(new CompanyBookingPolicy(companyId, roomTypes)));
     }
 }
