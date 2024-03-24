@@ -2,6 +2,7 @@ using AutoFixture.Xunit2;
 using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Domain.Entities.BookingPolicies;
 using CorporateHotelBooking.Unit.Tests.Helpers.AutoFixture;
+using FluentAssertions;
 
 namespace CorporateHotelBooking.Unit.Tests.Domain;
 
@@ -19,7 +20,7 @@ public class AggregatedBookingPolicyTests
         var bookingAllowed = bookingPolicy.BookingAllowed(allowedRoomTypes[0]);
 
         // Assert
-        Assert.True(bookingAllowed);
+        bookingAllowed.Should().BeTrue();
     }
 
     [Theory, AutoData]
@@ -38,7 +39,7 @@ public class AggregatedBookingPolicyTests
         var bookingAllowed = bookingPolicy.BookingAllowed(allowedRoomTypes[1]);
 
         // Assert
-        Assert.True(bookingAllowed);
+        bookingAllowed.Should().BeTrue();
     }
 
     [Theory, AutoData]
@@ -57,7 +58,7 @@ public class AggregatedBookingPolicyTests
         var bookingAllowed = bookingPolicy.BookingAllowed(RoomType.Standard);
 
         // Assert
-        Assert.True(bookingAllowed);
+        bookingAllowed.Should().BeTrue();
     }
 
     [Theory, AutoData]
@@ -76,7 +77,7 @@ public class AggregatedBookingPolicyTests
         var bookingAllowed = bookingPolicy.BookingAllowed(RoomType.Standard);
 
         // Assert
-        Assert.False(bookingAllowed);
+        bookingAllowed.Should().BeFalse();
     }
 
     [Theory, AutoData]
@@ -91,7 +92,7 @@ public class AggregatedBookingPolicyTests
         var bookingAllowed = bookingPolicy.BookingAllowed(RoomType.Standard);
 
         // Assert
-        Assert.False(bookingAllowed);
+        bookingAllowed.Should().BeFalse();
     }
 
     [Theory, AutoData]
@@ -106,6 +107,6 @@ public class AggregatedBookingPolicyTests
         var bookingAllowed = bookingPolicy.BookingAllowed(roomType);
 
         // Assert
-        Assert.True(bookingAllowed);
+        bookingAllowed.Should().BeTrue();
     }
 }
