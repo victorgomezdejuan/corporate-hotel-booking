@@ -2,6 +2,7 @@ using AutoFixture.Xunit2;
 using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Repositories.Bookings;
 using CorporateHotelBooking.Unit.Tests.Helpers;
+using FluentAssertions;
 
 namespace CorporateHotelBooking.Unit.Tests.Repositories.InMemoryBookingRepositoryTests;
 
@@ -21,7 +22,7 @@ public class GetCountTests
         var count = _repository.GetCount(hotelId, roomType, DateOnly.MinValue, DateOnly.MaxValue);
 
         // Assert
-        Assert.Equal(0, count);
+        count.Should().Be(0);
     }
 
     [Fact]
@@ -35,7 +36,7 @@ public class GetCountTests
         var count = _repository.GetCount(booking.HotelId, booking.RoomType, booking.CheckInDate, booking.CheckOutDate);
 
         // Assert
-        Assert.Equal(1, count);
+        count.Should().Be(1);
     }
 
     [Fact]
@@ -50,7 +51,7 @@ public class GetCountTests
         var count = _repository.GetCount(anotherHotelId, booking.RoomType, booking.CheckInDate, booking.CheckOutDate);
 
         // Assert
-        Assert.Equal(0, count);
+        count.Should().Be(0);
     }
 
     [Fact]
@@ -68,7 +69,7 @@ public class GetCountTests
             booking.CheckOutDate);
 
         // Assert
-        Assert.Equal(0, count);
+        count.Should().Be(0);
     }
 
     [Theory, AutoData]
@@ -81,7 +82,7 @@ public class GetCountTests
         var count = _repository.GetCount(hotelId, roomType, new DateOnly(2021, 1, 2), new DateOnly(2021, 1, 3));
 
         // Assert
-        Assert.Equal(1, count);
+        count.Should().Be(1);
     }
 
     [Theory, AutoData]
@@ -94,7 +95,7 @@ public class GetCountTests
         var count = _repository.GetCount(hotelId, roomType, new DateOnly(2020, 12, 31), new DateOnly(2021, 1, 1));
 
         // Assert
-        Assert.Equal(1, count);
+        count.Should().Be(1);
     }
 
     [Theory, AutoData]
@@ -107,6 +108,6 @@ public class GetCountTests
         var count = _repository.GetCount(hotelId, roomType, new DateOnly(2021, 1, 3), new DateOnly(2021, 1, 4));
 
         // Assert
-        Assert.Equal(0, count);
+        count.Should().Be(0);
     }
 }
