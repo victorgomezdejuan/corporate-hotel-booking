@@ -25,19 +25,24 @@ public class BookingPolicyService
         _employeeRepository = employeeRepository;
     }
 
-    public void SetCompanyPolicy(int companyId, ICollection<RoomType> roomTypes)
+    public Result SetCompanyPolicy(int companyId, ICollection<RoomType> roomTypes)
     {
-        new SetCompanyBookingPolicyCommandHandler(_companyPolicyRepository).Handle(new SetCompanyBookingPolicyCommand(companyId, roomTypes));
+        return new SetCompanyBookingPolicyCommandHandler(_companyPolicyRepository)
+            .Handle(new SetCompanyBookingPolicyCommand(companyId, roomTypes));
     }
 
     public void SetEmployeePolicy(int employeeId, ICollection<RoomType> roomTypes)
     {
-        new SetEmployeeBookingPolicyCommandHandler(_employeePolicyRepository).Handle(new SetEmployeeBookingPolicyCommand(employeeId, roomTypes));
+        new SetEmployeeBookingPolicyCommandHandler(_employeePolicyRepository)
+            .Handle(new SetEmployeeBookingPolicyCommand(employeeId, roomTypes));
     }
 
     public Result<bool> IsBookingAllowed(int employeeId, RoomType roomType)
     {
-        return new IsBookingAllowedQueryHandler(_employeeRepository, _companyPolicyRepository, _employeePolicyRepository)
+        return new IsBookingAllowedQueryHandler(
+                _employeeRepository,
+                _companyPolicyRepository,
+                _employeePolicyRepository)
             .Handle(new IsBookingAllowedQuery(employeeId, roomType));
     }
 }

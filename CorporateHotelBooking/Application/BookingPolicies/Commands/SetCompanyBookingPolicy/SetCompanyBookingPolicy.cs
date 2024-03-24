@@ -1,3 +1,4 @@
+using CorporateHotelBooking.Application.Common;
 using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Domain.Entities.BookingPolicies;
 using CorporateHotelBooking.Repositories.CompanyBookingPolicies;
@@ -25,7 +26,7 @@ public class SetCompanyBookingPolicyCommandHandler
         _companyPolicyRepository = companyPolicyRepository;
     }
 
-    public void Handle(SetCompanyBookingPolicyCommand command)
+    public Result Handle(SetCompanyBookingPolicyCommand command)
     {
         var companyPoliciy = new CompanyBookingPolicy(command.CompanyId, command.RoomTypes);
 
@@ -37,5 +38,7 @@ public class SetCompanyBookingPolicyCommandHandler
         {
             _companyPolicyRepository.Add(companyPoliciy);
         }
+
+        return Result.Success();
     }
 }
