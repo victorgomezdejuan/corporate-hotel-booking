@@ -31,9 +31,9 @@ public class BookingPolicyService
             .Handle(new SetCompanyBookingPolicyCommand(companyId, roomTypes));
     }
 
-    public void SetEmployeePolicy(int employeeId, ICollection<RoomType> roomTypes)
+    public Result SetEmployeePolicy(int employeeId, ICollection<RoomType> roomTypes)
     {
-        new SetEmployeeBookingPolicyCommandHandler(_employeePolicyRepository)
+        return new SetEmployeeBookingPolicyCommandHandler(_employeeRepository, _employeePolicyRepository)
             .Handle(new SetEmployeeBookingPolicyCommand(employeeId, roomTypes));
     }
 

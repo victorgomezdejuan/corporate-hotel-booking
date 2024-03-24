@@ -5,6 +5,7 @@ using CorporateHotelBooking.Integrated.Tests.Helpers;
 using CorporateHotelBooking.Integrated.Tests.Helpers.AutoFixture;
 using CorporateHotelBooking.Repositories.CompanyBookingPolicies;
 using CorporateHotelBooking.Repositories.EmployeeBookingPolicies;
+using CorporateHotelBooking.Repositories.Employees;
 using CorporateHotelBooking.Services;
 using FluentAssertions;
 
@@ -13,47 +14,51 @@ namespace CorporateHotelBooking.Integrated.Tests.BookingPolicyServiceTests;
 public class SetEmployeeBookingPolicyTests
 {
     private readonly InMemoryEmployeeBookingPolicyRepository _employeePolicyRepository;
+    private readonly InMemoryEmployeeRepository _employeeRepository;
     private readonly BookingPolicyService _bookingPolicyService;
 
     public SetEmployeeBookingPolicyTests()
     {
+        _employeeRepository = new InMemoryEmployeeRepository();
         _employeePolicyRepository = new InMemoryEmployeeBookingPolicyRepository();
         _bookingPolicyService = new BookingPolicyService(
             // BookingPolicyService acts as a facade that handles different actions related to booking policies
             // This leads us to feed it with two additional repositories although for this use case they are not needed
             new NotImplementedCompanyBookingPolicyRepository(),
             _employeePolicyRepository,
-            new NotImplementedEmployeeRepository());
+            _employeeRepository);
     }
 
     [Theory, AutoData]
-    public void AddNewEmployeePolicy(int employeeId, [CollectionSize(2)] List<RoomType> roomTypes)
+    public void AddNewEmployeePolicy(Employee employee, [CollectionSize(2)] List<RoomType> roomTypes)
     {
         // Act
-        _bookingPolicyService.SetEmployeePolicy(employeeId, roomTypes);
+        _employeeRepository.Add(employee);
+        _bookingPolicyService.SetEmployeePolicy(employee.Id, roomTypes);
 
         // Assert
-        var retrievedEmployeePolicy = _employeePolicyRepository.Get(employeeId);
-        retrievedEmployeePolicy.Should().Be(new EmployeeBookingPolicy(employeeId, roomTypes));
+        var retrievedEmployeePolicy = _employeePolicyRepository.Get(employee.Id);
+        retrievedEmployeePolicy.Should().Be(new EmployeeBookingPolicy(employee.Id, roomTypes));
     }
 
     [Theory, AutoData]
-    public void UpdateExistingEmployeePolicy(int employeeId)
+    public void UpdateExistingEmployeePolicy(Employee employee)
     {
         // Arrange
+        _employeeRepository.Add(employee);
         _bookingPolicyService.SetEmployeePolicy(
-            employeeId,
+            employee.Id,
             new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite });
 
         // Act
         _bookingPolicyService.SetEmployeePolicy(
-            employeeId,
+            employee.Id,
             new List<RoomType> { RoomType.JuniorSuite, RoomType.MasterSuite });
 
         // Assert
-        var retrievedEmployeePolicy = _employeePolicyRepository.Get(employeeId);
+        var retrievedEmployeePolicy = _employeePolicyRepository.Get(employee.Id);
         retrievedEmployeePolicy.Should().Be(new EmployeeBookingPolicy(
-            employeeId,
+            employee.Id,
             new List<RoomType> { RoomType.JuniorSuite, RoomType.MasterSuite }));
     }
 }

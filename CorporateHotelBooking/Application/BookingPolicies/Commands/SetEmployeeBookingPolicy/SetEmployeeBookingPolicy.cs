@@ -1,6 +1,8 @@
+using CorporateHotelBooking.Application.Common;
 using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Domain.Entities.BookingPolicies;
 using CorporateHotelBooking.Repositories.EmployeeBookingPolicies;
+using CorporateHotelBooking.Repositories.Employees;
 
 namespace CorporateHotelBooking.Application.BookingPolicies.Commands.SetEmployeeBookingPolicy
 {
@@ -18,15 +20,24 @@ namespace CorporateHotelBooking.Application.BookingPolicies.Commands.SetEmployee
 
     public class SetEmployeeBookingPolicyCommandHandler
     {
-        private IEmployeeBookingPolicyRepository _employeePolicyRepository;
+        private readonly IEmployeeRepository _employeeRepository;
+        private readonly IEmployeeBookingPolicyRepository _employeePolicyRepository;
 
-        public SetEmployeeBookingPolicyCommandHandler(IEmployeeBookingPolicyRepository employeePolicyRepository)
+        public SetEmployeeBookingPolicyCommandHandler(
+            IEmployeeRepository employeeRepository,
+            IEmployeeBookingPolicyRepository employeePolicyRepository)
         {
+            _employeeRepository = employeeRepository;
             _employeePolicyRepository = employeePolicyRepository;
         }
 
-        public void Handle(SetEmployeeBookingPolicyCommand command)
+        public Result Handle(SetEmployeeBookingPolicyCommand command)
         {
+            if (!_employeeRepository.Exists(command.EmployeeId))
+            {
+                return Result.Failure("Employee not found");
+            }
+
             var employeePolicy = new EmployeeBookingPolicy(command.EmployeeId, command.RoomTypes);
 
             if (_employeePolicyRepository.Exists(command.EmployeeId))
@@ -37,6 +48,8 @@ namespace CorporateHotelBooking.Application.BookingPolicies.Commands.SetEmployee
             {
                 _employeePolicyRepository.Add(employeePolicy);
             }
+
+            return Result.Success();
         }
     }
 }
