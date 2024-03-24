@@ -1,6 +1,7 @@
 using AutoFixture.Xunit2;
 using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Repositories.Hotels;
+using FluentAssertions;
 
 namespace CorporateHotelBooking.Unit.Tests.Repositories.InMemoryHotelRepositoryTests;
 
@@ -23,7 +24,7 @@ public class ExistsTests
         var exists = _repository.Exists(hotel.Id);
 
         // Assert
-        Assert.True(exists);
+        exists.Should().BeTrue();
     }
 
     [Theory, AutoData]
@@ -33,6 +34,6 @@ public class ExistsTests
         var exists = _repository.Exists(hotelId);
 
         // Assert
-        Assert.False(exists);
+        exists.Should().BeFalse();
     }
 }

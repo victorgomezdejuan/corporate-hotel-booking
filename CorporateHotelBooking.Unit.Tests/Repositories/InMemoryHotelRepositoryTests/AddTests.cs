@@ -1,6 +1,7 @@
 using AutoFixture.Xunit2;
 using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Repositories.Hotels;
+using FluentAssertions;
 
 namespace CorporateHotelBooking.Unit.Tests.Repositories.InMemoryHotelRepositoryTests;
 
@@ -17,6 +18,6 @@ public class AddTests
         
         // Assert
         var retrievedHotel = repository.Get(hotel.Id);
-        Assert.Equal(hotel, retrievedHotel);
+        retrievedHotel.Should().Be(hotel);
     }
 }

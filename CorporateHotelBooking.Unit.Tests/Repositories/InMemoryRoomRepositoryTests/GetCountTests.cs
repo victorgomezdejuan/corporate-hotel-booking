@@ -1,6 +1,7 @@
 using AutoFixture.Xunit2;
 using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Repositories.Rooms;
+using FluentAssertions;
 
 namespace CorporateHotelBooking.Unit.Tests.Repositories.InMemoryRoomRepositoryTests;
 
@@ -20,7 +21,7 @@ public class GetRoomCountTests
         var count = _repository.GetCount(hotelId, roomType);
 
         // Assert
-        Assert.Equal(0, count);
+        count.Should().Be(0);
     }
 
     [Theory, AutoData]
@@ -33,7 +34,7 @@ public class GetRoomCountTests
         var count = _repository.GetCount(room.HotelId, room.Type);
 
         // Assert
-        Assert.Equal(1, count);
+        count.Should().Be(1);
     }
 
     [Theory, AutoData]
@@ -48,6 +49,6 @@ public class GetRoomCountTests
         var count = _repository.GetCount(hotelId, roomType);
 
         // Assert
-        Assert.Equal(3, count);
+        count.Should().Be(3);
     }
 }
