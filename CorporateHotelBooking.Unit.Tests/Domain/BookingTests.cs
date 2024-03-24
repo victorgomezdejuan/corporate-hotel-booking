@@ -1,4 +1,3 @@
-using AutoFixture.Xunit2;
 using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Domain.Exceptions;
 using CorporateHotelBooking.Unit.Tests.Helpers;
