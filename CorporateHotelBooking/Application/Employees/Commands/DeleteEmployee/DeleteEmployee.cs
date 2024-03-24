@@ -1,5 +1,4 @@
 using CorporateHotelBooking.Application.Common;
-using CorporateHotelBooking.Application.Common.Exceptions;
 using CorporateHotelBooking.Repositories.Employees;
 
 namespace CorporateHotelBooking.Application.Employees.Commands.DeleteEmployee;
