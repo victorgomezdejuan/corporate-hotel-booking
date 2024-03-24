@@ -11,14 +11,14 @@ namespace CorporateHotelBooking.Services;
 
 public class BookingPolicyService
 {
+    private readonly IEmployeeRepository _employeeRepository;
     private readonly ICompanyBookingPolicyRepository _companyPolicyRepository;
     private readonly IEmployeeBookingPolicyRepository _employeePolicyRepository;
-    private readonly IEmployeeRepository _employeeRepository;
     
     public BookingPolicyService(
+        IEmployeeRepository employeeRepository,
         ICompanyBookingPolicyRepository companyPolicyRepository,
-        IEmployeeBookingPolicyRepository employeePolicyRepository,
-        IEmployeeRepository employeeRepository)
+        IEmployeeBookingPolicyRepository employeePolicyRepository)
     {
         _companyPolicyRepository = companyPolicyRepository;
         _employeePolicyRepository = employeePolicyRepository;

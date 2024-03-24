@@ -19,11 +19,11 @@ public class SetCompanyBookingPolicyTests
     {
         _companyPolicyRepository = new InMemoryCompanyBookingPolicyRepository();
         _bookingPolicyService = new BookingPolicyService(
+            new NotImplementedEmployeeRepository(),
             _companyPolicyRepository,
             // BookingPolicyService acts as a facade that handles different actions related to booking policies
             // This leads us to feed it with two additional repositories although for this use case they are not needed
-            new NotImplementedEmployeeBookingPolicyRepository(),
-            new NotImplementedEmployeeRepository()); 
+            new NotImplementedEmployeeBookingPolicyRepository()); 
     }
 
     [Theory, AutoData]

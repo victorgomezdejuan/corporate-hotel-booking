@@ -23,9 +23,9 @@ public class IsBookingAllowedTests
             new CompanyBookingPolicy(employee.CompanyId, roomTypes));
         
         var bookingPolicyService = new BookingPolicyService(
+            employeeRepository,
             companyPolicyRepository,
-            new InMemoryEmployeeBookingPolicyRepository(),
-            employeeRepository);
+            new InMemoryEmployeeBookingPolicyRepository());
 
         // Act
         var result = bookingPolicyService.IsBookingAllowed(employee.Id, roomTypes[0]);

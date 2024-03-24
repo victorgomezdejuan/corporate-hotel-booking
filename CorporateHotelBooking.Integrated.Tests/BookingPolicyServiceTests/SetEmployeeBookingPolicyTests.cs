@@ -1,7 +1,6 @@
 using AutoFixture.Xunit2;
 using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Domain.Entities.BookingPolicies;
-using CorporateHotelBooking.Integrated.Tests.Helpers;
 using CorporateHotelBooking.Integrated.Tests.Helpers.AutoFixture;
 using CorporateHotelBooking.Repositories.CompanyBookingPolicies;
 using CorporateHotelBooking.Repositories.EmployeeBookingPolicies;
@@ -13,8 +12,8 @@ namespace CorporateHotelBooking.Integrated.Tests.BookingPolicyServiceTests;
 
 public class SetEmployeeBookingPolicyTests
 {
-    private readonly InMemoryEmployeeBookingPolicyRepository _employeePolicyRepository;
     private readonly InMemoryEmployeeRepository _employeeRepository;
+    private readonly InMemoryEmployeeBookingPolicyRepository _employeePolicyRepository;
     private readonly BookingPolicyService _bookingPolicyService;
 
     public SetEmployeeBookingPolicyTests()
@@ -22,11 +21,11 @@ public class SetEmployeeBookingPolicyTests
         _employeeRepository = new InMemoryEmployeeRepository();
         _employeePolicyRepository = new InMemoryEmployeeBookingPolicyRepository();
         _bookingPolicyService = new BookingPolicyService(
+            _employeeRepository,
             // BookingPolicyService acts as a facade that handles different actions related to booking policies
             // This leads us to feed it with two additional repositories although for this use case they are not needed
             new NotImplementedCompanyBookingPolicyRepository(),
-            _employeePolicyRepository,
-            _employeeRepository);
+            _employeePolicyRepository);
     }
 
     [Theory, AutoData]
