@@ -1,5 +1,4 @@
 using AutoFixture.Xunit2;
-using CorporateHotelBooking.Application.Common.Exceptions;
 using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Repositories.Employees;
 using FluentAssertions;
