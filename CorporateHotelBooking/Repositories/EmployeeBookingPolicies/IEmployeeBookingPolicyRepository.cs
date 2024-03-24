@@ -8,5 +8,5 @@ public interface IEmployeeBookingPolicyRepository
     void Update(EmployeeBookingPolicy employeePolicy);
     void Delete(int employeeId);
     bool Exists(int employeeId);
-    EmployeeBookingPolicy Get(int employeeId);
+    EmployeeBookingPolicy? Get(int employeeId);
 }

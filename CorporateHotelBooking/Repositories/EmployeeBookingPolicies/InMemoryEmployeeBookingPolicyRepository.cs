@@ -1,4 +1,3 @@
-using CorporateHotelBooking.Application.Common.Exceptions;
 using CorporateHotelBooking.Domain.Entities.BookingPolicies;
 
 namespace CorporateHotelBooking.Repositories.EmployeeBookingPolicies;
@@ -27,12 +26,13 @@ public class InMemoryEmployeeBookingPolicyRepository : IEmployeeBookingPolicyRep
         return _employeePolicies.ContainsKey(employeeId);
     }
 
-    public EmployeeBookingPolicy Get(int employeeId)
+    public EmployeeBookingPolicy? Get(int employeeId)
     {
         if (!Exists(employeeId))
         {
-            throw new EmployeeNotFoundException(employeeId);
+            return null;
         }
+        
         return _employeePolicies[employeeId];
     }
 }

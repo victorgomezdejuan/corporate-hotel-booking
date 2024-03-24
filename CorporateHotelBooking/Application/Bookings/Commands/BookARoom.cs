@@ -129,7 +129,7 @@ public class BookARoomCommandHandler
         BookingPolicy employeeBookingPolicy;
         if (_employeeBookingPolicyRepository.Exists(employeeId))
         {
-            employeeBookingPolicy = _employeeBookingPolicyRepository.Get(employeeId);
+            employeeBookingPolicy = _employeeBookingPolicyRepository.Get(employeeId)!;
         }
         else
         {

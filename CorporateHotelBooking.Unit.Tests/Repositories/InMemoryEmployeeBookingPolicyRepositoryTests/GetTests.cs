@@ -1,5 +1,4 @@
 using AutoFixture.Xunit2;
-using CorporateHotelBooking.Application.Common.Exceptions;
 using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Domain.Entities.BookingPolicies;
 using CorporateHotelBooking.Repositories.EmployeeBookingPolicies;
@@ -12,10 +11,7 @@ public class GetTests
 {
     private readonly InMemoryEmployeeBookingPolicyRepository _repository;
 
-    public GetTests()
-    {
-        _repository = new InMemoryEmployeeBookingPolicyRepository();
-    }
+    public GetTests() => _repository = new InMemoryEmployeeBookingPolicyRepository();
 
     [Theory, AutoData]
     public void GetExistingEmployeePolicy(int employeeId, [CollectionSize(2)] List<RoomType> allowedRoomTypes)
@@ -35,9 +31,9 @@ public class GetTests
     public void GetNonExistingEmployeePolicy(int employeeId)
     {
         // Act
-        EmployeeBookingPolicy action() => _repository.Get(employeeId);
+        var employee = _repository.Get(employeeId);
 
         // Assert
-        Assert.Throws<EmployeeNotFoundException>(action);
+        employee.Should().BeNull();
     }
 }
