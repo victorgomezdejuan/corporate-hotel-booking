@@ -31,18 +31,9 @@ public class InMemoryBookingRepository : IBookingRepository
         _bookings.RemoveAll(b => b.EmployeeId == employeeId);
     }
 
-    public Booking Get(int id)
+    public Booking? Get(int id)
     {
-        var booking = _bookings.SingleOrDefault(b => b.Id == id);
-        
-        if (booking is not null)
-        {
-            return booking;
-        }
-        else
-        {
-            throw new BookingNotFoundException();
-        }
+        return _bookings.SingleOrDefault(b => b.Id == id);
     }
 
     public int GetCount(int hotelId, RoomType roomType, DateOnly dateFrom, DateOnly dateTo)

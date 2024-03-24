@@ -18,10 +18,10 @@ public class GetTests
     public void BookingDoesNotExist(int bookingId)
     {
         // Act
-        Action action = () => _repository.Get(bookingId);
+        var booking = _repository.Get(bookingId);
 
         // Assert
-        action.Should().Throw<BookingNotFoundException>();
+        booking.Should().BeNull();
     }
 
     [Fact]

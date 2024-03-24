@@ -21,13 +21,9 @@ public class DeleteByEmployeeTests
         bookingRepository.DeleteByEmployee(employeeId);
 
         // Assert
-        // Gettting the booking should throw an exception
-        Action act1 = () => bookingRepository.Get(booking1.Id.Value);
-        act1.Should().Throw<BookingNotFoundException>();
-        Action act2 = () => bookingRepository.Get(booking2.Id.Value);
-        act2.Should().Throw<BookingNotFoundException>();
-        Action act3 = () => bookingRepository.Get(booking3.Id.Value);
-        act3.Should().Throw<BookingNotFoundException>();
+        bookingRepository.Get(booking1.Id.Value).Should().BeNull();
+        bookingRepository.Get(booking2.Id.Value).Should().BeNull();
+        bookingRepository.Get(booking3.Id.Value).Should().BeNull();
     }
 
     [Theory, AutoData]
