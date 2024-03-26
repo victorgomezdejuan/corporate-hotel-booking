@@ -29,9 +29,10 @@ public class DeleteEmployeeTests
         companyService.AddEmployee(companyId, booking.EmployeeId);
 
         // Act
-        companyService.DeleteEmployee(booking.EmployeeId);
+        var result = companyService.DeleteEmployee(booking.EmployeeId);
 
         // Assert
+        result.IsFailure.Should().BeFalse();
         employeeRepository.Get(booking.EmployeeId).Should().BeNull();
         bookingRepository
             .GetCount(booking.EmployeeId, booking.RoomType, booking.CheckInDate, booking.CheckOutDate)

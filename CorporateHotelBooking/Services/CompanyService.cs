@@ -28,11 +28,11 @@ public class CompanyService
         return new AddEmployeeCommandHandler(_employeeRepository).Handle(new AddEmployeeCommand(employeeId, companyId));
     }
 
-    public void DeleteEmployee(int employeeId)
+    public Result DeleteEmployee(int employeeId)
     {
         var handler = new DeleteEmployeeCommandHandler(_employeeRepository);
         handler.Subscribe(new EmployeeBookingDeleter(_bookingRepository));
         handler.Subscribe(new EmployeeBookingPoliciesDeleter(_employeeBookingPolicyRepository));
-        handler.Handle(new DeleteEmployeeCommand(employeeId));
+        return handler.Handle(new DeleteEmployeeCommand(employeeId));
     }
 }
