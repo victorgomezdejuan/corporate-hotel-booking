@@ -30,9 +30,10 @@ public class SetCompanyBookingPolicyTests
     public void AddNewCompanyPolicy(int companyId, [CollectionSize(2)] List<RoomType> roomTypes)
     {
         // Act
-        _bookingPolicyService.SetCompanyPolicy(companyId, roomTypes);
+        var result = _bookingPolicyService.SetCompanyPolicy(companyId, roomTypes);
 
         // Assert
+        result.IsFailure.Should().BeFalse();
         var retrievedCompanyPolicy = _companyPolicyRepository.Get(companyId);
         retrievedCompanyPolicy.Should().Be(new CompanyBookingPolicy(companyId, roomTypes));
     }
@@ -46,11 +47,12 @@ public class SetCompanyBookingPolicyTests
             new List<RoomType> { RoomType.Standard, RoomType.JuniorSuite });
 
         // Act
-        _bookingPolicyService.SetCompanyPolicy(
+        var result = _bookingPolicyService.SetCompanyPolicy(
             companyId,
             new List<RoomType> { RoomType.JuniorSuite, RoomType.MasterSuite });
 
         // Assert
+        result.IsFailure.Should().BeFalse();
         var retrievedCompanyPolicy = _companyPolicyRepository.Get(companyId);
         retrievedCompanyPolicy.Should().Be(new CompanyBookingPolicy(
             companyId,
