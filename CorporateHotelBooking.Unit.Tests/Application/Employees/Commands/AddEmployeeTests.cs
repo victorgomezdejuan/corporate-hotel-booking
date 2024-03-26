@@ -25,9 +25,10 @@ public class AddEmployeeTests
         var addEmployeeCommand = new AddEmployeeCommand(employeeId, companyId);
 
         // Act
-        _addEmployeeCommandHandler.Handle(addEmployeeCommand);
+        var result = _addEmployeeCommandHandler.Handle(addEmployeeCommand);
 
         // Assert
+        result.IsFailure.Should().BeFalse();
         _employeeRepository.Verify(r => r.Add(new Employee(employeeId, companyId)));
     }
 
