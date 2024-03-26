@@ -1,5 +1,4 @@
 using AutoFixture.Xunit2;
-using CorporateHotelBooking.Application.Employees.Commands.AddEmployee;
 using CorporateHotelBooking.Repositories.Bookings;
 using CorporateHotelBooking.Repositories.EmployeeBookingPolicies;
 using CorporateHotelBooking.Repositories.Employees;
@@ -27,9 +26,10 @@ public class AddEmployeeTests
     public void AddEmployee(int companyId, int employeeId)
     {
         // Act
-        _companyService.AddEmployee(companyId, employeeId);
+        var result = _companyService.AddEmployee(companyId, employeeId);
 
         // Assert
+        result.IsFailure.Should().BeFalse();
         var employee = _employeeRepository.Get(employeeId);
         employee!.Id.Should().Be(employeeId);
         employee.CompanyId.Should().Be(companyId);
