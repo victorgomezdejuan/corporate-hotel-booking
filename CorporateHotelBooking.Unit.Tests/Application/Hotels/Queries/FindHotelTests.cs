@@ -50,4 +50,25 @@ public class FindHotelTests
         // Assert
         result.Should().BeNull();
     }
+
+    [Theory, AutoData]
+    public void FindHotelWithNoRooms(Hotel hotel)
+    {
+        // Arrange
+        var hotelRepositoryMock = new Mock<IHotelRepository>();
+        hotelRepositoryMock.Setup(x => x.Get(hotel.Id)).Returns(hotel);
+        var roomRepositoryMock = new Mock<IRoomRepository>();
+        roomRepositoryMock.Setup(x => x.GetMany(hotel.Id)).Returns(new List<Room>().AsReadOnly());
+        var handler = new FindHotelQueryHandler(hotelRepositoryMock.Object, roomRepositoryMock.Object);
+
+        // Act
+        HotelDto result = handler.Handle(new FindHotelQuery(hotel.Id));
+
+        // Assert
+        result.Should().NotBeNull();
+        result.Should().BeOfType<HotelDto>();
+        result.Id.Should().Be(hotel.Id);
+        result.Rooms.Should().NotBeNull();
+        result.Rooms.Should().HaveCount(0);
+    }
 }
