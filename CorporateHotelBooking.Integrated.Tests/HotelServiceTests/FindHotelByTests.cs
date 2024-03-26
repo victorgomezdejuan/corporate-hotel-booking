@@ -22,7 +22,7 @@ public class FindHotelByTests
         hotelService.SetRoom(hotelId, room2Number, room2Type);
 
         // Act
-        var hotel = hotelService.FindHotelBy(hotelId);
+        var hotel = hotelService.FindHotelBy(hotelId)!;
 
         // Assert
         hotel.Id.Should().Be(hotelId);

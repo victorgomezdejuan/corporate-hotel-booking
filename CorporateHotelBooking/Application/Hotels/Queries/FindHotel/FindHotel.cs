@@ -17,9 +17,15 @@ public class FindHotelQueryHandler
         _roomRepository = rommRepository;
     }
 
-    public HotelDto Handle(FindHotelQuery query)
+    public HotelDto? Handle(FindHotelQuery query)
     {
         var hotel = _hotelRepository.Get(query.Id);
+
+        if (hotel is null)
+        {
+            return null;
+        }
+
         var rooms = _roomRepository.GetMany(query.Id).Select(r => new RoomDto(r.Number, r.Type));
 
         return new HotelDto(hotel.Id, hotel.Name, rooms);

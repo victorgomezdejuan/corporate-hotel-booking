@@ -32,9 +32,10 @@ public class SetRoomTests
         _hotelRepositoryMock.Setup(x => x.Exists(_command.HotelId)).Returns(true);
 
         // Act
-        _setRoomCommandHandler.Handle(_command);
+        var result = _setRoomCommandHandler.Handle(_command);
 
         // Assert
+        result.IsFailure.Should().BeFalse();
         _roomRepositoryMock.Verify(x => x.Add(It.Is<Room>(r => r.Equals(
             new Room(_command.HotelId, _command.RoomNumber, _command.RoomType)))));
     }
@@ -47,9 +48,10 @@ public class SetRoomTests
         _hotelRepositoryMock.Setup(x => x.Exists(_command.HotelId)).Returns(true);
 
         // Act
-        _setRoomCommandHandler.Handle(_command);
+        var result = _setRoomCommandHandler.Handle(_command);
 
         // Assert
+        result.IsFailure.Should().BeFalse();
         _roomRepositoryMock.Verify(x => x.Update(It.Is<Room>(r => r.Equals(
             new Room(_command.HotelId, _command.RoomNumber, _command.RoomType)))));
     }

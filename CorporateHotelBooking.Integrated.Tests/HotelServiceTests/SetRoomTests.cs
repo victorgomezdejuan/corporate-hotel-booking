@@ -28,9 +28,10 @@ public class SetRoomTests
         _hotelService.AddHotel(hotelId, hotelName);
 
         // Act
-        _hotelService.SetRoom(hotelId, roomNumber, roomType);
+        var result = _hotelService.SetRoom(hotelId, roomNumber, roomType);
 
         // Assert
+        result.IsFailure.Should().BeFalse();
         var rooms = _roomRepository.GetMany(hotelId);
         rooms.Should().HaveCount(1);
         rooms.Should().Contain(r => r.Number == roomNumber && r.Type == roomType);
@@ -44,9 +45,10 @@ public class SetRoomTests
         _hotelService.SetRoom(hotelId, roomNumber, RoomType.Standard);
 
         // Act
-        _hotelService.SetRoom(hotelId, roomNumber, RoomType.JuniorSuite);
+        var result = _hotelService.SetRoom(hotelId, roomNumber, RoomType.JuniorSuite);
 
         // Assert
+        result.IsFailure.Should().BeFalse();
         var rooms = _roomRepository.GetMany(hotelId);
         rooms.Should().HaveCount(1);
         rooms.Should().Contain(r => r.Number == roomNumber && r.Type == RoomType.JuniorSuite);

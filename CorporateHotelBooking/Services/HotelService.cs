@@ -30,7 +30,7 @@ public class HotelService
         return new SetRoomCommandHandler(_hotelRepository, _roomRepository).Handle(new SetRoomCommand(hotelId, number, roomType));
     }
 
-    public HotelDto FindHotelBy(int hotelId)
+    public HotelDto? FindHotelBy(int hotelId)
     {
         return new FindHotelQueryHandler(_hotelRepository, _roomRepository).Handle(new FindHotelQuery(hotelId));
     }

@@ -27,7 +27,7 @@ public class AddHotelTests
 
         // Assert
         result.IsFailure.Should().BeFalse();
-        var hotel = _hotelService.FindHotelBy(hotelId);
+        var hotel = _hotelService.FindHotelBy(hotelId)!;
         hotel.Id.Should().Be(hotelId);
         hotel.Name.Should().Be(hotelName);
     }
