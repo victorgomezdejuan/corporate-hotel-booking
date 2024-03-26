@@ -1,5 +1,4 @@
 using AutoFixture.Xunit2;
-using CorporateHotelBooking.Application.Hotels.Commands.AddHotel;
 using CorporateHotelBooking.Repositories.Hotels;
 using CorporateHotelBooking.Repositories.Rooms;
 using CorporateHotelBooking.Services;
@@ -24,9 +23,10 @@ public class AddHotelTests
     public void AddNewHotel(int hotelId, string hotelName)
     {
         // Act
-        _hotelService.AddHotel(hotelId, hotelName);
+        var result = _hotelService.AddHotel(hotelId, hotelName);
 
         // Assert
+        result.IsFailure.Should().BeFalse();
         var hotel = _hotelService.FindHotelBy(hotelId);
         hotel.Id.Should().Be(hotelId);
         hotel.Name.Should().Be(hotelName);

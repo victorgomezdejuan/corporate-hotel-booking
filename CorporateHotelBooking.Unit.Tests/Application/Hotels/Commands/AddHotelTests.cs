@@ -25,9 +25,10 @@ public class AddHotelTests
             var command = new AddHotelCommand(hotelId, hotelName);
 
             // Act
-            _handler.Handle(command);
+            var result = _handler.Handle(command);
 
             // Assert
+            result.IsFailure.Should().BeFalse();
             _hotelRepositoryMock.Verify(x => x.Add(It.Is<Hotel>(h => h.Id == hotelId && h.Name == hotelName)));
         }
 
