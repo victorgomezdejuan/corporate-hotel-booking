@@ -1,8 +1,8 @@
 using CorporateHotelBooking.Application.Common;
 using CorporateHotelBooking.Application.Common.Mappings;
-using CorporateHotelBooking.Application.Rooms.Commands.SetRoom;
 using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Domain.Entities.BookingPolicies;
+using CorporateHotelBooking.Domain.Exceptions;
 using CorporateHotelBooking.Repositories.Bookings;
 using CorporateHotelBooking.Repositories.CompanyBookingPolicies;
 using CorporateHotelBooking.Repositories.EmployeeBookingPolicies;
@@ -48,23 +48,21 @@ public class BookARoomCommandHandler
 
     public Result<NewBooking> Handle(BookARoomCommand command)
     {
-        var validationResult = ValidateCommand(command);
-
-        if (validationResult.IsFailure)
+        var bookingGenerationResult = GetBookingFromCommand(command);
+        if (bookingGenerationResult.IsFailure)
         {
-            return Result<NewBooking>.Failure(validationResult.Error);
+            return Result<NewBooking>.Failure(bookingGenerationResult.Error);
         }
 
-        Booking booking = _bookingRepository.Add(new Booking
-        (
-            employeeId: command.EmployeeId,
-            hotelId: command.HotelId,
-            roomType: command.RoomType,
-            checkInDate: command.CheckInDate,
-            checkOutDate: command.CheckOutDate
-        ));
+        var commandValidationResult = ValidateCommand(command);
+        if (commandValidationResult.IsFailure)
+        {
+            return Result<NewBooking>.Failure(commandValidationResult.Error);
+        }
 
-        return Result<NewBooking>.Success(booking.AsNewBooking());
+        var createdBooking = _bookingRepository.Add(bookingGenerationResult.Value!);
+
+        return Result<NewBooking>.Success(createdBooking.AsNewBooking());
     }
 
     private Result ValidateCommand(BookARoomCommand command)
@@ -98,6 +96,27 @@ public class BookARoomCommandHandler
         }
 
         return Result.Success();
+    }
+
+    private static Result<Booking> GetBookingFromCommand(BookARoomCommand command)
+    {
+        try
+        {
+            var booking = new Booking
+            (
+                employeeId: command.EmployeeId,
+                hotelId: command.HotelId,
+                roomType: command.RoomType,
+                checkInDate: command.CheckInDate,
+                checkOutDate: command.CheckOutDate
+            );
+
+            return Result<Booking>.Success(booking);
+        }
+        catch (CheckOutDateMustBeAfterCheckInDateException)
+        {
+            return Result<Booking>.Failure("Check-out date must be after check-in date.");
+        }
     }
 
     private bool IsRoomTypeProvidedByTheHotel(BookARoomCommand command)

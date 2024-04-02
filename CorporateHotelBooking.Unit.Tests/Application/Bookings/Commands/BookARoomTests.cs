@@ -205,6 +205,20 @@ public class BookARoomTests
             Times.Once);
     }
 
+    [Fact]
+    public void CheckOutDateMustBeAfterCheckInDate()
+    {
+        // Arrange
+        var command = CreateCommandWithWrongDates();
+
+        // Act
+        var result = _handler.Handle(command);
+
+        // Assert
+        result.IsFailure.Should().BeTrue();
+        result.Error.Should().Be("Check-out date must be after check-in date.");
+    }
+
     private static BookARoomCommand CreateRandomCommand()
     {
         var fixture = new Fixture().Customize(new DateOnlyFixtureCustomization());
@@ -216,6 +230,20 @@ public class BookARoomTests
             RoomType: fixture.Create<RoomType>(),
             CheckInDate: checkInDate,
             CheckOutDate: checkInDate.AddDays(fixture.Create<int>())
+         );
+    }
+
+        private static BookARoomCommand CreateCommandWithWrongDates()
+    {
+        var fixture = new Fixture().Customize(new DateOnlyFixtureCustomization());
+        var checkInDate = fixture.Create<DateOnly>();
+
+         return new BookARoomCommand(
+            EmployeeId: fixture.Create<int>(),
+            HotelId: fixture.Create<int>(),
+            RoomType: fixture.Create<RoomType>(),
+            CheckInDate: checkInDate,
+            CheckOutDate: checkInDate.AddDays(-fixture.Create<int>())
          );
     }
 
