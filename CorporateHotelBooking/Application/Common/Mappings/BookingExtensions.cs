@@ -12,7 +12,7 @@ public static class BookingExtensions
             booking.EmployeeId,
             booking.HotelId,
             booking.RoomType,
-            booking.CheckInDate,
-            booking.CheckOutDate);
+            booking.DateRange.CheckInDate,
+            booking.DateRange.CheckOutDate);
     }
 }

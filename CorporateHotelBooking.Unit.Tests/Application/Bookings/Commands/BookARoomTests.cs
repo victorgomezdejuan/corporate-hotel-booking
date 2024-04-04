@@ -3,6 +3,7 @@ using AutoFixture.Xunit2;
 using CorporateHotelBooking.Application.Bookings.Commands;
 using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Domain.Entities.BookingPolicies;
+using CorporateHotelBooking.Domain.ValueObjects;
 using CorporateHotelBooking.Repositories.Bookings;
 using CorporateHotelBooking.Repositories.CompanyBookingPolicies;
 using CorporateHotelBooking.Repositories.EmployeeBookingPolicies;
@@ -146,7 +147,10 @@ public class BookARoomTests
         _companyBookingPolicyRepositoryMock.Setup(x => x.Exists(companyId)).Returns(false);
         _roomRepositoryMock.Setup(x => x.GetCount(command.HotelId, command.RoomType)).Returns(1);
         _bookingRepositoryMock
-            .Setup(x => x.GetCount(command.HotelId, command.RoomType, command.CheckInDate, command.CheckOutDate))
+            .Setup(x => x.GetCount(
+                command.HotelId,
+                command.RoomType,
+                new BookingDateRange(command.CheckInDate, command.CheckOutDate)))
             .Returns(1);
 
         // Act
@@ -170,7 +174,10 @@ public class BookARoomTests
         _companyBookingPolicyRepositoryMock.Setup(x => x.Exists(companyId)).Returns(false);
         _roomRepositoryMock.Setup(x => x.GetCount(command.HotelId, RoomType.Standard)).Returns(1);
         _bookingRepositoryMock
-            .Setup(x => x.GetCount(command.HotelId, command.RoomType, command.CheckInDate, command.CheckOutDate))
+            .Setup(x => x.GetCount(
+                command.HotelId,
+                command.RoomType,
+                new BookingDateRange(command.CheckInDate, command.CheckOutDate)))
             .Returns(0);
         _bookingRepositoryMock.Setup(x => x.Add(It.IsAny<Booking>()))
             .Returns(new Booking(
@@ -178,8 +185,7 @@ public class BookARoomTests
                 command.EmployeeId,
                 command.HotelId,
                 command.RoomType,
-                command.CheckInDate,
-                command.CheckOutDate));
+                new BookingDateRange(command.CheckInDate, command.CheckOutDate)));
 
         // Act
         var result = _handler.Handle(command);
@@ -200,8 +206,7 @@ public class BookARoomTests
                 command.EmployeeId,
                 command.HotelId,
                 command.RoomType,
-                command.CheckInDate,
-                command.CheckOutDate)),
+                new BookingDateRange(command.CheckInDate, command.CheckOutDate))),
             Times.Once);
     }
 

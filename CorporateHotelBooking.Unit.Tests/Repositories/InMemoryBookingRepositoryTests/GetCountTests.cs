@@ -1,5 +1,6 @@
 using AutoFixture.Xunit2;
 using CorporateHotelBooking.Domain.Entities;
+using CorporateHotelBooking.Domain.ValueObjects;
 using CorporateHotelBooking.Repositories.Bookings;
 using CorporateHotelBooking.Unit.Tests.Helpers;
 using FluentAssertions;
@@ -19,7 +20,7 @@ public class GetCountTests
     public void NoBookings(int hotelId, RoomType roomType)
     {
         // Act
-        var count = _repository.GetCount(hotelId, roomType, DateOnly.MinValue, DateOnly.MaxValue);
+        var count = _repository.GetCount(hotelId, roomType, new BookingDateRange(DateOnly.MinValue, DateOnly.MaxValue));
 
         // Assert
         count.Should().Be(0);
@@ -33,7 +34,7 @@ public class GetCountTests
         _repository.Add(booking);
 
         // Act
-        var count = _repository.GetCount(booking.HotelId, booking.RoomType, booking.CheckInDate, booking.CheckOutDate);
+        var count = _repository.GetCount(booking.HotelId, booking.RoomType, booking.DateRange);
 
         // Assert
         count.Should().Be(1);
@@ -48,7 +49,7 @@ public class GetCountTests
         var anotherHotelId = booking.HotelId + 1;
 
         // Act
-        var count = _repository.GetCount(anotherHotelId, booking.RoomType, booking.CheckInDate, booking.CheckOutDate);
+        var count = _repository.GetCount(anotherHotelId, booking.RoomType, booking.DateRange);
 
         // Assert
         count.Should().Be(0);
@@ -65,8 +66,7 @@ public class GetCountTests
         var count = _repository.GetCount(
             booking.HotelId,
             RoomTypeProvider.DifferentFrom(booking.RoomType),
-            booking.CheckInDate,
-            booking.CheckOutDate);
+            booking.DateRange);
 
         // Assert
         count.Should().Be(0);
@@ -76,10 +76,17 @@ public class GetCountTests
     public void OneBookingWithOnlyOverlappingFirstDay(int employeeId, int hotelId, RoomType roomType)
     {
         // Arrange
-        _repository.Add(new Booking(employeeId, hotelId, roomType, new DateOnly(2021, 1, 1), new DateOnly(2021, 1, 2)));
+        _repository.Add(new Booking(
+            employeeId,
+            hotelId,
+            roomType,
+            new BookingDateRange(new DateOnly(2021, 1, 1), new DateOnly(2021, 1, 2))));
 
         // Act
-        var count = _repository.GetCount(hotelId, roomType, new DateOnly(2021, 1, 2), new DateOnly(2021, 1, 3));
+        var count = _repository.GetCount(
+            hotelId,
+            roomType,
+            new BookingDateRange(new DateOnly(2021, 1, 2), new DateOnly(2021, 1, 3)));
 
         // Assert
         count.Should().Be(1);
@@ -89,10 +96,17 @@ public class GetCountTests
     public void OneBookingWithOnlyOverlappingLastDay(int employeeId, int hotelId, RoomType roomType)
     {
         // Arrange
-        _repository.Add(new Booking(employeeId, hotelId, roomType, new DateOnly(2021, 1, 1), new DateOnly(2021, 1, 2)));
+        _repository.Add(new Booking(
+            employeeId,
+            hotelId,
+            roomType,
+            new BookingDateRange(new DateOnly(2021, 1, 1), new DateOnly(2021, 1, 2))));
 
         // Act
-        var count = _repository.GetCount(hotelId, roomType, new DateOnly(2020, 12, 31), new DateOnly(2021, 1, 1));
+        var count = _repository.GetCount(
+            hotelId,
+            roomType,
+            new BookingDateRange(new DateOnly(2020, 12, 31), new DateOnly(2021, 1, 1)));
 
         // Assert
         count.Should().Be(1);
@@ -102,10 +116,17 @@ public class GetCountTests
     public void OneBookingWithNoOverlappingDates(int employeeId, int hotelId, RoomType roomType)
     {
         // Arrange
-        _repository.Add(new Booking(employeeId, hotelId, roomType, new DateOnly(2021, 1, 1), new DateOnly(2021, 1, 2)));
+        _repository.Add(new Booking(
+            employeeId,
+            hotelId,
+            roomType,
+            new BookingDateRange(new DateOnly(2021, 1, 1), new DateOnly(2021, 1, 2))));
 
         // Act
-        var count = _repository.GetCount(hotelId, roomType, new DateOnly(2021, 1, 3), new DateOnly(2021, 1, 4));
+        var count = _repository.GetCount(
+            hotelId,
+            roomType,
+            new BookingDateRange(new DateOnly(2021, 1, 3), new DateOnly(2021, 1, 4)));
 
         // Assert
         count.Should().Be(0);

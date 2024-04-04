@@ -1,5 +1,6 @@
 using AutoFixture;
 using CorporateHotelBooking.Domain.Entities;
+using CorporateHotelBooking.Domain.ValueObjects;
 using CorporateHotelBooking.Integrated.Tests.Helpers.AutoFixture;
 
 namespace CorporateHotelBooking.Integrated.Tests.Helpers;
@@ -15,7 +16,8 @@ public class BookingFactory
             fixture.Create<int>(),
             fixture.Create<int>(),
             RoomType.Standard,
-            checkInDate,
-            checkInDate.AddDays(fixture.Create<int>()));
+            new BookingDateRange(
+                checkInDate,
+                checkInDate.AddDays(fixture.Create<int>())));
     }
 }

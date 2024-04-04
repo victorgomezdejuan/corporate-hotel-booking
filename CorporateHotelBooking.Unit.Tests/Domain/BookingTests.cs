@@ -1,5 +1,6 @@
 using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Domain.Exceptions;
+using CorporateHotelBooking.Domain.ValueObjects;
 using CorporateHotelBooking.Unit.Tests.Helpers;
 using FluentAssertions;
 
@@ -18,8 +19,7 @@ public class BookingTests
             booking.EmployeeId,
             booking.HotelId,
             booking.RoomType,
-            DateUtils.Today(),
-            DateUtils.Today());
+            new BookingDateRange(DateUtils.Today(), DateUtils.Today()));
         
         // Assert
         act.Should().Throw<CheckOutDateMustBeAfterCheckInDateException>();
@@ -36,8 +36,7 @@ public class BookingTests
             booking.EmployeeId,
             booking.HotelId,
             booking.RoomType,
-            DateUtils.Today(),
-            DateUtils.Today().AddDays(-1));
+            new BookingDateRange(DateUtils.Today(), DateUtils.Today().AddDays(-1)));
 
         // Assert
         act.Should().Throw<CheckOutDateMustBeAfterCheckInDateException>();
@@ -54,11 +53,10 @@ public class BookingTests
             booking.EmployeeId,
             booking.HotelId,
             booking.RoomType,
-            DateUtils.Today(),
-            DateUtils.Today().AddDays(1));
+            new BookingDateRange(DateUtils.Today(), DateUtils.Today().AddDays(1)));
 
         // Assert
-        createdBooking.CheckInDate.Should().Be(DateUtils.Today());
-        createdBooking.CheckOutDate.Should().Be(DateUtils.Today().AddDays(1));
+        createdBooking.DateRange.CheckInDate.Should().Be(DateUtils.Today());
+        createdBooking.DateRange.CheckOutDate.Should().Be(DateUtils.Today().AddDays(1));
     }
 }

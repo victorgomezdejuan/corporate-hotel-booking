@@ -1,4 +1,5 @@
 using CorporateHotelBooking.Domain.Entities;
+using CorporateHotelBooking.Domain.ValueObjects;
 
 namespace CorporateHotelBooking.Repositories.Bookings;
 
@@ -18,8 +19,7 @@ public class InMemoryBookingRepository : IBookingRepository
             employeeId: booking.EmployeeId,
             hotelId: booking.HotelId,
             roomType: booking.RoomType,
-            checkInDate: booking.CheckInDate,
-            checkOutDate: booking.CheckOutDate
+            dateRange: booking.DateRange
         );
         _bookings.Add(newBooking);
 
@@ -36,14 +36,8 @@ public class InMemoryBookingRepository : IBookingRepository
         return _bookings.SingleOrDefault(b => b.Id == id);
     }
 
-    public int GetCount(int hotelId, RoomType roomType, DateOnly dateFrom, DateOnly dateTo)
+    public int GetCount(int hotelId, RoomType roomType, BookingDateRange dateRange)
     {
-        return _bookings.Count(b => b.HotelId == hotelId && b.RoomType == roomType &&
-            (
-                (b.CheckInDate >= dateFrom && b.CheckInDate <= dateTo) ||
-                (b.CheckOutDate >= dateFrom && b.CheckOutDate <= dateTo)
-            )
-        );
-    
+        return _bookings.Count(b => b.HotelId == hotelId && b.RoomType == roomType && b.DateRange.Overlaps(dateRange));
     }
 }

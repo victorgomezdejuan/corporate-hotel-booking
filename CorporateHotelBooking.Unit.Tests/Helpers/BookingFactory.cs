@@ -1,5 +1,6 @@
 using AutoFixture;
 using CorporateHotelBooking.Domain.Entities;
+using CorporateHotelBooking.Domain.ValueObjects;
 using CorporateHotelBooking.Unit.Tests.Helpers.AutoFixture;
 
 namespace CorporateHotelBooking.Unit.Tests.Helpers;
@@ -15,8 +16,7 @@ public class BookingFactory
             fixture.Create<int>(),
             fixture.Create<int>(),
             RoomType.Standard,
-            checkInDate,
-            checkInDate.AddDays(fixture.Create<int>()));
+            new BookingDateRange(checkInDate, checkInDate.AddDays(fixture.Create<int>())));
     }
 
     internal static Booking CreateRandomWithEmployeeAndRoomType(int employeeId, RoomType roomType)
@@ -28,7 +28,6 @@ public class BookingFactory
             employeeId,
             fixture.Create<int>(),
             roomType,
-            checkInDate,
-            checkInDate.AddDays(fixture.Create<int>()));
+            new BookingDateRange(checkInDate, checkInDate.AddDays(fixture.Create<int>())));
     }
 }

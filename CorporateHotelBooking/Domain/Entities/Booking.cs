@@ -1,23 +1,19 @@
-using CorporateHotelBooking.Domain.Exceptions;
+using CorporateHotelBooking.Domain.ValueObjects;
 
 namespace CorporateHotelBooking.Domain.Entities;
 
 public record Booking
 {
-    public Booking(int employeeId, int hotelId, RoomType roomType, DateOnly checkInDate, DateOnly checkOutDate)
+    public Booking(int employeeId, int hotelId, RoomType roomType, BookingDateRange dateRange)
     {
-        if (checkOutDate <= checkInDate)
-            throw new CheckOutDateMustBeAfterCheckInDateException();
-
         EmployeeId = employeeId;
         HotelId = hotelId;
         RoomType = roomType;
-        CheckInDate = checkInDate;
-        CheckOutDate = checkOutDate;
+        DateRange = dateRange;
     }
 
-    public Booking(int id, int employeeId, int hotelId, RoomType roomType, DateOnly checkInDate, DateOnly checkOutDate) 
-        : this(employeeId, hotelId, roomType, checkInDate, checkOutDate)
+    public Booking(int id, int employeeId, int hotelId, RoomType roomType, BookingDateRange dateRange) 
+        : this(employeeId, hotelId, roomType, dateRange)
     {
         Id = id;
     }
@@ -26,6 +22,5 @@ public record Booking
     public int EmployeeId { get; }
     public int HotelId { get; }
     public RoomType RoomType { get; }
-    public DateOnly CheckInDate { get; }
-    public DateOnly CheckOutDate { get; }
+    public BookingDateRange DateRange { get; }
 }

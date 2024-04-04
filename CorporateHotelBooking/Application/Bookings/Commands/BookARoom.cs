@@ -3,6 +3,7 @@ using CorporateHotelBooking.Application.Common.Mappings;
 using CorporateHotelBooking.Domain.Entities;
 using CorporateHotelBooking.Domain.Entities.BookingPolicies;
 using CorporateHotelBooking.Domain.Exceptions;
+using CorporateHotelBooking.Domain.ValueObjects;
 using CorporateHotelBooking.Repositories.Bookings;
 using CorporateHotelBooking.Repositories.CompanyBookingPolicies;
 using CorporateHotelBooking.Repositories.EmployeeBookingPolicies;
@@ -107,8 +108,7 @@ public class BookARoomCommandHandler
                 employeeId: command.EmployeeId,
                 hotelId: command.HotelId,
                 roomType: command.RoomType,
-                checkInDate: command.CheckInDate,
-                checkOutDate: command.CheckOutDate
+                dateRange: new BookingDateRange(command.CheckInDate, command.CheckOutDate)
             );
 
             return Result<Booking>.Success(booking);
@@ -176,8 +176,10 @@ public class BookARoomCommandHandler
 
     private bool AreThereRoomsAvailable(BookARoomCommand command)
     {
+        var dateRange = new BookingDateRange(command.CheckInDate, command.CheckOutDate);
+
         if (
-            _bookingRepository.GetCount(command.HotelId, command.RoomType, command.CheckInDate, command.CheckOutDate)
+            _bookingRepository.GetCount(command.HotelId, command.RoomType, dateRange)
             >=
             _roomRepository.GetCount(command.HotelId, command.RoomType))
         {

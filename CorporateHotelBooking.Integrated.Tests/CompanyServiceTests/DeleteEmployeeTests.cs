@@ -35,7 +35,7 @@ public class DeleteEmployeeTests
         result.IsFailure.Should().BeFalse();
         employeeRepository.Get(booking.EmployeeId).Should().BeNull();
         bookingRepository
-            .GetCount(booking.EmployeeId, booking.RoomType, booking.CheckInDate, booking.CheckOutDate)
+            .GetCount(booking.EmployeeId, booking.RoomType, booking.DateRange)
             .Should().Be(0);
         employeeBookingPolicyRepository.Exists(booking.EmployeeId).Should().BeFalse();
     }

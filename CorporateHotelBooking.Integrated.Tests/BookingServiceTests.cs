@@ -58,12 +58,18 @@ public class BookingServiceTests
             booking.EmployeeId,
             booking.HotelId,
             booking.RoomType,
-            booking.CheckInDate,
-            booking.CheckOutDate);
+            booking.DateRange.CheckInDate,
+            booking.DateRange.CheckOutDate);
 
         // Assert
         result.IsFailure.Should().BeFalse();
-        result.Value.Should().BeEquivalentTo(booking, options => options.Excluding(b => b.Id));
+
+        result.Value!.EmployeeId.Should().Be(booking.EmployeeId);
+        result.Value!.HotelId.Should().Be(booking.HotelId);
+        result.Value!.RoomType.Should().Be(booking.RoomType);
+        result.Value!.CheckInDate.Should().Be(booking.DateRange.CheckInDate);
+        result.Value!.CheckOutDate.Should().Be(booking.DateRange.CheckOutDate);
+        
         _bookingRepository.Get(1).Should().BeEquivalentTo(booking, options => options.Excluding(b => b.Id));
     }
 
@@ -87,8 +93,8 @@ public class BookingServiceTests
             booking.EmployeeId,
             booking.HotelId,
             booking.RoomType,
-            booking.CheckInDate,
-            booking.CheckOutDate);
+            booking.DateRange.CheckInDate,
+            booking.DateRange.CheckOutDate);
 
         // Assert
         result.IsFailure.Should().BeTrue();
